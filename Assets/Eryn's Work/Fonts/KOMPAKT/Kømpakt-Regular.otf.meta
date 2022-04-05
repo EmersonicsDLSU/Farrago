@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: b8543c9aa74378a4eb1afe8b0326353d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Kompakt
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 712e40518ed8c1f43bf388a86528db69, type: 3}
+  - {fileID: 12800000, guid: a7a2dcbc941a66941889912d1e32c904, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

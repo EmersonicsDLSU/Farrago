@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fcb87f9d63c918048bb763df6eda088e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MasterMixer: {fileID: 24100000, guid: 3f9142ee2a1138f41821bc1479af7a33, type: 2}
+  - BGMMixer: {fileID: 24100000, guid: 0601176fd84b14b4a8c4143a0980a9f2, type: 2}
+  - SFXMixer: {fileID: 24100000, guid: 343a1f6f7733d6143bd146eb678ce3c4, type: 2}
+  - AmbienceMixer: {fileID: 24100000, guid: 4d639e87cc6278843b9e603daaab23dd, type: 2}
+  - PlayerSFXMixer: {fileID: 24100000, guid: fd412196b680efb4a89430f4f4a502e5, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
