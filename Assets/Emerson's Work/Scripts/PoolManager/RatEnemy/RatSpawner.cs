@@ -5,7 +5,7 @@ using UnityEngine;
 //This is an exmaple of our spawn type
 public class RatSpawner : MonoBehaviour , IPoolFunctions
 {
-    //the type of pool and the originalObj; both are required, set you're preffered values for the constructors(maxSize, isFixAllocation?)
+    //the type of pool and the originalObj; both are required, set you're preferred values for the constructors(maxSize, isFixAllocation?)
     [HideInInspector] public ObjPools enemyPool;
     [SerializeField] private List <GameObject> originalObjs = new List<GameObject>();
 

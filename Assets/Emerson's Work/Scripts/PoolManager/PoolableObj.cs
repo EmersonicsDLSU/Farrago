@@ -40,7 +40,8 @@ public class PoolableObj : APoolable
     public GameObject createCopy(ObjPools pool)
     {
         //duplicate the origin copy
-        GameObject go = GameObject.Instantiate(this.gameObject, this.transform.position, Quaternion.identity) as GameObject;
+        GameObject go = 
+            GameObject.Instantiate(this.gameObject, this.transform.position, Quaternion.identity) as GameObject;
 
         //awake
         go.GetComponent<PoolableObj>().poolRef = pool;

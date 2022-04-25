@@ -42,7 +42,7 @@ public class PotionAbsorption : MonoBehaviour
     // used in conditional expression for absorbing colors
     [HideInInspector]public bool isAbsorbing = false;
     // rotation speed when absorbing
-    private float rotSpeed = 0.2f;
+    [SerializeField]private float rotSpeed = 0.2f;
     // reference to the PlayerSFX_Manager Static Instance
     PlayerSFX_Manager playerSFX;
     // Potion Absorption Struct - contains the script properties
@@ -99,15 +99,15 @@ public class PotionAbsorption : MonoBehaviour
             {
                 isAbsorbing = true;
                 mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, isAbsorbing);
-                //clamp the rotation of the player to the angle where it would face the object infront
+                // clamp the rotation of the player to the angle where it would face the object in-front
                 mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.ColorInteractableGO);
             }
             else if (Input.GetKey(KeyCode.E) && PAStruct_obj.interactAgain)
             {
                 // increment time to 'timePress'
-                timePress += Time.deltaTime;
+                timePress += Time.deltaTime * rotSpeed;
                 // increment fill Image bar
-                interactableFillIcon.fillAmount = timePress / 2.0f;
+                interactableFillIcon.fillAmount = timePress / 1.0f;
 
                 // if UI fill is full
                 if (interactableFillIcon.fillAmount == 1.0f)
@@ -119,8 +119,15 @@ public class PotionAbsorption : MonoBehaviour
                     playerSFX.findSFXSourceByLabel("Absorb").PlayOneShot(playerSFX.findSFXSourceByLabel("Absorb").clip);
                     Invoke("resetGrowAnim", 0.4f);
                     // Checks the Current tag(Color Tag) of this objects
+                    /*
+                     *NOTE: The passed ColorMixer object is coming from a new instantiated class obj which means that
+                    we're always creating a copy of the color we want. This will have a slight effect on the performance
+                    since instantiation time is repeated for each newly created obj. To resolve this, we should transform
+                    this process to object pooling.
+                     */
                     switch (ColorInteractableGO.transform.tag)
                     {
+                        // These color cases are the colors that are available/seen in the world to be absorbed
                         case "RED POTION":
                             AssignColor(ref PAStruct_obj, new ColorMixer
                                 (color_Code_To_UColor[ColorCode.RED], ColorCode.RED));
@@ -138,7 +145,10 @@ public class PotionAbsorption : MonoBehaviour
                     }
                     // call Monologue Text methods 
                     if (object_ID != null)
-                        TextControl.textInstance.Interact((TextControl.textType)System.Enum.Parse(typeof(TextControl.textType), object_ID.objectCode.ToString()));
+                        TextControl.textInstance.Interact(
+                            (TextControl.textType)System.Enum.Parse(typeof(TextControl.textType),
+                                object_ID.objectCode.ToString())
+                            );
                     TextControl.textInstance.delayReset();
                 }
             }

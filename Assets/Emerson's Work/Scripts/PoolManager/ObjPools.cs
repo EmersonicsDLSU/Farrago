@@ -63,11 +63,13 @@ public class ObjPools
                 availableObjects.Add(copy.createCopy(this));
                 if(typeof(T).Equals(typeof(RatSpawner)))
                 {
-                    availableObjects[i].GetComponent<AIAgent>().ratSpawnerSc = (RatSpawner)System.Convert.ChangeType(refSpawner, typeof(RatSpawner));
+                    availableObjects[i].GetComponent<AIAgent>().ratSpawnerSc = 
+                        (RatSpawner)System.Convert.ChangeType(refSpawner, typeof(RatSpawner));
                     //Debug.LogError($"Stored: {availableObjects[i].GetComponent<AIAgent>().ratSpawnerSc != null}");
                 }
                 else if(typeof(T).Equals(typeof(RatChaseSpawner)))
-                    availableObjects[i].GetComponent<AIAgent>().ratChaseSpawnerSc = (RatChaseSpawner)System.Convert.ChangeType(refSpawner, typeof(RatChaseSpawner));
+                    availableObjects[i].GetComponent<AIAgent>().ratChaseSpawnerSc =
+                        (RatChaseSpawner)System.Convert.ChangeType(refSpawner, typeof(RatChaseSpawner));
                 /*
                 else if(typeof(T).Equals(typeof(InventoryPool)))
                     availableObjects[i].GetComponent<AIAgent>().ratChaseSpawnerSc = (InventoryPool)System.Convert.ChangeType(refSpawner, typeof(InventoryPool));
@@ -106,7 +108,7 @@ public class ObjPools
     {
         usedObjects.Add(availableObjects[0]);
         availableObjects.RemoveAt(0);
-        //sets the onActivate func of the poolable
+        // calls the onActivate func of the poolable
         this.poolFunctions.onRequestGo(this.spawnLocations);
         //poolable now exist in the game
         usedObjects[usedObjects.Count - 1].SetActive(true);

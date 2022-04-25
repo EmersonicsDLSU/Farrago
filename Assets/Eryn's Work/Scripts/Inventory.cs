@@ -5,15 +5,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-//SLOTS HOLD PROPERTIES OF AN INVENTORY SLOT
+// SLOTS HOLD PROPERTIES OF AN INVENTORY SLOT
 [System.Serializable]
 public class Slots
 {
-    //ISFULL CHECKS IF INVENTORY SLOT IS OCCUPIED
+    // ISFULL CHECKS IF INVENTORY SLOT IS OCCUPIED
     public bool isFull;
-    //INVENTORYSLOT IS FOR UI INVENTORY SLOT
+    // INVENTORYSLOT IS FOR UI INVENTORY SLOT
     public GameObject inventorySlot;
-    //COLORITEM IS FOR POTION PREFAB HOLDER
+    // COLORITEM IS FOR POTION PREFAB HOLDER
     public GameObject colorItem;
     // ColorMixer Object
     public ColorMixer color;
@@ -27,13 +27,13 @@ public class Inventory : MonoBehaviour
     [Header("Inventory Slots")]
     // A Lis collection of the colors absorbed
     public List<Slots> inventorySlots = new List<Slots>();
-    //FOR CLEANSE PROGRESS
+    // FOR CLEANSE PROGRESS
     private float timeCheck;
     private float cleanseLength = 1.0f;
     private bool canCleanse = true;
     // PlayerSFXManager Instance reference - used for absorbed sfx
     private PlayerSFX_Manager playerSFX;
-    //InventoryPool script component
+    // InventoryPool script component
     [SerializeField] private InventoryPool inventoryPoolSc;
 
     private void Start()
@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour
         }
         playerSFX = PlayerSFX_Manager.Instance;
     }
-    //FUNCTION CLEANSES WHOLE INVENTORY
+    // FUNCTION CLEANSES WHOLE INVENTORY
     void Cleanse(MainPlayerSc mainPlayer)
     {
         // Cleanse every color GO in the color slots
@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour
         {
             if (inventorySlots[i].colorItem != null)
             {
-                //Destroy(inventorySlots[i].colorItem);
+                // Destroy(inventorySlots[i].colorItem);
                 this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);
                 inventorySlots[0].isFull = false;
                 inventorySlots[0].colorItem = null;
@@ -69,21 +69,21 @@ public class Inventory : MonoBehaviour
 
     }
 
-    //FUNCTION IF COLOR COMBINATION IS DETECTED
+    // FUNCTION IF COLOR COMBINATION IS DETECTED
     public void CheckColorCombination(ref MainPlayerSc mainPlayer, ColorMixer color)
     {
         // If the player have a previous color in its slot, then it's combine time
         if (inventorySlots[0].isFull == true)
         {
-            assignColor(inventorySlots[0].color + color);
+            AssignColor(inventorySlots[0].color + color);
         }
         else // simply assigns the new color
         {
-            assignColor(color);
+            AssignColor(color);
         }
     }
-    //Borrows the requested object from the pool and assign the parent to the UI slot
-    public void assignColor(ColorMixer color)
+    // Borrows the requested object from the pool and assign the parent to the UI slot
+    public void AssignColor(ColorMixer color)
     {
         // assigns the new color for the mainPlayer's skinMeshRenderer
         var playerSkinColor = GameObject.FindGameObjectWithTag("Player").
@@ -100,8 +100,8 @@ public class Inventory : MonoBehaviour
             this.inventoryPoolSc.itemPool.usedObjects[this.inventoryPoolSc.itemPool.usedObjects.Count - 1];
         inventorySlots[0].color = color;
     }
-    //PUBLIC FUNCTION FOR CHECKING IF INVENTORY IS FULL
-    //CAN BE USED IN OTHER SCRIPTS FOR CHECKING INVENTORY STATUS
+    // PUBLIC FUNCTION FOR CHECKING IF INVENTORY IS FULL
+    // CAN BE USED IN OTHER SCRIPTS FOR CHECKING INVENTORY STATUS
     public bool isInventoryFull()
     {
         for (int i = 0; i < inventorySlots.Count; i++)
