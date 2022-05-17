@@ -14,7 +14,8 @@ public enum ColorCode
     ORANGE,
     VIOLET,
     WHITE,
-    BLACK
+    BLACK,
+    GREEN
 };
 
 // Class for ColoredPotion Absorption Mechanic
@@ -83,6 +84,7 @@ public class PotionAbsorption : MonoBehaviour
         color_Code_To_UColor.Add(ColorCode.VIOLET, new Color(0.50f, 0f, 1f));
         color_Code_To_UColor.Add(ColorCode.WHITE, Color.white);
         color_Code_To_UColor.Add(ColorCode.BLACK, Color.black);
+        color_Code_To_UColor.Add(ColorCode.GREEN, Color.green);
     }
 
     // Update is called once per frame
@@ -118,6 +120,7 @@ public class PotionAbsorption : MonoBehaviour
                     GameObject.Find("Inventory").GetComponent<Animator>().SetBool("isAbsorb", true);
                     playerSFX.findSFXSourceByLabel("Absorb").PlayOneShot(playerSFX.findSFXSourceByLabel("Absorb").clip);
                     Invoke("resetGrowAnim", 0.4f);
+
                     // Checks the Current tag(Color Tag) of this objects
                     /*
                      *NOTE: The passed ColorMixer object is coming from a new instantiated class obj which means that

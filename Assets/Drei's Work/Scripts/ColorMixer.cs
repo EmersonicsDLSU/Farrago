@@ -27,7 +27,8 @@ public class ColorMixer
         {   
             // 1st and 2nd value are the color combinations. 3rd parameter is the resulting color   
             new List<ColorCode>() {ColorCode.RED, ColorCode.YELLOW, ColorCode.ORANGE},  
-            new List<ColorCode>() {ColorCode.RED, ColorCode.BLUE, ColorCode.VIOLET},    
+            new List<ColorCode>() {ColorCode.RED, ColorCode.BLUE, ColorCode.VIOLET},
+            new List<ColorCode>() {ColorCode.BLUE, ColorCode.YELLOW, ColorCode.GREEN}
         };   
         // get all the related color combination in the 1st column
         var relatedColorList1 = colorPairs.FindAll(x => 
