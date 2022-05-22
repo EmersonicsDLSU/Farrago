@@ -75,6 +75,7 @@ public class Inventory : MonoBehaviour
         // If the player have a previous color in its slot, then it's combine time
         if (inventorySlots[0].isFull == true)
         {
+            Debug.LogError($"Combine!!!");
             AssignColor(inventorySlots[0].color + color);
         }
         else // simply assigns the new color
