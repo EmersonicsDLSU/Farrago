@@ -16,6 +16,8 @@ TagManager:
   - Enemy
   - Keybind
   - Journal
+  - Player_Shirt
+  - Player_Coat
   layers:
   - Default
   - TransparentFX

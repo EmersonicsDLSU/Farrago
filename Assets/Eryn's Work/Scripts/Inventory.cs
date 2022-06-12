@@ -36,6 +36,10 @@ public class Inventory : MonoBehaviour
     // InventoryPool script component
     [SerializeField] private InventoryPool inventoryPoolSc;
 
+    //DEFAULT ANGELA COLORS
+    private Color coatBaseColor;
+    private GameObject coat;
+
     private void Start()
     {
         if(inventoryPoolSc == null)
@@ -43,6 +47,9 @@ public class Inventory : MonoBehaviour
             inventoryPoolSc = FindObjectOfType<InventoryPool>();
         }
         playerSFX = PlayerSFX_Manager.Instance;
+
+        coat = GameObject.FindGameObjectWithTag("Player_Coat");
+        coatBaseColor = coat.GetComponent<SkinnedMeshRenderer>().material.color;
     }
     // FUNCTION CLEANSES WHOLE INVENTORY
     void Cleanse(MainPlayerSc mainPlayer)
@@ -57,10 +64,10 @@ public class Inventory : MonoBehaviour
                 inventorySlots[0].isFull = false;
                 inventorySlots[0].colorItem = null;
             }
-
         }
         // Reset Color Slots properties
-        mainPlayer.GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.white;
+        coat = GameObject.FindGameObjectWithTag("Player_Coat");
+        coat.GetComponent<SkinnedMeshRenderer>().material.color = coatBaseColor;
         timeCheck = 0.0f;
         cleanseFill.fillAmount = 0.0f;
         canCleanse = false;
@@ -87,9 +94,8 @@ public class Inventory : MonoBehaviour
     public void AssignColor(ColorMixer color)
     {
         // assigns the new color for the mainPlayer's skinMeshRenderer
-        var playerSkinColor = GameObject.FindGameObjectWithTag("Player").
-            GetComponentInChildren<SkinnedMeshRenderer>();
-        playerSkinColor.material.color = color.color;
+        var coatColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>();
+        coatColor.material.color = color.color;
         // Release color UI ICON pool
         this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);
         inventorySlots[0].isFull = true;
