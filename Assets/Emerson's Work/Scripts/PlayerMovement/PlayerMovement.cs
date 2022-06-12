@@ -220,14 +220,14 @@ public class PlayerMovement : MonoBehaviour
         {
             // brings back the player to its normalSpeed ; maxSpeed configured by the designer
             _playerProperty.speed = _playerProperty.maxSpeed;
-            // checks if the player is on ground layer
-            if(_playerProperty.isGround)
+            // checks if the player is on ground layer or sprinting while on air
+            if(_playerProperty.isGround || _playerProperty.isJump)
             {
                 // Sprint Mechanic KeyEvents
                 // When the player is holding the sprint button; increases the speed of the player
                 if(Input.GetKey(this.local_keybind.run))
                 {
-                    _playerProperty.speed = _playerProperty.maxSpeed * 1.25f;
+                    _playerProperty.speed = _playerProperty.maxSpeed * 2.0f;
                     _playerProperty.isRun = true;
                     mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
                 }
