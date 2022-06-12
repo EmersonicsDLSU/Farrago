@@ -32,14 +32,14 @@ public class Object_ID : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             //TextControl.textInstance.Interact((TextControl.textType)System.Enum.Parse(typeof(TextControl.textType), objectCode.ToString()));
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             TextControl.textInstance.clearQueue();
         }

@@ -7,13 +7,13 @@ public class PuzzleCollider : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
             this.gameObject.GetComponentInParent<PuzzleInteraction>().canInteract = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
             this.gameObject.GetComponentInParent<PuzzleInteraction>().canInteract = false;
     }
 }

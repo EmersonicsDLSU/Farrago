@@ -79,14 +79,14 @@ public class PuzzleSolverInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
             this.canInteract = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.LogError("EXIT");
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
             this.canInteract = false;
     }
 

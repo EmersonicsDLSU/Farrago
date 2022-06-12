@@ -17,7 +17,7 @@ public class CamZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             virtualCamera.enabled = true;
             Debug.LogWarning(virtualCamera.enabled);
@@ -25,7 +25,7 @@ public class CamZone : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             virtualCamera.enabled = false;
             Debug.LogWarning(virtualCamera.enabled);

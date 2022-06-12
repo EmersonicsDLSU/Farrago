@@ -16,9 +16,9 @@ public class SeeThroughWalls : MonoBehaviour
     {
         cinemachineBrain = this.GetComponent<CinemachineBrain>();
 
-        if(target == null || target.tag == "PlayerModel")
+        if(target == null || target.tag == "Player")
         {
-            target = GameObject.FindGameObjectWithTag("PlayerModel");
+            target = GameObject.FindGameObjectWithTag("Player");
         }
         if(CVCam.Follow == null)
         {

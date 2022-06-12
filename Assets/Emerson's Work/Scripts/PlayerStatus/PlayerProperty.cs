@@ -27,6 +27,7 @@ public class PlayerProperty
     [HideInInspector] public bool isJump = false;
     [HideInInspector] public bool canJump = true;
     [HideInInspector] public bool isGround;
+    [HideInInspector] public bool isInteract = false;
     
     //input axes
     [HideInInspector]public readonly float SPEED_MULTIPLIER = 5.0f;

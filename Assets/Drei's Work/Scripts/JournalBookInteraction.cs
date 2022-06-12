@@ -22,7 +22,7 @@ public class JournalBookInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             Debug.LogError("COLLIDED");
 
@@ -38,7 +38,7 @@ public class JournalBookInteraction : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             this.isPlayerInJournalArea = true;
 
@@ -74,7 +74,7 @@ public class JournalBookInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             this.interactableParent.SetActive(false);
             this.isPlayerInJournalArea = false;

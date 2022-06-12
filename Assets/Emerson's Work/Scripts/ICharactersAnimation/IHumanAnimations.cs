@@ -9,5 +9,6 @@ public interface IHumanAnimations<T>
     public void IH_SneakAnim(ref T className);
     public void IH_JumpAnim(ref T className);
     public void IH_IsGroundAnim(ref T className);
+    public void IH_IsInteractAnim(ref T className);
     public void IH_ConsumeAnim(ref T className, bool isConsuming);
 }

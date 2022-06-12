@@ -35,7 +35,7 @@ public class ClueInteraction : MonoBehaviour
 
 private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             Debug.LogError("COLLIDED");
 
@@ -53,7 +53,7 @@ private void OnTriggerEnter(Collider other)
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             isPlayerInClueArea = true;
 
@@ -102,7 +102,7 @@ private void OnTriggerEnter(Collider other)
     private void OnTriggerExit(Collider other)
     {
 
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
          
 

@@ -35,7 +35,7 @@ public class AbsorptionCollider : MonoBehaviour
     //checks if the player enters the collider of this obj
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             // assigns the parent gameobject of this gameobject
             potionAbsSc.ColorInteractableGO = this.transform.parent.gameObject;
@@ -53,7 +53,7 @@ public class AbsorptionCollider : MonoBehaviour
     //checks if the player is inside the collider of this obj
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             if (MainPlayerScript.playerMovementSc.MovementX != 0 || 
                 MainPlayerScript.playerMovementSc.MovementY != 0 || 
@@ -75,7 +75,7 @@ public class AbsorptionCollider : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //isInsideCollider = false;
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             // reset PotionAbsorption properties
             this.potionAbsSc.canAbsorb = false;

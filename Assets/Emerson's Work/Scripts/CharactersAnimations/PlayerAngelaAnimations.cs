@@ -28,6 +28,10 @@ public class PlayerAngelaAnimations : MonoBehaviour, IHumanAnimations<MainPlayer
     {
         mainPlayer.playerAnim.SetBool("isGround", mainPlayer.playerMovementSc._playerProperty.isGround);
     }
+    public void IH_IsInteractAnim(ref MainPlayerSc mainPlayer)
+    {
+        mainPlayer.playerAnim.SetBool("isInteract", mainPlayer.playerMovementSc._playerProperty.isInteract);
+    }
     public void IH_ConsumeAnim(ref MainPlayerSc mainPlayer, bool isConsuming)
     {
         mainPlayer.playerAnim.SetBool("isConsume", isConsuming);

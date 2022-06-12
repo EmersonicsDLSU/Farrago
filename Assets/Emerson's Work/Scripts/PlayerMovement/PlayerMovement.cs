@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     // KeybindReceiver object
     private KeybindReceiver local_keybind;
 
+    [SerializeField]private Transform modelTransform;
     private void Awake()
     {
         //respawns back the player to the last saved point
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.LogError($"Ressurected: {MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint}");
             MainCharacterStructs.Instance.playerSavedAttrib.IsDead = false;
-            GameObject.FindGameObjectWithTag("PlayerModel").transform.position = 
+            GameObject.FindGameObjectWithTag("Player").transform.position = 
                 MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;;
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
                 MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
@@ -237,6 +238,11 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            _playerProperty.isRun = false;
+            mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
+        }
     }
     // method that handles the jump conditions and calculation of the mainPlayer
     private void PlayerSneakMovement(ref MainPlayerSc mainPlayer)
@@ -371,12 +377,12 @@ public class PlayerMovement : MonoBehaviour
 
         // translates the player
         Vector3 move = transform.right * movementX + transform.forward * movementY;
+        FlipCharacter(ref mainPlayer);
         mainPlayer.playerCharController.Move(move * _playerProperty.speed * Time.deltaTime);
-        mainPlayer.gameObject.transform.position = mainPlayer.playerAnim.gameObject.transform.position;
+        //mainPlayer.gameObject.transform.position = mainPlayer.playerAnim.gameObject.transform.position;
         // check if the total value for x and y movement is not equal to 0; means its moving
         mainPlayer.playerAngelaAnim.IH_MoveAnim(ref mainPlayer);
         // Rotates the character depending on its corresponding movement
-        FlipCharacter(ref mainPlayer);
     }
     // NOTE: THIS IS NOT EFFICIENT, CUSTOM METHODS LIKE THIS SHOULD BE PLACED IN A SEPARATE CLASS 
     // THAT CONSIST OF DIFFERENT SELECTIONS/BEHAVIORS
@@ -411,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
         mainPlayer.playerCharController.transform.rotation = Quaternion.Slerp
         (mainPlayer.playerCharController.transform.rotation, 
             Quaternion.Euler(0.0f, angle, 0.0f), rotate_interval);
-        mainPlayer.playerCharController.transform.rotation = Quaternion.Euler(0.0f, -angle, 0.0f);
+        modelTransform.rotation = Quaternion.Euler(0.0f, -angle, 0.0f);
     }
     // current angle of the character in Y-axis; reference position starts from the right
     float angle = 0.0f;
@@ -422,11 +428,13 @@ public class PlayerMovement : MonoBehaviour
         // change orientation based on the direction
         if(movementX != 0.0f || movementY != 0.0f)
         {
-            Transform modelTransform = mainPlayer.playerCharController.transform;
-            angle = Mathf.Atan2(movementY, movementX) * Mathf.Rad2Deg -180.0f;
+            //Transform modelTransform = mainPlayer.playerCharController.transform;
+            angle = Mathf.Atan2(movementY, movementX) * Mathf.Rad2Deg - 180F;
             // Add smooth rotation 
+            
             modelTransform.rotation = Quaternion.Slerp
                 (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval);
+            
         }
     }
 

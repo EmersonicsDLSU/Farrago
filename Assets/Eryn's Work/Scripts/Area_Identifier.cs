@@ -27,7 +27,7 @@ public class Area_Identifier : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {       
 
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             if(area == areaType.LEVEL)
             {
@@ -47,7 +47,7 @@ public class Area_Identifier : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerModel"))
+        if (other.CompareTag("Player"))
         {
             if (area == areaType.CHASE)
             {
