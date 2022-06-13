@@ -256,7 +256,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(local_keybind.sneak))
         {
             _playerProperty.isSneak = true;
-            _playerProperty.speed = _playerProperty.maxSpeed / 4;
+            _playerProperty.speed = _playerProperty.maxSpeed * 0.75f;
             mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
         }
         else if (!Input.GetKey(local_keybind.sneak))
@@ -427,13 +427,10 @@ public class PlayerMovement : MonoBehaviour
         // change orientation based on the direction
         if(movementX != 0.0f || movementY != 0.0f)
         {
-            //Transform modelTransform = mainPlayer.playerCharController.transform;
             angle = Mathf.Atan2(movementY, movementX) * Mathf.Rad2Deg - 180F;
             // Add smooth rotation 
-            
             modelTransform.rotation = Quaternion.Slerp
                 (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval);
-            
         }
     }
 

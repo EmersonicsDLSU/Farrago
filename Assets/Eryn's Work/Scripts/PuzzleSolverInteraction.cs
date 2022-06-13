@@ -22,9 +22,12 @@ public class PuzzleSolverInteraction : MonoBehaviour
     public GameObject interactableParent;
     public Image interactableFill;
 
+    private MainPlayerSc mainPlayer;
+
     void Start()
     {
         playerPuzzleInv = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PuzzleInventory>();
+        mainPlayer = FindObjectOfType<MainPlayerSc>();
     }
 
     void Update()
@@ -42,6 +45,7 @@ public class PuzzleSolverInteraction : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.E) && interactAgain)
                 {
+                    mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                     timePress += Time.deltaTime;
                     interactableFill.fillAmount = timePress / 2.0f;
 
