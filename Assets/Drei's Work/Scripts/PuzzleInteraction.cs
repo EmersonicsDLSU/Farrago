@@ -12,8 +12,7 @@ public class PuzzleInteraction : MonoBehaviour
     ParticleSystem.MainModule ma;
     public PlayerProperty _playerProperty;
     
-
-    private GameObject playermodel;
+    
     public Animator anim;
 
     [Space]
@@ -32,6 +31,8 @@ public class PuzzleInteraction : MonoBehaviour
     private List<string> characterResponsesCorrect = new List<string>();
     private List<string> characterResponsesIncorrect = new List<string>();
     private int randomMonologueHolder;
+
+    private MainPlayerSc mainPlayer;
 
 
     void Awake()
@@ -62,7 +63,6 @@ public class PuzzleInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playermodel = GameObject.FindGameObjectWithTag("Player");
         anim.SetBool("will fade", false);
 
         //FOR MONOLOGUES
@@ -70,6 +70,8 @@ public class PuzzleInteraction : MonoBehaviour
 
         //DISABLE FIRE PARTICLE SYSTEM
         fireParticleSystem.Stop();
+
+        mainPlayer = FindObjectOfType<MainPlayerSc>();
     }
 
     // Update is called once per frame
@@ -86,6 +88,7 @@ public class PuzzleInteraction : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.E) && interactAgain)
             {
+                mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                 timePress += Time.deltaTime;
                 interactableFill.fillAmount = timePress / 2.0f;
 

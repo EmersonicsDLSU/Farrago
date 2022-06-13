@@ -414,10 +414,9 @@ public class PlayerMovement : MonoBehaviour
             (mainPlayer.playerCharController.transform.position - directedObj.transform.position).normalized;
         float angle = Mathf.Atan2(normalize.z, normalize.x) * Mathf.Rad2Deg;
         // Add smooth rotation 
-        mainPlayer.playerCharController.transform.rotation = Quaternion.Slerp
-        (mainPlayer.playerCharController.transform.rotation, 
-            Quaternion.Euler(0.0f, angle, 0.0f), rotate_interval);
-        modelTransform.rotation = Quaternion.Euler(0.0f, -angle, 0.0f);
+        modelTransform.rotation = Quaternion.Slerp
+        (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval);
+        //modelTransform.rotation = Quaternion.Euler(0.0f, -angle, 0.0f);
     }
     // current angle of the character in Y-axis; reference position starts from the right
     float angle = 0.0f;

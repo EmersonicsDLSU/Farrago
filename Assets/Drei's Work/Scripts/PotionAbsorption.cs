@@ -102,10 +102,10 @@ public class PotionAbsorption : MonoBehaviour
                 isAbsorbing = true;
                 mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, isAbsorbing);
                 // clamp the rotation of the player to the angle where it would face the object in-front
-                mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.ColorInteractableGO);
             }
             else if (Input.GetKey(KeyCode.E) && PAStruct_obj.interactAgain)
             {
+                mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.ColorInteractableGO);
                 // increment time to 'timePress'
                 timePress += Time.deltaTime * rotSpeed;
                 // increment fill Image bar
