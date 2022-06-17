@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Settings_Controller : MonoBehaviour
 {
     // Start is called before the first frame update
     List<int> widths = new List<int>() { 3860, 2560, 1920, 1280 };
     List<int> heights = new List<int>() { 2160, 1440, 1080, 720 };
+
+    [SerializeField] private RenderPipelineAsset[] renderPipelines;
 
     void Awake()
     {
@@ -55,6 +58,7 @@ public class Settings_Controller : MonoBehaviour
     public void SetQuality(int index)
     {
         QualitySettings.SetQualityLevel(index);
+        QualitySettings.renderPipeline = renderPipelines[index];
         PlayerPrefs.SetInt("Quality", index);
     }
 
