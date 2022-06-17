@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Eryn's Work/Scene/Loading_Prototype.unity
     guid: 7bee8bdb174f3d44d8c0fd9c3c38681a
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: f83bb96a5c5e8a848ab52c58028c2849, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 585806eb73beb2442b89158e20d78442, type: 2}
