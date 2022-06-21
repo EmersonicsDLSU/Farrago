@@ -69,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void update(MainPlayerSc mainPlayer)
     {
+        // assigns the movement of the joystick to our movement axis
+        movementX = mainPlayer.joystick.Horizontal;
+        movementY = mainPlayer.joystick.Vertical;
+
         //temporarily disables the main character during re-spawn
         if(MainCharacterStructs.Instance.playerSavedAttrib.IsDead)
         {
@@ -378,24 +382,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        /* // old code (no-bind)
-        //horizontal and forward coordinates
-        movementX = Input.GetAxis("Horizontal");
-        movementY = Input.GetAxis("Vertical");
-
-        Debug.Log($"MOVE X: {movementX}");
-        */
-        
-        // Evaluates the translation value from the customized method
-        movementX = CustomizedGetAxis(local_keybind.left, local_keybind.right, movementX);
-        movementY = CustomizedGetAxis(local_keybind.back, local_keybind.fwd, movementY);
-
-        /*
-        public KeyCode fwd = KeyCode.D,
-        right = KeyCode.S,
-        left = KeyCode.W,
-        back = KeyCode.A;
-        */
+        // assigns the movement of the joystick to our movement axis
+        movementX = mainPlayer.joystick.Horizontal;
+        movementY = mainPlayer.joystick.Vertical;
 
         // translates the player
         Vector3 move = transform.right * movementX + transform.forward * movementY;
@@ -406,32 +395,6 @@ public class PlayerMovement : MonoBehaviour
         mainPlayer.playerAngelaAnim.IH_MoveAnim(ref mainPlayer);
         // Rotates the character depending on its corresponding movement
     }
-
-
-    // NOTE: THIS IS NOT EFFICIENT, CUSTOM METHODS LIKE THIS SHOULD BE PLACED IN A SEPARATE CLASS 
-    // THAT CONSIST OF DIFFERENT SELECTIONS/BEHAVIORS
-    // Customized method for player movement
-    private float CustomizedGetAxis(KeyCode first, KeyCode second, float axisValue)
-    {
-        if (Input.GetKey(first))
-        {
-            axisValue -= Time.deltaTime * _playerProperty.SPEED_MULTIPLIER;
-            axisValue = Mathf.Clamp(axisValue, -1.0f, 1.0f);
-            //Debug.Log($"MOVE LEFT: {axisValue}");
-        }
-        else if (Input.GetKey(second))
-        {
-            axisValue += Time.deltaTime * _playerProperty.SPEED_MULTIPLIER;
-            axisValue = Mathf.Clamp(axisValue, -1.0f, 1.0f);
-            //Debug.Log($"MOVE RIGHT: {axisValue}");
-        }
-        else
-        {
-            axisValue = 0.0f;
-        }
-        return axisValue;
-    }
-
 
     // General method used to clamp the face position of the player to the object
     public void ClampToObject(ref MainPlayerSc mainPlayer, GameObject directedObj)

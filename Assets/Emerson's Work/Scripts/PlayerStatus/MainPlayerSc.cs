@@ -19,6 +19,7 @@ public class MainPlayerSc : MonoBehaviour
     [HideInInspector] public PuzzleInventory player_puzzleInventory;
     [HideInInspector] public PlayerCollisionDetection playerDetectCollision = null;
     [HideInInspector] public PotionAbsorption PotionAbsorptionSC = null;
+    [HideInInspector] public FixedJoystick joystick = null;
 
     //external scripts
     public TimelineLevel timelineLevelSc = null;
@@ -45,6 +46,8 @@ public class MainPlayerSc : MonoBehaviour
         }
         playerDetectCollision = this.GetComponentInChildren<PlayerCollisionDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
+
+        joystick = FindObjectOfType<FixedJoystick>();
     }
 
     // Update is called once per frame
