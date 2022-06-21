@@ -104,7 +104,7 @@ public class JournalBookInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isEPressed == false && isPlayerInJournalArea == true)
+        if (ButtonActionManager.Instance.isInteractHeldDown == true && isEPressed == false && isPlayerInJournalArea == true)
         {
             this.isEPressed = true;
         }

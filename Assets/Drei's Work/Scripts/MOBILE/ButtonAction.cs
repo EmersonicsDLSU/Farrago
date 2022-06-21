@@ -34,6 +34,7 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (lastPressedButton == buttonActionManagerRef.interactButton.gameObject)
         {
             buttonActionManagerRef.isInteractHeldDown = true;
+            
             mainPlayer.PotionAbsorptionSC.GetEKeyDown(mainPlayer);
         }
 
@@ -48,7 +49,8 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (lastPressedButton == buttonActionManagerRef.sneakButton.gameObject)
         {
             buttonActionManagerRef.isSneakHeldDown = true;
-            mainPlayer.playerMovementSc.GetKeyDownSneak(mainPlayer);
+            mainPlayer.playerMovementSc.GetKeyUpSneak(mainPlayer);
+            
         }
 
         //IS CLEANSE HELD DOWN
@@ -89,7 +91,7 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (lastPressedButton == buttonActionManagerRef.sneakButton.gameObject)
         {
             buttonActionManagerRef.isSneakHeldDown = false;
-            mainPlayer.playerMovementSc.GetKeyUpSneak(mainPlayer);
+            mainPlayer.playerMovementSc.GetKeyDownSneak(mainPlayer);
         }
 
         //IS CLEANSE HELD DOWN
