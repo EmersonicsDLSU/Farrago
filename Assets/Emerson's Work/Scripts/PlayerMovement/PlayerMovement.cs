@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     private KeybindReceiver local_keybind;
 
     [SerializeField]private Transform modelTransform;
+
+
     private void Awake()
     {
         //respawns back the player to the last saved point
@@ -47,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
                 MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
         }
     }
+
+
     private void Start()
     {
         _playerProperty.speed = _playerProperty.maxSpeed;
@@ -55,10 +59,14 @@ public class PlayerMovement : MonoBehaviour
             local_keybind = FindObjectOfType<KeybindReceiver>();
         }
     }
+
+
     // timer attribute for dead ticks 
     private float dead_ticks = 0.0f;
     // 'update()' is called once per frame
     // Input getkey downs are only computed accurately in Update or LateUpdate
+
+
     public void update(MainPlayerSc mainPlayer)
     {
         //temporarily disables the main character during re-spawn
@@ -116,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
     }
     // NOTE: Currently, this is called in the frame. This should be placed on the collider trigger
     // so it's memory call will not be wasted
+
+
     // Checks if the player touched an enemy; if was touched, player gets killed
     private void PlayerTouchedEnemy(ref MainPlayerSc mainPlayer)
     {
@@ -145,6 +155,8 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
+
+
     // Checks if the player starts to fall 
     private void CheckFalling(ref MainPlayerSc mainPlayer)
     {
@@ -172,6 +184,8 @@ public class PlayerMovement : MonoBehaviour
         }
         _playerProperty.was_Grounded = _playerProperty.isGround;
     }
+
+
     // check if the player fell from a high platform / if fell time is long
     private void CheckFallDistance(ref MainPlayerSc mainPlayer)
     {
@@ -212,6 +226,8 @@ public class PlayerMovement : MonoBehaviour
         //Debug.LogError($"Player Fell Distance: {this.fall_Distance}");
     }
     // method that handles the sprint conditions and calculation of the mainPlayer
+
+
     private void PlayerSprintMovement(ref MainPlayerSc mainPlayer)
     {
         // Sprint Mechanic
@@ -245,6 +261,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     // method that handles the jump conditions and calculation of the mainPlayer
+
+
     private void PlayerSneakMovement(ref MainPlayerSc mainPlayer)
     {
         // checks if a timeline is being played.
@@ -265,6 +283,8 @@ public class PlayerMovement : MonoBehaviour
             mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
         }
     }
+
+
     // method that handles the jump conditions and calculation of the mainPlayer
     public void PlayerJumpMovement(ref MainPlayerSc mainPlayer)
     {
@@ -344,6 +364,8 @@ public class PlayerMovement : MonoBehaviour
             */
         }
     }
+
+
     // Method that handles the translation movement of the MainCharacter
     private void CalculateHorizontalMovement(ref MainPlayerSc mainPlayer)
     {
@@ -384,6 +406,8 @@ public class PlayerMovement : MonoBehaviour
         mainPlayer.playerAngelaAnim.IH_MoveAnim(ref mainPlayer);
         // Rotates the character depending on its corresponding movement
     }
+
+
     // NOTE: THIS IS NOT EFFICIENT, CUSTOM METHODS LIKE THIS SHOULD BE PLACED IN A SEPARATE CLASS 
     // THAT CONSIST OF DIFFERENT SELECTIONS/BEHAVIORS
     // Customized method for player movement
@@ -407,6 +431,8 @@ public class PlayerMovement : MonoBehaviour
         }
         return axisValue;
     }
+
+
     // General method used to clamp the face position of the player to the object
     public void ClampToObject(ref MainPlayerSc mainPlayer, GameObject directedObj)
     {
