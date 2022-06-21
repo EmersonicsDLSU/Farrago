@@ -58,19 +58,10 @@ public class HUD_Controller : MonoBehaviour
         }
 
         //PAUSE MENU
-        if (Input.GetKeyDown(KeyCode.Escape) && canPress && isJPressed == false)
+        if (ButtonActionManager.Instance.isPausePressed && canPress && isJPressed == false)
         {
             canPress = false;
-            if (isEscPressed == false)
-            {
-                On_Pause();
-                isEscPressed = true;
-            }
-            else
-            {
-                On_unPause();
-                isEscPressed = false;
-            }
+            On_Pause();
         }
         //OBJECTIVES UI
         else if (Input.GetKeyDown(KeyCode.Tab) && canPress && questGiver.isInQuest)
@@ -143,6 +134,9 @@ public class HUD_Controller : MonoBehaviour
     public void On_unPause()
     {
         Time.timeScale = 1;
+        ButtonActionManager.Instance.isPausePressed = false;
+
+        
         if (pausePanel.activeSelf != false)
         {
             Animator animator = pausePanel.GetComponent<Animator>();

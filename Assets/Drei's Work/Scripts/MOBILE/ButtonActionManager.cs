@@ -14,6 +14,7 @@ public class ButtonActionManager : MonoBehaviour
     public Button sneakButton;
     public Button cleanseButton;
     public Button journalButton;
+    public Button pauseButton;
 
     private GameObject lastPressedButton;
     [HideInInspector] public bool isInteractHeldDown = false;
@@ -23,6 +24,7 @@ public class ButtonActionManager : MonoBehaviour
     [HideInInspector] public bool isJumpPressed = false;
     [HideInInspector] public bool isCleanseHeldDown = false;
     [HideInInspector] public bool isJournalPressed = false;
+    [HideInInspector] public bool isPausePressed = false;
 
     void Awake()
     {

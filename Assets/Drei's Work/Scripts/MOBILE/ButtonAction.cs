@@ -73,6 +73,12 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         {
             buttonActionManagerRef.isJournalPressed = true;
         }
+
+        //IS PAUSE PRESSED
+        if (lastPressedButton == buttonActionManagerRef.pauseButton.gameObject)
+        {
+            buttonActionManagerRef.isPausePressed = true;
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
