@@ -17,6 +17,7 @@ public class ButtonActionManager : MonoBehaviour
 
     private GameObject lastPressedButton;
     [HideInInspector] public bool isInteractHeldDown = false;
+    [HideInInspector] public bool isInteractTapped = false;
     [HideInInspector] public bool isRunHeldDown = false;
     [HideInInspector] public bool isSneakHeldDown = false;
     [HideInInspector] public bool isJumpPressed = false;

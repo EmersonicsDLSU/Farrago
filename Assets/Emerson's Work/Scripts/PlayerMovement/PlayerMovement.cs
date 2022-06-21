@@ -232,6 +232,20 @@ public class PlayerMovement : MonoBehaviour
     // method that handles the sprint conditions and calculation of the mainPlayer
 
 
+    public void GetKeyDownRun(MainPlayerSc mainPlayer)
+    {
+        _playerProperty.speed = _playerProperty.maxSpeed * 2.0f;
+        _playerProperty.isRun = true;
+        mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
+    }
+
+    public void GetKeyUpRun(MainPlayerSc mainPlayer)
+    {
+        _playerProperty.isRun = false;
+        mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
+    }
+
+
     private void PlayerSprintMovement(ref MainPlayerSc mainPlayer)
     {
         // Sprint Mechanic
@@ -245,17 +259,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 // Sprint Mechanic KeyEvents
                 // When the player is holding the sprint button; increases the speed of the player
-                if(Input.GetKey(this.local_keybind.run))
-                {
-                    _playerProperty.speed = _playerProperty.maxSpeed * 2.0f;
-                    _playerProperty.isRun = true;
-                    mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
-                }
-                if(!Input.GetKey(this.local_keybind.run))
-                {
-                    _playerProperty.isRun = false;
-                    mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
-                }
+                
             }
         }
         else
@@ -267,6 +271,20 @@ public class PlayerMovement : MonoBehaviour
     // method that handles the jump conditions and calculation of the mainPlayer
 
 
+    public void GetKeyUpSneak(MainPlayerSc mainPlayer)
+    {
+        _playerProperty.isSneak = true;
+        _playerProperty.speed = _playerProperty.maxSpeed * 0.75f;
+        mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
+    }
+
+    public void GetKeyDownSneak(MainPlayerSc mainPlayer)
+    {
+        _playerProperty.isSneak = false;
+        mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
+    }
+
+
     private void PlayerSneakMovement(ref MainPlayerSc mainPlayer)
     {
         // checks if a timeline is being played.
@@ -275,17 +293,13 @@ public class PlayerMovement : MonoBehaviour
         // This is for the CUSTOMIZED/BIND KEY FOR 'SNEAK'
         //KeyCode sneakCode = KeybindManager.Instance.getKeyByAction("SNEAK");
         // Sneak Mechanic KeyEvents
-        if (Input.GetKey(local_keybind.sneak))
-        {
-            _playerProperty.isSneak = true;
-            _playerProperty.speed = _playerProperty.maxSpeed * 0.75f;
-            mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
-        }
-        else if (!Input.GetKey(local_keybind.sneak))
-        {
-            _playerProperty.isSneak = false;
-            mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
-        }
+        
+    }
+
+
+    public void GetKeyDownJump()
+    {
+        _playerProperty.earlyJumpTicks = _playerProperty.earlyJumpTime; //for early jump
     }
 
 
@@ -316,10 +330,7 @@ public class PlayerMovement : MonoBehaviour
         //for the smooth edge jump
         _playerProperty.onGroundTicks -= Time.deltaTime;
         // Sneak Mechanic KeyEvents
-        if (Input.GetKeyDown(local_keybind.jump))
-        {
-            _playerProperty.earlyJumpTicks = _playerProperty.earlyJumpTime; //for early jump
-        }
+        
         //this is for the case when the player is repeatedly mashing the space / jump button
         if ((_playerProperty.earlyJumpTicks > 0) && (_playerProperty.onGroundTicks > 0) &&
             _playerProperty.isGround && _playerProperty.canJump)

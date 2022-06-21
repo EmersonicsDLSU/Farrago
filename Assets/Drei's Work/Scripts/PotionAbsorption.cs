@@ -87,23 +87,28 @@ public class PotionAbsorption : MonoBehaviour
         color_Code_To_UColor.Add(ColorCode.GREEN, Color.green);
     }
 
+
+    public void GetEKeyUp(MainPlayerSc mainPlayer)
+    {
+        // Reset some properties
+        ResetProperties(ref mainPlayer, true);
+    }
+
+    public void GetEKeyDown(MainPlayerSc mainPlayer)
+    {
+        isAbsorbing = true;
+        mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, isAbsorbing);
+        // clamp the rotation of the player to the angle where it would face the object in-front
+    }
+
+
     // Update is called once per frame
     public void update(MainPlayerSc mainPlayer)
     {
         if (canAbsorb == true)
         {
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                // Reset some properties
-                ResetProperties(ref mainPlayer, true);
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && PAStruct_obj.interactAgain)
-            {
-                isAbsorbing = true;
-                mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, isAbsorbing);
-                // clamp the rotation of the player to the angle where it would face the object in-front
-            }
-            else if (Input.GetKey(KeyCode.E) && PAStruct_obj.interactAgain)
+            
+            if ((ButtonActionManager.Instance.isInteractHeldDown == true) && PAStruct_obj.interactAgain)
             {
                 mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.ColorInteractableGO);
                 // increment time to 'timePress'
