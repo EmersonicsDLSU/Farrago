@@ -79,7 +79,7 @@ public class HUD_Controller : MonoBehaviour
             On_ClickObjectives();
         }
         //JOURNAL MENU
-        else if (Input.GetKeyDown(KeyCode.J) && canPress && playerJournal.isJournalObtained == true)
+        else if (ButtonActionManager.Instance.isJournalPressed && canPress && playerJournal.isJournalObtained == true)
         {
             canPress = false;
             if (isJPressed == false)
@@ -205,7 +205,7 @@ public class HUD_Controller : MonoBehaviour
             }
         }
 
-        Invoke("time_Pause", 1.0f);
+        //Invoke("time_Pause", 1.0f);
 
         Invoke("displayJournalPics", 1.0f);
 
@@ -238,8 +238,9 @@ public class HUD_Controller : MonoBehaviour
     public void On_CloseJournal()
     {
         isJPressed = false;
+        ButtonActionManager.Instance.isJournalPressed = false;
 
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         if (journalPanel.activeSelf != false)
         {
             Animator animator = journalPanel.GetComponent<Animator>();

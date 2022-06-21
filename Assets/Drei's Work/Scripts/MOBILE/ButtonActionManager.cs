@@ -22,6 +22,7 @@ public class ButtonActionManager : MonoBehaviour
     [HideInInspector] public bool isSneakHeldDown = false;
     [HideInInspector] public bool isJumpPressed = false;
     [HideInInspector] public bool isCleanseHeldDown = false;
+    [HideInInspector] public bool isJournalPressed = false;
 
     void Awake()
     {

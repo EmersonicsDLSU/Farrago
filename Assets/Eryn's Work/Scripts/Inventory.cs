@@ -119,10 +119,14 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+
+    
+
+
     public void update(MainPlayerSc mainPlayer)
     {
         // If Cleanse Key is Released
-        if (Input.GetKeyUp(KeyCode.R))
+        if (ButtonActionManager.Instance.isCleanseHeldDown == false)
         {
             timeCheck = 0.0f;
             cleanseFill.fillAmount = 0.0f;
@@ -130,7 +134,7 @@ public class Inventory : MonoBehaviour
             cleanseUI.SetActive(false);
         }
         // Cleanse Key is still on press
-        else if (Input.GetKey(KeyCode.R) && canCleanse)
+        else if (ButtonActionManager.Instance.isCleanseHeldDown == true && canCleanse)
         {
             timeCheck += Time.deltaTime;
             cleanseUI.SetActive(true);
@@ -140,7 +144,7 @@ public class Inventory : MonoBehaviour
                 Cleanse(mainPlayer);
         }
         // Cleanse Key is still on press, but there's nothing to cleanse
-        else if(Input.GetKey(KeyCode.R) && !canCleanse)
+        else if(ButtonActionManager.Instance.isCleanseHeldDown == true && !canCleanse)
         {
             cleanseUI.SetActive(false);
         }

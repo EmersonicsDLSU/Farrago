@@ -35,7 +35,8 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         {
             buttonActionManagerRef.isInteractHeldDown = true;
             
-            mainPlayer.PotionAbsorptionSC.GetEKeyDown(mainPlayer);
+            if(mainPlayer.PotionAbsorptionSC.canAbsorb == true)
+                mainPlayer.PotionAbsorptionSC.GetEKeyDown(mainPlayer);
         }
 
         //IS RUN HELD DOWN
@@ -66,6 +67,12 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             buttonActionManagerRef.isJumpPressed = true;
             mainPlayer.playerMovementSc.GetKeyDownJump();
         }
+
+        //IS JOURNAL PRESSED
+        if (lastPressedButton == buttonActionManagerRef.journalButton.gameObject)
+        {
+            buttonActionManagerRef.isJournalPressed = true;
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -77,7 +84,9 @@ public class ButtonAction : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (lastPressedButton == buttonActionManagerRef.interactButton.gameObject)
         {
             buttonActionManagerRef.isInteractHeldDown = false;
-            mainPlayer.PotionAbsorptionSC.GetEKeyUp(mainPlayer);
+
+            if (mainPlayer.PotionAbsorptionSC.canAbsorb == true)
+                mainPlayer.PotionAbsorptionSC.GetEKeyUp(mainPlayer);
         }
 
         //IS RUN HELD DOWN
