@@ -9,6 +9,7 @@ public class QuestGiver : MonoBehaviour
 
     public TMP_Text[]objectiveTextsPrefabs;
     public List<string> completedObjectives = new List<string>();
+    [HideInInspector] public int cluesObtained = 0;
     public QuestCollection questCollection;
     PuzzleInventory playerPuzzleInv;
     public AQuest currentQuest;
@@ -51,6 +52,7 @@ public class QuestGiver : MonoBehaviour
 
         if (isInQuest == true)
         {
+            checkCluesObtained();
             checkItemObjectives();
             checkIfObjectivesComplete();
         }
@@ -106,7 +108,18 @@ public class QuestGiver : MonoBehaviour
             currentQuest.questComplete();
             isInQuest = false;
             currentQuest.neededGameObjects.Clear();
+            currentQuest.cluesToObtainAmount = 0;
+            cluesObtained = 0;
             currentQuest = null;
+        }
+    }
+
+    public void checkCluesObtained()
+    {
+        if (cluesObtained == currentQuest.cluesToObtainAmount)
+        {
+            completedObjectives.Add("collectClues");
+            strikethroughTextByKey("collectClues");
         }
     }
 

@@ -15,12 +15,14 @@ public class AQuest
     public string[] UIObjectives = new string[MAX_OBJECTIVES_SIZE];
     public questDescriptions questID;
     public List<GameObject> neededGameObjects = new List<GameObject>();
+    [HideInInspector] public int cluesToObtainAmount;
 
     public bool requiresObjectivesUI;
 
     public void questComplete()
     {
         neededGameObjects.Clear();
+        cluesToObtainAmount = 0;
         isActive = false;
         Debug.LogError("OBJECTIVES COMPLETED");
     }

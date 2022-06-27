@@ -67,6 +67,10 @@ private void OnTriggerEnter(Collider other)
                 key = "J" + playerJournal.journalEntries.Count.ToString();
                 playerJournal.journalEntries.Add(key, clueImage);
 
+                // --------- FOR QUEST GIVER --------------
+                GameObject.Find("QuestGiver").GetComponent<QuestGiver>().cluesObtained++;
+                // -----------------------------------------
+
                 playerJournal.journalEntries[key].enabled = true;
 
 
@@ -79,8 +83,6 @@ private void OnTriggerEnter(Collider other)
             else if (this.isEPressed == true && this.isClueObtained == true && playerJournal.journalEntries[key].isActiveAndEnabled == true)
             {
 
-                clueImage.rectTransform.anchoredPosition = imageInitPos;
-
                 interactText.GetComponent<Text>().text = "Absorb/Interact";
 
                 playerJournal.journalEntries[key].enabled = false;
@@ -91,9 +93,9 @@ private void OnTriggerEnter(Collider other)
                 TextControl.textInstance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
                 TextControl.textInstance.delayReset();
 
-                clueUIText.GetComponent<Animator>().SetBool("isClueObtained", true);
-                journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", true);
-                Invoke("closeUIText", 2.0f);
+                //clueUIText.GetComponent<Animator>().SetBool("isClueObtained", true);
+                //journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", true);
+                //Invoke("closeUIText", 2.0f);
             }
         }
     }
@@ -104,8 +106,6 @@ private void OnTriggerEnter(Collider other)
 
         if (other.CompareTag("Player"))
         {
-         
-
             isPlayerInClueArea = false;
             clueImage.rectTransform.anchoredPosition = imageInitPos;
 
@@ -116,12 +116,13 @@ private void OnTriggerEnter(Collider other)
             if(playerJournal.journalEntries.ContainsKey(key))
                 playerJournal.journalEntries[key].enabled = false;
             this.isEPressed = false;
+            this.gameObject.SetActive(false);
 
             if (isClueObtained == true && isFirstInteract == true)
             {
-                clueUIText.GetComponent<Animator>().SetBool("isClueObtained", true);
-                journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", true);
-                Invoke("closeUIText", 2.0f);
+                //clueUIText.GetComponent<Animator>().SetBool("isClueObtained", true);
+                //journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", true);
+                //Invoke("closeUIText", 2.0f);
                 isFirstInteract = false;
 
                 TextControl.textInstance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
@@ -133,7 +134,7 @@ private void OnTriggerEnter(Collider other)
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isEPressed == false && isPlayerInClueArea == true)
+        if (ButtonActionManager.Instance.isInteractHeldDown == true && isEPressed == false && isPlayerInClueArea == true)
         {
             this.isEPressed = true;
         }
@@ -142,7 +143,7 @@ private void OnTriggerEnter(Collider other)
 
     private void closeUIText()
     {
-        clueUIText.GetComponent<Animator>().SetBool("isClueObtained", false);
-        journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", false);
+        //clueUIText.GetComponent<Animator>().SetBool("isClueObtained", false);
+        //journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", false);
     }
 }

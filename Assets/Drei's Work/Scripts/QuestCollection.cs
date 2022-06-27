@@ -53,14 +53,19 @@ public sealed class QuestCollection
         quest_color_tut_room3.isActive = true;
 
         //UI Objectives
-        quest_color_tut_room3.UIObjectives[0] = "- Turn on bunsen burner";
-        quest_color_tut_room3.UIObjectives[1] = "- Obtain key";
+        quest_color_tut_room3.UIObjectives[0] = "- Collect journal clues";
+        quest_color_tut_room3.UIObjectives[1] = "- Turn on bunsen burner";
+        quest_color_tut_room3.UIObjectives[2] = "- Obtain key";
 
         //descriptive Objectives -- FOR IN GAME CODE RECOGNITION
-        quest_color_tut_room3.descriptiveObjectives[0] = "completeFire";
-        quest_color_tut_room3.descriptiveObjectives[1] = "obtainKey";
-        quest_color_tut_room3.currentQuestObjectiveSize = 2;
+        quest_color_tut_room3.descriptiveObjectives[0] = "collectClues";
+        quest_color_tut_room3.descriptiveObjectives[1] = "completeFire";
+        quest_color_tut_room3.descriptiveObjectives[2] = "obtainKey";
+        quest_color_tut_room3.currentQuestObjectiveSize = 3;
         quest_color_tut_room3.requiresObjectivesUI = true;
+
+        //NUMBER OF CLUES TO OBTAIN
+        quest_color_tut_room3.cluesToObtainAmount = 2;
 
         //needed game objects
         quest_color_tut_room3.neededGameObjects.Add(GameObject.Find("KEY"));
