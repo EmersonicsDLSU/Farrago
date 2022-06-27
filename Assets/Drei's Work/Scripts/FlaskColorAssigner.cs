@@ -30,6 +30,7 @@ public class FlaskColorAssigner : MonoBehaviour
             case "red":
                 baseColor = Color.red;
                 finalColor = baseColor * Mathf.LinearToGammaSpace(1.5f);
+                potionHolder.GetComponent<MeshRenderer>().material.color = baseColor;
                 potionHolder.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", finalColor);
                 potionHolder.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
                 colorProperty = Color.red;
@@ -38,6 +39,7 @@ public class FlaskColorAssigner : MonoBehaviour
             case "yellow":
                 baseColor = Color.yellow;
                 finalColor = baseColor * Mathf.LinearToGammaSpace(1.5f);
+                potionHolder.GetComponent<MeshRenderer>().material.color = baseColor;
                 potionHolder.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", finalColor);
                 potionHolder.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
                 colorProperty = Color.yellow;
@@ -45,6 +47,7 @@ public class FlaskColorAssigner : MonoBehaviour
             case "blue":
                 baseColor = Color.blue;
                 finalColor = baseColor * Mathf.LinearToGammaSpace(1.5f);
+                potionHolder.GetComponent<MeshRenderer>().material.color = baseColor;
                 potionHolder.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", finalColor);
                 potionHolder.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
                 colorProperty = Color.blue;

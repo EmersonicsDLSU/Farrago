@@ -8,9 +8,12 @@ using Random = UnityEngine.Random;
 public class PuzzleInteraction : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
-    private ParticleSystem fireParticleSystem;
-    ParticleSystem.MainModule ma;
+    [SerializeField] private ParticleSystem ParticleSystem;
+    private ParticleSystem.MainModule ma;
+    private ParticleSystem.MainModule subEmitter;
+    private ParticleSystem.TrailModule tr;
     public PlayerProperty _playerProperty;
+    private Color colorToAssign;
     
     
     public Animator anim;
@@ -55,8 +58,13 @@ public class PuzzleInteraction : MonoBehaviour
         characterResponsesIncorrect.Add("This isn’t it");
         characterResponsesIncorrect.Add("I’m… guessing this isn’t right");
 
-        fireParticleSystem = this.transform.gameObject.GetComponentInChildren<ParticleSystem>();
-        ma = fireParticleSystem.main;
+        ma = ParticleSystem.main;
+        tr = ParticleSystem.trails;
+
+        mainPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<MainPlayerSc>();
+
+        //FOR MONOLOGUES
+        colorPuzzleUIText = GameObject.Find("PuzzleInteractText");
 
     }
 
@@ -65,13 +73,9 @@ public class PuzzleInteraction : MonoBehaviour
     {
         anim.SetBool("will fade", false);
 
-        //FOR MONOLOGUES
-        colorPuzzleUIText = GameObject.Find("PuzzleInteractText");
-
         //DISABLE FIRE PARTICLE SYSTEM
-        fireParticleSystem.Stop();
-
-        mainPlayer = FindObjectOfType<MainPlayerSc>();
+        if(ParticleSystem.gameObject.transform.parent.tag == "Interactable Fire")
+            ParticleSystem.Stop();
     }
 
     // Update is called once per frame
@@ -100,7 +104,7 @@ public class PuzzleInteraction : MonoBehaviour
                     switch (this.transform.tag)
                     {
                         case "Interactable Fire":
-                            isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SkinnedMeshRenderer>().material.color);
+                            isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color);
                             Debug.Log("is color correct: " + isColorCorrect);
 
                             if (isColorCorrect == true)
@@ -113,13 +117,51 @@ public class PuzzleInteraction : MonoBehaviour
                                 triggerPuzzleUITextCorrect();
 
                                 //CHANGE FIRE COLOR
-                                fireParticleSystem.Play();
-                                fireParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                ma.startColor = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SkinnedMeshRenderer>().material.color;
+                                ParticleSystem.Play();
+                                ParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                                ma.startColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
                                 anim.SetBool("will fade", true);
                                 anim.gameObject.GetComponent<BoxCollider>().enabled = false;
                                 if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
                                     anim.gameObject.GetComponent<AudioSource>().Play();
+                            }
+                            else
+                            {
+                                //TRIGGER INCORRECT MONOLOGUE
+                                triggerPuzzleUITextIncorrect();
+                            }
+                            break;
+
+                        case "Interactable Electricity":
+                            isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color);
+                            Debug.Log("is color correct: " + isColorCorrect);
+
+                            if (isColorCorrect == true)
+                            {
+                                colorToAssign = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
+
+                                //MARK OBJECTIVE AS COMPLETE
+                                GameObject.Find("QuestGiver").GetComponent<QuestGiver>().currentQuest.wiresRepairedAmount++;
+
+                                if (GameObject.Find("QuestGiver").GetComponent<QuestGiver>().currentQuest.wiresRepairedAmount == GameObject.Find("QuestGiver").GetComponent<QuestGiver>().currentQuest.wiresToRepairAmount)
+                                {
+                                    GameObject.Find("QuestGiver").GetComponent<QuestGiver>().completedObjectives.Add("repairWire");
+                                    GameObject.Find("QuestGiver").GetComponent<QuestGiver>().strikethroughTextByKey("repairWire");
+                                }
+                                
+
+                                //TRIGGER CORRECT MONOLOGUE
+                                triggerPuzzleUITextCorrect();
+
+                                //CHANGE ELECTRICITY COLOR
+                                ma.startColor = colorToAssign;
+                                tr.colorOverLifetime = colorToAssign;
+                                ParticleSystem.GetComponent<Renderer>().materials[1].color = colorToAssign;
+                                subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+                                subEmitter.startColor = colorToAssign;
+
+                                //if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
+                                //anim.gameObject.GetComponent<AudioSource>().Play();
                             }
                             else
                             {
@@ -156,8 +198,14 @@ public class PuzzleInteraction : MonoBehaviour
             {
                 return true;
             }
-                
-            
+        }
+        
+        else if (interactableType == "Interactable Electricity")
+        {
+            if (characterCurrColor == Color.yellow)
+            {
+                return true;
+            }
         }
         return false;
     }
