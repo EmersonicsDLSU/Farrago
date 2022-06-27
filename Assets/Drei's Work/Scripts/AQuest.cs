@@ -15,7 +15,6 @@ public class AQuest
     public string[] UIObjectives = new string[MAX_OBJECTIVES_SIZE];
     public questDescriptions questID;
     public List<GameObject> neededGameObjects = new List<GameObject>();
-    [HideInInspector] public int cluesToObtainAmount;
 
     [HideInInspector] public int cluesToObtainAmount = 0;
     [HideInInspector] public int wiresToRepairAmount = 0;
