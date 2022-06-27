@@ -17,6 +17,10 @@ public class AQuest
     public List<GameObject> neededGameObjects = new List<GameObject>();
     [HideInInspector] public int cluesToObtainAmount;
 
+    [HideInInspector] public int cluesToObtainAmount = 0;
+    [HideInInspector] public int wiresToRepairAmount = 0;
+    [HideInInspector] public int wiresRepairedAmount = 0;
+
     public bool requiresObjectivesUI;
 
     public void questComplete()

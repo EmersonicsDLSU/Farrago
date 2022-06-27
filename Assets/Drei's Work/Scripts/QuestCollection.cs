@@ -10,7 +10,9 @@ using TMPro;
 //ENUM
 public enum questDescriptions
 {
-    tutorial_color_r3 = 0
+    tutorial_color_r3,
+    color_r5,
+    color_r6
 };
 
 
@@ -41,6 +43,7 @@ public sealed class QuestCollection
 
     //QUESTS
     public AQuest quest_color_tut_room3 = new AQuest();
+    public AQuest quest_color_room5 = new AQuest();
 
     //BOOLS
     public bool isInTutorialLevel;
@@ -72,5 +75,27 @@ public sealed class QuestCollection
 
         //add to dict
         questDict.Add(quest_color_tut_room3.questID, quest_color_tut_room3);
+    }
+
+    public void initializeRoom5Quest()
+    {
+        quest_color_room5.questID = questDescriptions.color_r5;
+        quest_color_room5.isActive = true;
+
+        //UI Objectives
+        quest_color_room5.UIObjectives[0] = "Repair wires";
+        quest_color_room5.UIObjectives[1] = "Turn on light";
+
+        //descriptive objectives
+        quest_color_room5.descriptiveObjectives[0] = "repairWire";
+        quest_color_room5.descriptiveObjectives[1] = "onLight";
+        quest_color_room5.currentQuestObjectiveSize = 2;
+        quest_color_room5.wiresRepairedAmount = 0;
+        quest_color_room5.wiresToRepairAmount = 2;
+        quest_color_room5.requiresObjectivesUI = true;
+
+        //add to dict
+        questDict.Add(quest_color_room5.questID, quest_color_room5);
+
     }
 }

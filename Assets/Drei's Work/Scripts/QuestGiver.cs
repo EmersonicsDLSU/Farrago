@@ -28,7 +28,8 @@ public class QuestGiver : MonoBehaviour
         //check first if the player is in a tutorial level
         //insert code here; di na cacall
         //Debug.LogError($"Test Cheez1: {questDescriptions.tutorial_color_r3}");
-        QuestCollection.Instance.initializeTutorialQuests();
+        questCollection.initializeTutorialQuests();
+        questCollection.initializeRoom5Quest();
         //Debug.LogError($"Test Cheez3: {questDescriptions.tutorial_color_r3}");
 
     }
@@ -48,6 +49,19 @@ public class QuestGiver : MonoBehaviour
             isInQuest = true;
         }
         //add else ifs here for other missions
+
+        /*
+        else if ()
+        {
+            currentQuest = questCollection.questDict[questDescriptions.color_r5];
+            //SETTING UI OBJECTIVES
+            for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
+            {
+                objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+            }
+            isInQuest = true;
+        }
+        */
 
 
         if (isInQuest == true)

@@ -18,6 +18,9 @@ TagManager:
   - Journal
   - Player_Shirt
   - Player_Coat
+  - Interactable Electricity
+  - SubEmitter
+  - ToTurnOn
   layers:
   - Default
   - TransparentFX
