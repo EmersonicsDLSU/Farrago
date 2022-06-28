@@ -2,16 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpecialLightInteraction
+{
+    NONE,
+    L6_LEFT_WIRE,
+    L6_RIGHT_WIRE,
+};
+
 public class PuzzleLightInteraction : MonoBehaviour
 {
     private QuestGiver questGiver;
     [SerializeField] private GameObject level5CutsceneTrigger;
+    [SerializeField] private GameObject assignedVine;
+
+    [SerializeField] private SpecialLightInteraction special_lightInteractionType;
+
+    public bool isWireRepaired;
+    private bool L6_hasVineReachedMaxLength = false;
 
     // Start is called before the first frame update
     void Start()
     {
         questGiver = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
         GetComponent<Light>().enabled = false;
+
+        
     }
 
     // Update is called once per frame
@@ -22,6 +37,72 @@ public class PuzzleLightInteraction : MonoBehaviour
             GetComponent<Light>().enabled = true;
             level5CutsceneTrigger.SetActive(true);
         }
+
+        else if (questGiver.currentQuest.questID == questDescriptions.color_r6)
+        {
+            //if the wire connected to the light is repaired, turn on light
+            if (isWireRepaired == true)
+            {
+                GetComponent<Light>().enabled = true;
+            }
+            
+            //if level 6 left wire is repaired
+            if (getLightBool() == true && this.special_lightInteractionType == SpecialLightInteraction.L6_LEFT_WIRE)
+            {
+                //enable anim of correct vine length
+                assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
+                Invoke("stopVineAnim", 3.0f);
+            }
+
+            //if level 6 right wire is repaired PROVIDED THAT left wire is repaired, nothing will happen if right wire is repaired first
+            else if (getLightBool() == true && this.special_lightInteractionType == SpecialLightInteraction.L6_RIGHT_WIRE && isLeftWireRepaired() == true)
+            {
+                //enable vine anim to make vine reach max length
+                if (L6_hasVineReachedMaxLength == false)
+                {
+                    enableVineAnim();
+                }
+                assignedVine.GetComponent<Animator>().SetBool("isLeftOn", false);
+                assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
+
+                //delay stop of animation after 12 secs, weird, but this somehow works, pacheck nalang
+                Invoke("stopVineAnim", 12.0f);
+                Invoke("setL6_VineAtMax", 12.0f);
+            }
+
+            //if level 6 desk lamp is repaired
+            else if (getLightBool() == true)
+            {
+                assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
+                Invoke("stopVineAnim", 3.0f);
+                questGiver.setQuestComplete();
+            }
+        }
+    }
+
+    private bool getLightBool()
+    {
+        return GetComponent<Light>().enabled;
+    }
+
+    private bool isLeftWireRepaired()
+    {
+        return GameObject.FindGameObjectWithTag("L6_LeftLight").GetComponent<PuzzleLightInteraction>().isWireRepaired;
+    }
+
+    private void stopVineAnim()
+    {
+        assignedVine.GetComponent<Animator>().enabled = false;
+    }
+
+    private void enableVineAnim()
+    {
+        assignedVine.GetComponent<Animator>().enabled = true;
+    }
+
+    private void setL6_VineAtMax()
+    {
+        L6_hasVineReachedMaxLength = true;
     }
 
     

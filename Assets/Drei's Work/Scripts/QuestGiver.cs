@@ -30,6 +30,7 @@ public class QuestGiver : MonoBehaviour
         //Debug.LogError($"Test Cheez1: {questDescriptions.tutorial_color_r3}");
         questCollection.initializeTutorialQuests();
         questCollection.initializeRoom5Quest();
+        questCollection.initializeRoom6Quest();
         //Debug.LogError($"Test Cheez3: {questDescriptions.tutorial_color_r3}");
 
     }
@@ -63,13 +64,7 @@ public class QuestGiver : MonoBehaviour
         }
         */
 
-        currentQuest = questCollection.questDict[questDescriptions.color_r5];
-        //SETTING UI OBJECTIVES
-        for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
-        {
-            objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
-        }
-        isInQuest = true;
+        currentQuest = questCollection.questDict[questDescriptions.color_r6];
 
 
         if (isInQuest == true)
@@ -138,5 +133,14 @@ public class QuestGiver : MonoBehaviour
     {
         //CALL IT ONLY ON UNSAVED QUIT FOR NOW
         currentQuest.clearNeededGameObjectsOnQuit();
+    }
+
+    public void setQuestComplete()
+    {
+        lastQuestDone = currentQuest;
+        currentQuest.questComplete();
+        isInQuest = false;
+        currentQuest.neededGameObjects.Clear();
+        currentQuest = null;
     }
 }
