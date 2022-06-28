@@ -147,8 +147,13 @@ public class PuzzleInteraction : MonoBehaviour
                                 {
                                     GameObject.Find("QuestGiver").GetComponent<QuestGiver>().completedObjectives.Add("repairWire");
                                     GameObject.Find("QuestGiver").GetComponent<QuestGiver>().strikethroughTextByKey("repairWire");
+
+                                    // ------ FOR LEVEL 5 TEMP CODE, DELETE SOON -----------
+                                    GameObject.Find("QuestGiver").GetComponent<QuestGiver>().completedObjectives.Add("onLight");
+                                    GameObject.Find("QuestGiver").GetComponent<QuestGiver>().strikethroughTextByKey("onLight");
+                                    // -----------------------------------------------------
                                 }
-                                
+
 
                                 //TRIGGER CORRECT MONOLOGUE
                                 triggerPuzzleUITextCorrect();

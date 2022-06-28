@@ -5,26 +5,24 @@ using UnityEngine;
 public class PuzzleLightInteraction : MonoBehaviour
 {
     private QuestGiver questGiver;
-    [SerializeField] private GameObject lightObject;
+    [SerializeField] private GameObject level5CutsceneTrigger;
 
     // Start is called before the first frame update
     void Start()
     {
         questGiver = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
+        GetComponent<Light>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (questGiver.currentQuest.questID == questDescriptions.color_r5 && questGiver.currentQuest.wiresRepairedAmount == questGiver.currentQuest.wiresToRepairAmount)
+        if (questGiver.lastQuestDone.questID == questDescriptions.color_r5)
         {
-            lightObject.SetActive(true);
-
-            //trigger plant grow cutscene here
-
-            //light lamp objectives complete
-            questGiver.completedObjectives.Add("onLight");
-            questGiver.strikethroughTextByKey("onLight");
+            GetComponent<Light>().enabled = true;
+            level5CutsceneTrigger.SetActive(true);
         }
     }
+
+    
 }

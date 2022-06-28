@@ -14,6 +14,7 @@ public class QuestGiver : MonoBehaviour
     public AQuest currentQuest;
     private TimelineLevel TimelineLevel;
     public bool isInQuest;
+    public AQuest lastQuestDone;
 
 
     // Start is called before the first frame update
@@ -61,6 +62,14 @@ public class QuestGiver : MonoBehaviour
             isInQuest = true;
         }
         */
+
+        currentQuest = questCollection.questDict[questDescriptions.color_r5];
+        //SETTING UI OBJECTIVES
+        for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
+        {
+            objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+        }
+        isInQuest = true;
 
 
         if (isInQuest == true)
@@ -117,6 +126,7 @@ public class QuestGiver : MonoBehaviour
         //IF QUEST IS COMPLETE
         if (completedObjectives.Count == currentQuest.currentQuestObjectiveSize)
         {
+            lastQuestDone = currentQuest;
             currentQuest.questComplete();
             isInQuest = false;
             currentQuest.neededGameObjects.Clear();

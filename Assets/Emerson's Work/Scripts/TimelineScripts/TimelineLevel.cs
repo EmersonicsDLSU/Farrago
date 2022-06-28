@@ -16,6 +16,8 @@ public enum CutSceneTypes
     Level4Intro,
     Level4RatCage,
     MeltIceScene,
+    Level5PlantGrow,
+    Level6Transition,
 }
 
 
