@@ -158,7 +158,8 @@ public class PuzzleInteraction : MonoBehaviour
                                 }
 
                                 //FOR PUZZLE LIGHT INTERACTION
-                                lightPuzzleSc.isWireRepaired = true;
+                                if(lightPuzzleSc != null)
+                                    lightPuzzleSc.isWireRepaired = true;
 
                                 //TRIGGER CORRECT MONOLOGUE
                                 triggerPuzzleUITextCorrect();

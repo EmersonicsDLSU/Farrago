@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +40,7 @@ public class QuestGiver : MonoBehaviour
     void Update()
     {
         //IF PLAYER IS ON ROOM 3 TUTORIAL
+        
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level3Intro)
         {
             currentQuest = QuestCollection.Instance.questDict[questDescriptions.tutorial_color_r3];
@@ -50,9 +52,10 @@ public class QuestGiver : MonoBehaviour
             isInQuest = true;
         }
         //add else ifs here for other missions
+        
 
-        /*
-        else if ()
+        
+        else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL5)
         {
             currentQuest = questCollection.questDict[questDescriptions.color_r5];
             //SETTING UI OBJECTIVES
@@ -62,9 +65,12 @@ public class QuestGiver : MonoBehaviour
             }
             isInQuest = true;
         }
-        */
-
-        currentQuest = questCollection.questDict[questDescriptions.color_r6];
+        
+        else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL6)
+        {
+            currentQuest = questCollection.questDict[questDescriptions.color_r6];
+        }
+        
 
 
         if (isInQuest == true)
