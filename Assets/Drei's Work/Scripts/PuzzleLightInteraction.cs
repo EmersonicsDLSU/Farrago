@@ -4,9 +4,10 @@ using UnityEngine;
 
 public enum SpecialLightInteraction
 {
-    NONE,
+    NONE = -1,
     L6_LEFT_WIRE,
     L6_RIGHT_WIRE,
+    L6_LAMP_DESK
 };
 
 public class PuzzleLightInteraction : MonoBehaviour
@@ -18,6 +19,8 @@ public class PuzzleLightInteraction : MonoBehaviour
     [SerializeField] private SpecialLightInteraction special_lightInteractionType;
 
     public bool isWireRepaired;
+    public GameObject [] ratDestinationToRemove;
+    public GameObject [] ratDestinationToAdd;
     private bool L6_hasVineReachedMaxLength = false;
 
     // Start is called before the first frame update
@@ -71,8 +74,18 @@ public class PuzzleLightInteraction : MonoBehaviour
             }
 
             //if level 6 desk lamp is repaired
-            else if (getLightBool() == true)
+            else if (getLightBool() == true && this.special_lightInteractionType == SpecialLightInteraction.L6_LAMP_DESK)
             {
+                // set the transform for the rat
+                for (int i = 0; i < ratDestinationToAdd.Length; i++)
+                {
+                    ratDestinationToAdd[i].SetActive(true);
+                }
+                for (int i = 0; i < ratDestinationToRemove.Length; i++)
+                {
+                    ratDestinationToRemove[i].SetActive(false);
+                }
+                // Invoke anim
                 assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
                 Invoke("stopVineAnim", 3.0f);
                 questGiver.setQuestComplete();
