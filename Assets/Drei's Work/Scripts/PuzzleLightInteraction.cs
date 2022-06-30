@@ -22,6 +22,7 @@ public class PuzzleLightInteraction : MonoBehaviour
     public GameObject [] ratDestinationToRemove;
     public GameObject [] ratDestinationToAdd;
     private bool L6_hasVineReachedMaxLength = false;
+    public GameObject Level6DeadTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +65,11 @@ public class PuzzleLightInteraction : MonoBehaviour
                 if (L6_hasVineReachedMaxLength == false)
                 {
                     enableVineAnim();
+                    // only for rightWire
+                    if (Level6DeadTrigger != null)
+                    {
+                        Level6DeadTrigger.SetActive(true);
+                    }
                 }
                 assignedVine.GetComponent<Animator>().SetBool("isLeftOn", false);
                 assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
