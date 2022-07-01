@@ -97,11 +97,10 @@ public class PuzzleLightInteraction : MonoBehaviour
                 Invoke("stopVineAnim", 3.0f);
                 questGiver.setQuestComplete();
 
-                if (GameObject.Find("TimeLines").GetComponent<TimelineLevel>().currentSceneType == CutSceneTypes.Level6Transition)
+                if (GameObject.Find("TimeLines").GetComponent<TimelineLevel>().lastPlayedSceneType == CutSceneTypes.Level6Transition)
                 {
                     level6CutsceneTrigger.SetActive(false);
                 }
-                    
                 else
                 {
                     level6CutsceneTrigger.SetActive(true);
