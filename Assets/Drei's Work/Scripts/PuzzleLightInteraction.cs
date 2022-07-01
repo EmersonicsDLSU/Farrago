@@ -14,6 +14,7 @@ public class PuzzleLightInteraction : MonoBehaviour
 {
     private QuestGiver questGiver;
     [SerializeField] private GameObject level5CutsceneTrigger;
+    [SerializeField] private GameObject level6CutsceneTrigger;
     [SerializeField] private GameObject assignedVine;
 
     [SerializeField] private SpecialLightInteraction special_lightInteractionType;
@@ -95,6 +96,16 @@ public class PuzzleLightInteraction : MonoBehaviour
                 assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
                 Invoke("stopVineAnim", 3.0f);
                 questGiver.setQuestComplete();
+
+                if (GameObject.Find("TimeLines").GetComponent<TimelineLevel>().currentSceneType == CutSceneTypes.Level6Transition)
+                {
+                    level6CutsceneTrigger.SetActive(false);
+                }
+                    
+                else
+                {
+                    level6CutsceneTrigger.SetActive(true);
+                }
             }
         }
     }
