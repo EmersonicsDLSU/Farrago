@@ -62,6 +62,7 @@ public class QuestGiver : MonoBehaviour
             for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
             {
                 objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+                objectiveTextsPrefabs[i].fontStyle = FontStyles.Normal;
             }
             isInQuest = true;
         }
@@ -131,6 +132,7 @@ public class QuestGiver : MonoBehaviour
             currentQuest.questComplete();
             isInQuest = false;
             currentQuest.neededGameObjects.Clear();
+            completedObjectives.Clear();
             currentQuest = null;
         }
     }
@@ -147,6 +149,7 @@ public class QuestGiver : MonoBehaviour
         currentQuest.questComplete();
         isInQuest = false;
         currentQuest.neededGameObjects.Clear();
+        completedObjectives.Clear();
         currentQuest = null;
     }
 }
