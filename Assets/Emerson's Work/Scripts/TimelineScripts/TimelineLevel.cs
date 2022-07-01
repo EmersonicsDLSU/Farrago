@@ -219,7 +219,7 @@ public class TimelineLevel : MonoBehaviour
     void Update()
     {
         //reset a specific scene: chase rat scene
-        if(lastPlayedSceneType == CutSceneTypes.Level4RatCage)
+        if(lastPlayedSceneType == CutSceneTypes.Level6Dead)
         {
             resetCutscene(CutSceneTypes.Level6Dead);
             // re-position the player transform to its latest re-spawn point
