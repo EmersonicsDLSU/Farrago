@@ -37,8 +37,9 @@ public class PuzzleLightInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (questGiver.lastQuestDone.questID == questDescriptions.color_r5)
+        if (questGiver.lastQuestDone.questID == questDescriptions.color_r5 && special_lightInteractionType == SpecialLightInteraction.NONE)
         {
+            Debug.LogError($"None");
             GetComponent<Light>().enabled = true;
             level5CutsceneTrigger.SetActive(true);
         }
