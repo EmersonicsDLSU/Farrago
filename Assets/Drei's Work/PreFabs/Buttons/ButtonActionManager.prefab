@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1626301963883954712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1626301963883954714}
+  - component: {fileID: 1626301963883954715}
+  m_Layer: 0
+  m_Name: ButtonActionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1626301963883954714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626301963883954712}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -38.691975, y: 15.775436, z: -2.4753797}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1626301963883954715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626301963883954712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d3c7b5dfb042441b5644df585ba7b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactButton: {fileID: 6628741611017975887, guid: d048c5d15836d9f4084bd32a233db753, type: 3}
+  jumpButton: {fileID: 2912238298140192876, guid: 477f8caac99abd645be10d6e838e5e51, type: 3}
+  runButton: {fileID: 469961030037539024, guid: 40dbc953df14e50448c05b2d99d601ef, type: 3}
+  sneakButton: {fileID: 8838200021935212619, guid: 311b6c2a31cbee041b2ba80ea3ca4810, type: 3}
+  cleanseButton: {fileID: 1482226812255781998, guid: 530dbbe9f0f950449b62a61e461d1d32, type: 3}
+  journalButton: {fileID: 1417705483681153585, guid: d7bc1c92b185d9349996a1af0f8c4810, type: 3}
+  pauseButton: {fileID: 4335577035595146244, guid: eb381df5b9772d541bd98fd19d5b36c8, type: 3}
+  isInteractHeldDown: 0
+  isInteractTapped: 0
+  isRunHeldDown: 0
+  isSneakHeldDown: 0
+  isJumpPressed: 0
+  isCleanseHeldDown: 0
+  isJournalPressed: 0
+  isPausePressed: 0

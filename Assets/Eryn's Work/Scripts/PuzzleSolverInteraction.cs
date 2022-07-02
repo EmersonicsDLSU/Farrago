@@ -37,13 +37,13 @@ public class PuzzleSolverInteraction : MonoBehaviour
             interactableParent.SetActive(true);
             if (checkRequired())
             {
-                if (Input.GetKeyUp(KeyCode.E))
+                if ((ButtonActionManager.Instance.isInteractHeldDown == false))
                 {
                     timePress = 0;
                     interactableFill.fillAmount = 0.0f;
                     interactAgain = true;
                 }
-                else if (Input.GetKey(KeyCode.E) && interactAgain)
+                else if ((ButtonActionManager.Instance.isInteractHeldDown == true) && interactAgain)
                 {
                     mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                     timePress += Time.deltaTime;

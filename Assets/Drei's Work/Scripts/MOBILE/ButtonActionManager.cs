@@ -8,13 +8,13 @@ public class ButtonActionManager : MonoBehaviour
 {
     public static ButtonActionManager Instance;
 
-    public Button interactButton;
-    public Button jumpButton;
-    public Button runButton;
-    public Button sneakButton;
-    public Button cleanseButton;
-    public Button journalButton;
-    public Button pauseButton;
+    [HideInInspector] public Button interactButton;
+    [HideInInspector] public Button jumpButton;
+    [HideInInspector] public Button runButton;
+    [HideInInspector] public Button sneakButton;
+    [HideInInspector] public Button cleanseButton;
+    [HideInInspector] public Button journalButton;
+    [HideInInspector] public Button pauseButton;
 
     private GameObject lastPressedButton;
     [HideInInspector] public bool isInteractHeldDown = false;
@@ -42,7 +42,13 @@ public class ButtonActionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        interactButton = GameObject.Find("AbsorbIntHelp").GetComponent<Button>();
+        jumpButton = GameObject.Find("JumpHelp").GetComponent<Button>();
+        runButton = GameObject.Find("RunHelp").GetComponent<Button>();
+        sneakButton = GameObject.Find("CrouchHelp").GetComponent<Button>();
+        cleanseButton = GameObject.Find("CleanseHelp").GetComponent<Button>();
+        journalButton = GameObject.Find("JournalHelp").GetComponent<Button>();
+        pauseButton = GameObject.Find("PauseButton (1)").GetComponent<Button>();
     }
 
     // Update is called once per frame
