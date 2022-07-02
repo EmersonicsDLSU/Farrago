@@ -74,11 +74,7 @@ public class PuzzleInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (anim != null)
-        {
-            anim.SetBool("will fade", false);
-        }
-        
+        anim.SetBool("will fade", false);
 
         //DISABLE FIRE PARTICLE SYSTEM
         if(ParticleSystem.gameObject.transform.parent.tag == "Interactable Fire")
