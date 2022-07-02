@@ -17,6 +17,8 @@ public class QuestGiver : MonoBehaviour
     public bool isInQuest;
     public AQuest lastQuestDone;
 
+    public int cluesObtained = 0;
+
 
     // Start is called before the first frame update
     void Start()
