@@ -43,7 +43,7 @@ public class QuestGiver : MonoBehaviour
     {
         //IF PLAYER IS ON ROOM 3 TUTORIAL
         
-        if (TimelineLevel.currentSceneType == CutSceneTypes.Level3Intro)
+        if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL3)
         {
             currentQuest = QuestCollection.Instance.questDict[questDescriptions.tutorial_color_r3];
             //SETTING UI OBJECTIVES
