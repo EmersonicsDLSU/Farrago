@@ -44,6 +44,7 @@ public sealed class QuestCollection
     //QUESTS
     public AQuest quest_color_tut_room3 = new AQuest();
     public AQuest quest_color_room5 = new AQuest();
+    public AQuest quest_color_room6 = new AQuest();
 
     //BOOLS
     public bool isInTutorialLevel;
@@ -97,5 +98,19 @@ public sealed class QuestCollection
         //add to dict
         questDict.Add(quest_color_room5.questID, quest_color_room5);
 
+    }
+
+    public void initializeRoom6Quest()
+    {
+        quest_color_room6.questID = questDescriptions.color_r6;
+        quest_color_room6.isActive = true;
+
+        //descriptive objectives
+        quest_color_room5.descriptiveObjectives[0] = "onLeftLight";
+        quest_color_room5.descriptiveObjectives[1] = "onDeskLight";
+        quest_color_room5.currentQuestObjectiveSize = 2;
+        quest_color_room6.requiresObjectivesUI = false;
+
+        questDict.Add(quest_color_room6.questID, quest_color_room6);
     }
 }

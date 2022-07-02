@@ -23,6 +23,9 @@ public class PuzzleInteraction : MonoBehaviour
     public GameObject interactableParent;
     public Image interactableFill;
 
+    [Space] [Header("Puzzle Light Interaction")] 
+    [SerializeField] private PuzzleLightInteraction lightPuzzleSc;
+
     [HideInInspector]public bool canInteract = false;
     private bool isColorCorrect = false;
     private float timePress;
@@ -145,10 +148,18 @@ public class PuzzleInteraction : MonoBehaviour
 
                                 if (GameObject.Find("QuestGiver").GetComponent<QuestGiver>().currentQuest.wiresRepairedAmount == GameObject.Find("QuestGiver").GetComponent<QuestGiver>().currentQuest.wiresToRepairAmount)
                                 {
+                                    // ------ FOR LEVEL 5 TEMP CODE, DELETE SOON -----------
                                     GameObject.Find("QuestGiver").GetComponent<QuestGiver>().completedObjectives.Add("repairWire");
                                     GameObject.Find("QuestGiver").GetComponent<QuestGiver>().strikethroughTextByKey("repairWire");
+
+                                    GameObject.Find("QuestGiver").GetComponent<QuestGiver>().completedObjectives.Add("onLight");
+                                    GameObject.Find("QuestGiver").GetComponent<QuestGiver>().strikethroughTextByKey("onLight");
+                                    // -----------------------------------------------------
                                 }
-                                
+
+                                //FOR PUZZLE LIGHT INTERACTION
+                                if(lightPuzzleSc != null)
+                                    lightPuzzleSc.isWireRepaired = true;
 
                                 //TRIGGER CORRECT MONOLOGUE
                                 triggerPuzzleUITextCorrect();
@@ -159,6 +170,37 @@ public class PuzzleInteraction : MonoBehaviour
                                 ParticleSystem.GetComponent<Renderer>().materials[1].color = colorToAssign;
                                 subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
                                 subEmitter.startColor = colorToAssign;
+
+                                //if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
+                                //anim.gameObject.GetComponent<AudioSource>().Play();
+                            }
+                            else
+                            {
+                                //TRIGGER INCORRECT MONOLOGUE
+                                triggerPuzzleUITextIncorrect();
+                            }
+                            break;
+
+                        case "Interactable Vine":
+                            isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color);
+                            Debug.Log("is color correct: " + isColorCorrect);
+
+                            if (isColorCorrect == true)
+                            {
+                                colorToAssign = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
+
+
+                                // ------- TEMP CODE FOR LEVEL 6, REMOVE SOON -------------
+                                interactableParent.SetActive(false);
+                                this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
+                                Invoke("stopVineAnim", 3.0f);
+                                // --------------------------------------------------------
+
+                                //TRIGGER CORRECT MONOLOGUE
+                                triggerPuzzleUITextCorrect();
+
+                                //CHANGE VINE COLOR
+                                this.gameObject.GetComponent<Renderer>().material.color = colorToAssign;
 
                                 //if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
                                 //anim.gameObject.GetComponent<AudioSource>().Play();
@@ -207,6 +249,15 @@ public class PuzzleInteraction : MonoBehaviour
                 return true;
             }
         }
+
+        else if (interactableType == "Interactable Vine")
+        {
+            if (characterCurrColor == Color.green)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -238,5 +289,10 @@ public class PuzzleInteraction : MonoBehaviour
 
         colorPuzzleUIText.GetComponent<Animator>().SetBool("toTriggerCorrect", true);
         Invoke("closePuzzleUITextCorrect", 2.0f);
+    }
+
+    private void stopVineAnim()
+    {
+        this.gameObject.GetComponent<Animator>().enabled = false;
     }
 }

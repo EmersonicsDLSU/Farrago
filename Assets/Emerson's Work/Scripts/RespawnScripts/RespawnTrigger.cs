@@ -7,6 +7,7 @@ public class RespawnTrigger : MonoBehaviour
     //external scripts
     public RespawnManager respawnManagerSc = null;
     public MainPlayerSc player_mainSc = null;
+    public RespawnPoints respawnPointEnum;
     
     private void Start()
     {
@@ -28,6 +29,7 @@ public class RespawnTrigger : MonoBehaviour
         if(player_mainSc != null)
         {
             MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint = this.transform.position;
+            MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum = respawnPointEnum;
             Debug.LogError($"Respawn Point Save In: {this.transform.name}");
         }
         

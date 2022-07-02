@@ -21,6 +21,8 @@ TagManager:
   - Interactable Electricity
   - SubEmitter
   - ToTurnOn
+  - Interactable Vine
+  - L6_LeftLight
   layers:
   - Default
   - TransparentFX
