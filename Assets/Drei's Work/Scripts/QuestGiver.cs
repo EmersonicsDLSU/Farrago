@@ -141,6 +141,10 @@ public class QuestGiver : MonoBehaviour
     {
         //CALL IT ONLY ON UNSAVED QUIT FOR NOW
         currentQuest.clearNeededGameObjectsOnQuit();
+        isInQuest = false;
+        currentQuest.neededGameObjects.Clear();
+        completedObjectives.Clear();
+        currentQuest = null;
     }
 
     public void setQuestComplete()
