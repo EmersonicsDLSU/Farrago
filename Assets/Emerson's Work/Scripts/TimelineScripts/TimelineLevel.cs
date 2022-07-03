@@ -131,7 +131,7 @@ public class TimelineLevel : MonoBehaviour
         //removes the all the HUD
         if (this.hudControllerSc != null)
         {
-            this.hudControllerSc.disable_All();
+            //this.hudControllerSc.disable_All();
         }
         /*
         if (this.tooltipHolderSc != null)

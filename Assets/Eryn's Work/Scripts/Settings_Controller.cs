@@ -19,9 +19,9 @@ public class Settings_Controller : MonoBehaviour
             SetScreenSize(PlayerPrefs.GetInt("ScreenSize"));
 
         if(!PlayerPrefs.HasKey("Quality"))
-            SetQuality(5);
+            SetQuality(0);
         else
-            SetQuality(5);
+            SetQuality(0);
 
         SetFullScreen(true);
 

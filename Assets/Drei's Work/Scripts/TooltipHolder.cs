@@ -20,6 +20,8 @@ public class TooltipHolder : MonoBehaviour
     float cleanseTicks = 0.0f;
     private float runTicks = 0.0f;
 
+    private MainPlayerSc mainPlayer;
+
     //REFERENCE TO THE LEVEL AREA
     private Area_Identifier level2_AreaIdentifier;
 
@@ -34,6 +36,8 @@ public class TooltipHolder : MonoBehaviour
         level2_AreaIdentifier = GameObject.Find("Level2").GetComponent<Area_Identifier>();
 
         playerCurrentColor = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SkinnedMeshRenderer>().material.color;
+
+        mainPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<MainPlayerSc>();
     }
 
     // Update is called once per frame
@@ -55,23 +59,22 @@ public class TooltipHolder : MonoBehaviour
             !TimelineLevel.isTimelinePlayed && isMoveTutDone == false)
         {
             isJumpTutDone = false;
-            
 
-            tooltipHelp.GetComponent<Text>().text = "press W, A, S, D to move";
+
+            tooltipHelp.GetComponent<Text>().text = "Use the joystick to move";
             triggerTooltipHelp();
         }
 
-        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D) ||
-            Input.GetKeyDown(KeyCode.S)) && isMoveTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level1Intro)
+        if ((mainPlayer.playerMovementSc.MovementX != 0 || mainPlayer.playerMovementSc.MovementY != 0) && isMoveTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level1Intro)
         {
             isMoveTutDone = true;
             unTriggerTooltipHelp();
 
-            tooltipHelp.GetComponent<Text>().text = "press SPACE to jump";
+            tooltipHelp.GetComponent<Text>().text = "tap Jump Button to jump";
             triggerTooltipHelp();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isMoveTutDone == true && isJumpTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level1Intro)
+        if (ButtonActionManager.Instance.isJumpPressed == true && isMoveTutDone == true && isJumpTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level1Intro)
         {
             isJumpTutDone = true;
 
@@ -81,19 +84,19 @@ public class TooltipHolder : MonoBehaviour
         //ROOM 2 JOURNAL OBTAIN TOOLTIP
         if (playerJournal.isJournalObtained == true && isJournalTutDone == false)
         {
-            tooltipHelp.GetComponent<Text>().text = "press J to open Journal";
+            tooltipHelp.GetComponent<Text>().text = "tap Journal Button to open Journal";
             triggerTooltipHelp();
         }
 
         //ROOM 2 JOURNAL CHECK TOOLTIP
-        if (TimelineLevel.currentSceneType == CutSceneTypes.Level2JournalChecker  && 
+        if (TimelineLevel.currentSceneType == CutSceneTypes.Level2JournalChecker &&
             !TimelineLevel.isTimelinePlayed && playerJournal.isJournalObtained == false)
         {
             tooltipHelp.GetComponent<Text>().text = "find Angela's JOURNAL";
             triggerTooltipHelp();
         }
 
-        if (Input.GetKeyDown(KeyCode.J) && isJournalTutDone == false && !TimelineLevel.isTimelinePlayed && (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level2Intro ||
+        if (ButtonActionManager.Instance.isJournalPressed == true && isJournalTutDone == false && !TimelineLevel.isTimelinePlayed && (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level2Intro ||
                TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level2JournalChecker || level2_AreaIdentifier.level == 2))
         {
             isJournalTutDone = true;
@@ -106,11 +109,11 @@ public class TooltipHolder : MonoBehaviour
         {
             isObjectivesAvailable = true;
             isObjectiveTutDone = false;
-            tooltipHelp.GetComponent<Text>().text = "press TAB to open Objectives";
+            tooltipHelp.GetComponent<Text>().text = "tap Objectives Button to open Objectives";
             triggerTooltipHelp();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && isObjectiveTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro)
+        if (FindObjectOfType<HUD_Controller>().isObjectivesOpen && isObjectiveTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro)
         {
             isObjectiveTutDone = true;
             unTriggerTooltipHelp();
@@ -120,37 +123,27 @@ public class TooltipHolder : MonoBehaviour
         if (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro &&
             !TimelineLevel.isTimelinePlayed && isObjectiveTutDone == true && isCleanseTutDone == false)
         {
-            tooltipHelp.GetComponent<Text>().text = "hold R to Cleanse colors";
+            tooltipHelp.GetComponent<Text>().text = "hold Cleanse Button to Cleanse colors";
             triggerTooltipHelp();
         }
 
-        if (Input.GetKey(KeyCode.R) && isCleanseTutDone == false && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro &&
+        if (ButtonActionManager.Instance.isCleanseHeldDown && isCleanseTutDone == false && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro &&
             !TimelineLevel.isTimelinePlayed)
         {
-            cleanseTicks += Time.deltaTime;
+            isCleanseTutDone = true;
+            unTriggerTooltipHelp();
 
-
-            if (cleanseTicks >= 1.0f)
-            {
-                playerCurrentColor = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SkinnedMeshRenderer>().material.color;
-                if (playerCurrentColor == Color.white)
-                {
-                    cleanseTicks = 0.0f;
-                    isCleanseTutDone = true;
-                    unTriggerTooltipHelp();
-                }
-            }
         }
 
         //ROOM 4 CHASE RUN TUTORIAL
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level4RatCage &&
             !TimelineLevel.isTimelinePlayed && isRunTutDone == false)
         {
-            tooltipHelp.GetComponent<Text>().text = "hold LSHIFT + W/A/S/D to RUN";
+            tooltipHelp.GetComponent<Text>().text = "hold Run Button and move joystick to RUN";
             triggerTooltipHelp();
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) && 
+        if ((mainPlayer.playerMovementSc.MovementX != 0 || mainPlayer.playerMovementSc.MovementY != 0) && ButtonActionManager.Instance.isRunHeldDown == true &&
             isRunTutDone == false && TimelineLevel.currentSceneType == CutSceneTypes.Level4RatCage && !TimelineLevel.isTimelinePlayed)
         {
             runTicks += Time.deltaTime;

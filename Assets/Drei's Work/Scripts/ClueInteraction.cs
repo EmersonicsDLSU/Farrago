@@ -72,28 +72,8 @@ private void OnTriggerEnter(Collider other)
 
                 this.isEPressed = false;
                 this.isClueObtained = true;
-                interactText.GetComponent<Text>().text = "Close";
+                //interactText.GetComponent<Text>().text = "Close";
 
-            }
-
-            else if (this.isEPressed == true && this.isClueObtained == true && playerJournal.journalEntries[key].isActiveAndEnabled == true)
-            {
-
-                clueImage.rectTransform.anchoredPosition = imageInitPos;
-
-                interactText.GetComponent<Text>().text = "Absorb/Interact";
-
-                playerJournal.journalEntries[key].enabled = false;
-                this.interactableParent.SetActive(false);
-
-                this.isEPressed = false;
-
-                TextControl.textInstance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
-                TextControl.textInstance.delayReset();
-
-                clueUIText.GetComponent<Animator>().SetBool("isClueObtained", true);
-                journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", true);
-                Invoke("closeUIText", 2.0f);
             }
         }
     }
@@ -133,7 +113,7 @@ private void OnTriggerEnter(Collider other)
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isEPressed == false && isPlayerInClueArea == true)
+        if (ButtonActionManager.Instance.isInteractHeldDown && isEPressed == false && isPlayerInClueArea == true)
         {
             this.isEPressed = true;
         }

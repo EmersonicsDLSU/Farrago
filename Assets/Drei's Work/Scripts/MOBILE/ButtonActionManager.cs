@@ -33,7 +33,6 @@ public class ButtonActionManager : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(this);
     }
 
 

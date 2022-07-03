@@ -25,6 +25,8 @@ public class HUD_Controller : MonoBehaviour
     private bool canPress = true;
     private bool isNextPagePressed = false;
     private bool isPrevPagePressed = false;
+
+    [HideInInspector] public bool isObjectivesOpen = false;
    
 
     private bool objectivesEnabled;
@@ -176,6 +178,7 @@ public class HUD_Controller : MonoBehaviour
     public void On_ClickObjectives()
     {
         //objectivesPanel.SetActive(true);
+        isObjectivesOpen = !isObjectivesOpen;
         canPress = true;
         
 
