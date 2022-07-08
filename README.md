@@ -3,12 +3,12 @@
 Animus Ludus Studios
 
 Members:
-Angelic Aram,
-Emerson Celestial,
-Ella Garcia,
-Aldrey Gaurana,
-Joseph Santos,
-Eryn Tallador
+Angelic Aram(Artist),
+Emerson Celestial(Programmer),
+Ella Garcia(Artist),
+Aldrey Gaurana(Programmer),
+Joseph Santos(Programmer),
+Eryn Tallador(Programmer)
 
 Farrago is a 3D single-player stealth-puzzle game that is story-driven and mixed with platformer elements. With no recollection of anything and surrounded by mutated monsters and experiments, you must use the resources around you to figure out a way to escape the dark lab. This becomes harder after discovering you are half the height of a beaker.
 
