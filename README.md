@@ -3,7 +3,6 @@
 Animus Ludus Studios
 
 Members:
-
 Angelic Aram,
 Emerson Celestial,
 Ella Garcia,
