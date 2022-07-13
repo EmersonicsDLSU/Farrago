@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class QuestGiver : MonoBehaviour
     public AQuest currentQuest;
     private TimelineLevel TimelineLevel;
     public bool isInQuest;
+    public AQuest lastQuestDone;
 
 
     // Start is called before the first frame update
@@ -27,7 +29,9 @@ public class QuestGiver : MonoBehaviour
         //check first if the player is in a tutorial level
         //insert code here; di na cacall
         //Debug.LogError($"Test Cheez1: {questDescriptions.tutorial_color_r3}");
-        QuestCollection.Instance.initializeTutorialQuests();
+        questCollection.initializeTutorialQuests();
+        questCollection.initializeRoom5Quest();
+        questCollection.initializeRoom6Quest();
         //Debug.LogError($"Test Cheez3: {questDescriptions.tutorial_color_r3}");
 
     }
@@ -36,6 +40,7 @@ public class QuestGiver : MonoBehaviour
     void Update()
     {
         //IF PLAYER IS ON ROOM 3 TUTORIAL
+        
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level3Intro)
         {
             currentQuest = QuestCollection.Instance.questDict[questDescriptions.tutorial_color_r3];
@@ -47,6 +52,26 @@ public class QuestGiver : MonoBehaviour
             isInQuest = true;
         }
         //add else ifs here for other missions
+        
+
+        
+        else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL5)
+        {
+            currentQuest = questCollection.questDict[questDescriptions.color_r5];
+            //SETTING UI OBJECTIVES
+            for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
+            {
+                objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+                objectiveTextsPrefabs[i].fontStyle = FontStyles.Normal;
+            }
+            isInQuest = true;
+        }
+        
+        else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL6)
+        {
+            currentQuest = questCollection.questDict[questDescriptions.color_r6];
+        }
+        
 
 
         if (isInQuest == true)
@@ -103,9 +128,11 @@ public class QuestGiver : MonoBehaviour
         //IF QUEST IS COMPLETE
         if (completedObjectives.Count == currentQuest.currentQuestObjectiveSize)
         {
+            lastQuestDone = currentQuest;
             currentQuest.questComplete();
             isInQuest = false;
             currentQuest.neededGameObjects.Clear();
+            completedObjectives.Clear();
             currentQuest = null;
         }
     }
@@ -114,5 +141,19 @@ public class QuestGiver : MonoBehaviour
     {
         //CALL IT ONLY ON UNSAVED QUIT FOR NOW
         currentQuest.clearNeededGameObjectsOnQuit();
+        isInQuest = false;
+        currentQuest.neededGameObjects.Clear();
+        completedObjectives.Clear();
+        currentQuest = null;
+    }
+
+    public void setQuestComplete()
+    {
+        lastQuestDone = currentQuest;
+        currentQuest.questComplete();
+        isInQuest = false;
+        currentQuest.neededGameObjects.Clear();
+        completedObjectives.Clear();
+        currentQuest = null;
     }
 }

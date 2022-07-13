@@ -16,6 +16,9 @@ public enum CutSceneTypes
     Level4Intro,
     Level4RatCage,
     MeltIceScene,
+    Level5PlantGrow,
+    Level6Transition,
+    Level6Dead
 }
 
 
@@ -45,9 +48,14 @@ public class TimelineLevel : MonoBehaviour
     [SerializeField] private HUD_Controller hudControllerSc = null;
     [SerializeField] private TooltipHolder tooltipHolderSc = null;
 
+    // mainPlayer reference
+    private MainPlayerSc mainPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
+        mainPlayer = FindObjectOfType<MainPlayerSc>();
+
         inGameHUD = GameObject.Find("InGameHUD");
         AssignTimelineCollection();
 
@@ -206,11 +214,20 @@ public class TimelineLevel : MonoBehaviour
         }
     }
 
-    /*
+    
     // Update is called once per frame
     void Update()
     {
- 
+        Debug.LogError($"QUEST: {GameObject.Find("QuestGiver").GetComponent<QuestGiver>().lastQuestDone.questID}");
+        //reset a specific scene: chase rat scene
+        if(lastPlayedSceneType == CutSceneTypes.Level6Dead)
+        {
+            resetCutscene(CutSceneTypes.Level6Dead);
+            // re-position the player transform to its latest re-spawn point
+            Debug.LogError($"Dead: {mainPlayer.timelineLevelSc.lastPlayedSceneType}");
+            FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
+                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
+        }
     }
-    */
+    
 }

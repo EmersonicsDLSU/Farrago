@@ -2,12 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct SavedAttributes
+public enum RespawnPoints
+{
+    NONE = -1,
+    LEVEL1,
+    LEVEL2,
+    LEVEL3,
+    LEVEL4,
+    LEVEL4_CHASE,
+    LEVEL5,
+    LEVEL6,
+};
+
+public class SavedAttributes
 {
     public Vector3 respawnPoint;
     public bool IsJournalObtained;
     public bool IsDead;
     public GameObject recentTrigger;
+    public RespawnPoints respawnPointEnum;
 
     public SavedAttributes(Vector3 respawnPoint, bool IsJournalObtained, bool IsDead, GameObject recentTrigger)
     {
@@ -15,6 +28,7 @@ public struct SavedAttributes
         this.IsJournalObtained = IsJournalObtained;
         this.IsDead = IsDead;
         this.recentTrigger = recentTrigger;
+        this.respawnPointEnum = RespawnPoints.NONE;
     }
 }
 

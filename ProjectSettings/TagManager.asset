@@ -18,6 +18,11 @@ TagManager:
   - Journal
   - Player_Shirt
   - Player_Coat
+  - Interactable Electricity
+  - SubEmitter
+  - ToTurnOn
+  - Interactable Vine
+  - L6_LeftLight
   layers:
   - Default
   - TransparentFX
