@@ -8,9 +8,11 @@ using UnityEngine.UI;
 // This class has its own reference in each interactable objects
 public class AbsorptionCollider : MonoBehaviour
 {
-    //MainPlayerSc script compoenent
+    //MainPlayerSc script component
     [SerializeField] private MainPlayerSc MainPlayerScript;
     private PotionAbsorption potionAbsSc;
+    // Interactable UI(Icon); Heads Up Display
+    [HideInInspector]public GameObject interactableIcon;
 
     void Start()
     {
@@ -31,6 +33,12 @@ public class AbsorptionCollider : MonoBehaviour
         {
             Debug.LogError($"Missing PotionAbsorption Script in {this.gameObject.name}");
         }
+        
+        interactableIcon = transform.parent.GetChild(0).gameObject;
+        if (interactableIcon == null)
+        {
+            Debug.LogError($"Missing Interactable Icon in {this.gameObject.name}");
+        }
     }
     //checks if the player enters the collider of this obj
     private void OnTriggerEnter(Collider other)
@@ -42,12 +50,10 @@ public class AbsorptionCollider : MonoBehaviour
             // assigns the parent gameobject of this gameobject
             potionAbsSc.object_ID = this.transform.parent.gameObject.GetComponent<Object_ID>();
             // assigns the Intertactable icon gameobject
-            potionAbsSc.interactableIcon = this.transform.parent.GetChild(0).gameObject;
-            // assigns the Intertactable icon gameobject
             potionAbsSc.interactableFillIcon = this.transform.parent.GetChild(0).gameObject.
                 transform.GetChild(1).GetComponent<Image>();
             this.potionAbsSc.canAbsorb = true;
-            this.potionAbsSc.interactableIcon.SetActive(true);
+            interactableIcon.SetActive(true);
         }
     }
     //checks if the player is inside the collider of this obj
@@ -79,7 +85,7 @@ public class AbsorptionCollider : MonoBehaviour
         {
             // reset PotionAbsorption properties
             this.potionAbsSc.canAbsorb = false;
-            this.potionAbsSc.interactableIcon.SetActive(false);
+            interactableIcon.SetActive(false);
             this.potionAbsSc.interactableFillIcon.fillAmount = 0.0f;
         }
     }

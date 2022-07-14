@@ -25,8 +25,6 @@ public class PotionAbsorption : MonoBehaviour
     [Header("Player Properties")]
     // Property class of 'Player'
     public PlayerProperty _playerProperty;
-    // Interactable UI(Icon); Heads Up Display
-    [HideInInspector]public GameObject interactableIcon;
     // Gameobject that holds the Color Tag
     [HideInInspector]public GameObject ColorInteractableGO;
     // Interactable UI(Circular Bar); Heads Up Display

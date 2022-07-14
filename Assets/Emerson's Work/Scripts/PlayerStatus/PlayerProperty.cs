@@ -19,6 +19,7 @@ public class PlayerProperty
     public float earlyJumpTime = 0.25f;
     [Tooltip("Timer for delay jump")]
     public float onGroundTimer = 0.25f;
+    public float jumpTimer = 0.0f;
 
     //player's condition
     [HideInInspector] public bool isRun = false;
@@ -33,7 +34,6 @@ public class PlayerProperty
     [HideInInspector]public readonly float SPEED_MULTIPLIER = 5.0f;
     
     // 'Jump' properties
-    [HideInInspector] public float jumpTimer = 0.0f;
     [HideInInspector] public float jumpTicks= 0.0f;
     //Early jump properties
     [HideInInspector] public float earlyJumpTicks = 0.0f;

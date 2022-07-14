@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Eryn's Work/Scene/UI_Prototype.unity
+    path: Assets/Eryn's Work/Scene/MainMenu.unity
     guid: 3c80b5bcb3d325b4fa65a4c8fab3df0a
   - enabled: 1
-    path: Assets/Eryn's Work/Scene/Cinemachine_Test.unity
+    path: Assets/Eryn's Work/Scene/GameScene.unity
     guid: 44b3f4ca5355eca4db797d9cb42533d7
   - enabled: 1
     path: Assets/Eryn's Work/Scene/Loading_Prototype.unity

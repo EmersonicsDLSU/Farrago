@@ -101,8 +101,8 @@ public class Inventory : MonoBehaviour
         inventorySlots[0].isFull = true;
         // Request color UI ICON pool
         Debug.LogError($"Color IS: {color.color_code}");
-        this.inventoryPoolSc.itemPool.RequestPoolable(color.color_code);
-        this.inventoryPoolSc.setCurrentColorPosition(inventorySlots[0].inventorySlot.transform);
+        this.inventoryPoolSc.itemPool.RequestPoolable(color.color_code, inventorySlots[0].inventorySlot.transform);
+        //this.inventoryPoolSc.setCurrentColorPosition(inventorySlots[0].inventorySlot.transform);
         inventorySlots[0].colorItem = 
             this.inventoryPoolSc.itemPool.usedObjects[this.inventoryPoolSc.itemPool.usedObjects.Count - 1];
         inventorySlots[0].color = color;

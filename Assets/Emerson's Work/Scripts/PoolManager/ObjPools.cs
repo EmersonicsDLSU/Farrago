@@ -129,7 +129,7 @@ public class ObjPools
         }
     }
 
-    public void RequestPoolable(ColorCode color_code)
+    public void RequestPoolable(ColorCode color_code, Transform inventoryTransform)
     {
         for (int i = 0; i < availableObjects.Count; i++)
         {
@@ -139,6 +139,10 @@ public class ObjPools
                 availableObjects.RemoveAt(i);
                 //sets the onActivate func of the poolable
                 this.poolFunctions.onRequestGo(this.spawnLocations);
+                // assign the object to its parent first
+                usedObjects[usedObjects.Count - 1].transform.SetParent(inventoryTransform);
+                usedObjects[usedObjects.Count - 1].transform.position = inventoryTransform.position;
+                usedObjects[usedObjects.Count - 1].transform.localScale = new Vector3(1, 1, 1);
                 //poolable now exist in the game
                 usedObjects[usedObjects.Count - 1].SetActive(true);
                 Debug.LogError($"{color_code.ToString()} is found!");

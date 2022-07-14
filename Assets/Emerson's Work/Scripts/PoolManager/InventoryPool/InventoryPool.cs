@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //This is an exmaple of our spawn type
 public class InventoryPool : MonoBehaviour, IPoolFunctions
