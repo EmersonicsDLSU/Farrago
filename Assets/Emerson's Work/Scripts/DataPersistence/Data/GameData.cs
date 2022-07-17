@@ -8,10 +8,10 @@ public class GameData
 {
     public string saveGameName;
     public Vector3 respawnPoint;
-    public int deathCount;
+    public int total_tries;
 
-    public SerializableDictionary<string, bool> respawnTriggerPassed;
-    public SerializableDictionary<string, bool> cutsceneTriggerPassed;
+    public SerializableDictionary<int, bool> respawnTriggerPassed;
+    public SerializableDictionary<int, bool> cutsceneTriggerPassed;
 
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
@@ -19,8 +19,8 @@ public class GameData
     {
         saveGameName = null;
         respawnPoint = Vector3.zero;
-        this.deathCount = 0;
-        respawnTriggerPassed = new SerializableDictionary<string, bool>();
-        cutsceneTriggerPassed = new SerializableDictionary<string, bool>();
+        this.total_tries = 0;
+        respawnTriggerPassed = new SerializableDictionary<int, bool>();
+        cutsceneTriggerPassed = new SerializableDictionary<int, bool>();
     }
 }

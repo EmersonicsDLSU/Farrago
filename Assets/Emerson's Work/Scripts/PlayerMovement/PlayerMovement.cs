@@ -134,6 +134,8 @@ public class PlayerMovement : MonoBehaviour
 
             //respawns back the player to the last saved point
             MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
+            // increment death count
+            CareerStatsHandler.instance._careerProperty.total_deaths += 1;
             //FindObjectOfType<Loader>().LoadLevel(1);
             
             //reset a specific scene: chase rat scene
@@ -186,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
         {
             // spawns back the player to the last saved point
             MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
+            // increment death count
+            CareerStatsHandler.instance._careerProperty.total_deaths += 1;
             //FindObjectOfType<Loader>().LoadLevel(1);
             
             // reset a specific scene: chase rat scene

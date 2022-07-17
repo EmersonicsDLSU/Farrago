@@ -31,25 +31,9 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<MainPlayerSc>() != null) player_mainSc = FindObjectOfType<MainPlayerSc>();
             else Debug.LogError($"Missing \"MainPlayerSc script\" in {this.gameObject.name}");
         }
+        DataPersistenceManager.instance.SearchForPersistenceObjInScene();
     }
     
-    public void LoadData(GameData data) 
-    {
-        data.respawnTriggerPassed.TryGetValue(id, out is_entered);
-        if (is_entered) 
-        {
-            this.gameObject.SetActive(false);
-        }
-    }
-
-    public void SaveData(GameData data) 
-    {
-        if (data.respawnTriggerPassed.ContainsKey(id))
-        {
-            data.respawnTriggerPassed.Remove(id);
-        }
-        data.respawnTriggerPassed.Add(id, is_entered);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -66,5 +50,20 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         }
         
         this.gameObject.SetActive(false);
+    }
+    
+    public void LoadData(GameData data)
+    {
+        data.respawnTriggerPassed.TryGetValue((int)respawnPointEnum, out is_entered);
+        GetComponent<BoxCollider>().enabled = !is_entered;
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.respawnTriggerPassed.ContainsKey((int)respawnPointEnum))
+        {
+            data.respawnTriggerPassed.Remove((int)respawnPointEnum);
+        }
+        data.respawnTriggerPassed.Add((int)respawnPointEnum, is_entered);
     }
 }

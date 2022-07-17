@@ -17,12 +17,15 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
     public CutSceneTypes sceneType = CutSceneTypes.None;
 
     public bool isRepeated = false;
+    public bool isConditional = false;
+    public bool isCompleted = false;
 
     //external scripts
     public TimelineLevel timelineLevelSc = null;
     public MainPlayerSc player_mainSc = null;
     public RespawnManager respawnManagerSc = null;
     
+
     private void Start()
     {
         GenerateGuid();
@@ -41,24 +44,7 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<TimelineLevel>() != null) respawnManagerSc = FindObjectOfType<RespawnManager>();
             else Debug.LogError($"Missing \"RespawnManager script\" in {this.gameObject.name}");
         }
-    }
-    
-    public void LoadData(GameData data) 
-    {
-        data.cutsceneTriggerPassed.TryGetValue(id, out onceUsed);
-        if (onceUsed) 
-        {
-            this.gameObject.SetActive(false);
-        }
-    }
-
-    public void SaveData(GameData data) 
-    {
-        if (data.cutsceneTriggerPassed.ContainsKey(id))
-        {
-            data.cutsceneTriggerPassed.Remove(id);
-        }
-        data.cutsceneTriggerPassed.Add(id, onceUsed);
+        DataPersistenceManager.instance.SearchForPersistenceObjInScene();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -124,5 +110,24 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
         }
 
         return true;
+    }
+    
+    public void LoadData(GameData data)
+    {
+        data.cutsceneTriggerPassed.TryGetValue((int)sceneType, out isCompleted);
+        if (isConditional) 
+        {
+            GetComponent<BoxCollider>().enabled = false;
+        }
+        GetComponent<BoxCollider>().enabled = !isCompleted;
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.cutsceneTriggerPassed.ContainsKey((int)sceneType))
+        {
+            data.cutsceneTriggerPassed.Remove((int)sceneType);
+        }
+        data.cutsceneTriggerPassed.Add((int)sceneType, isCompleted);
     }
 }

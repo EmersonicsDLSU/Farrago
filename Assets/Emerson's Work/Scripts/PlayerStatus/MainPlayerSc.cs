@@ -45,9 +45,22 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         }
         playerDetectCollision = this.GetComponentInChildren<PlayerCollisionDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
+
+        
+        // TODO: if player first time playing, we saved the first
+        DataPersistenceManager.instance.SaveCareerGame();
         DataPersistenceManager.instance.SearchForPersistenceObjInScene();
+        if (DataPersistenceManager.instance.currentLoadedData.total_tries == 0)
+        {
+            DataPersistenceManager.instance.SaveGame();
+        }
         DataPersistenceManager.instance.LoadGame();
         this.enabled = true;
+    }
+
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -60,12 +73,17 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.transform.position = data.respawnPoint;
+        // if first try, then we do not translate the player 
+        if (DataPersistenceManager.instance.currentLoadedData.total_tries != 0)
+        {
+            Debug.LogError($"Translate to :{data.respawnPoint}");
+            this.transform.position = data.respawnPoint;
+        }
     }
-
+    
     public void SaveData(GameData data)
     {
-        Debug.LogError($"Saved Position: {transform.position}");
+        data.total_tries += 1;
         data.respawnPoint = this.transform.position;
     }
 }

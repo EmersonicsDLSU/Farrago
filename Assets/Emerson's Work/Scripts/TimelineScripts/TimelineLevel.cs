@@ -163,6 +163,8 @@ public class TimelineLevel : MonoBehaviour
     private IEnumerator PlayTimelineRoutine(float timelineDuration)
     {
         yield return new WaitForSeconds(timelineDuration);
+        // timeline was finished
+        this.currentTrigger.GetComponent<TimelineTriggerIdentification>().isCompleted = true;
         //calls the timeline deactivator
         this.timelinePlayIsFinished = true;
         TimelineActiveChecker();
