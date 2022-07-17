@@ -226,7 +226,7 @@ public class TimelineLevel : MonoBehaviour
             // re-position the player transform to its latest re-spawn point
             Debug.LogError($"Dead: {mainPlayer.timelineLevelSc.lastPlayedSceneType}");
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
+                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
         }
     }
     

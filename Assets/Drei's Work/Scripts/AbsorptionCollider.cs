@@ -65,14 +65,14 @@ public class AbsorptionCollider : MonoBehaviour
                 MainPlayerScript.playerMovementSc.MovementY != 0 || 
                 MainPlayerScript.playerMovementSc._playerProperty.isJump)
             {
-                //Debug.LogError($"Player is Moving, can't interact with {this.gameObject.name}: {MainPlayerScript.playerMovementSc.MovementX}:{MainPlayerScript.playerMovementSc.MovementY}");
+                Debug.LogError($"Player is Moving, can't interact with {this.gameObject.name}: {MainPlayerScript.playerMovementSc.MovementX}:{MainPlayerScript.playerMovementSc.MovementY}");
                 this.potionAbsSc.canAbsorb = false;
                 this.potionAbsSc.isAbsorbing = false;
-                MainPlayerScript.playerAngelaAnim.IH_ConsumeAnim(ref MainPlayerScript, this.potionAbsSc.isAbsorbing);
+                //MainPlayerScript.playerAngelaAnim.IH_ConsumeAnim(ref MainPlayerScript, this.potionAbsSc.isAbsorbing);
             }
             else
             {
-                //Debug.LogError($"Can Interact");
+                Debug.LogError($"Can Interact");
                 this.potionAbsSc.canAbsorb = true;
             }
         }

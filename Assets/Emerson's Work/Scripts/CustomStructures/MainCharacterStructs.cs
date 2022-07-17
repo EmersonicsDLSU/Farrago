@@ -17,7 +17,6 @@ public enum RespawnPoints
 public class SavedAttributes
 {
     public Vector3 respawnPoint;
-    public bool IsJournalObtained;
     public bool IsDead;
     public GameObject recentTrigger;
     public RespawnPoints respawnPointEnum;
@@ -25,7 +24,6 @@ public class SavedAttributes
     public SavedAttributes(Vector3 respawnPoint, bool IsJournalObtained, bool IsDead, GameObject recentTrigger)
     {
         this.respawnPoint = respawnPoint;
-        this.IsJournalObtained = IsJournalObtained;
         this.IsDead = IsDead;
         this.recentTrigger = recentTrigger;
         this.respawnPointEnum = RespawnPoints.NONE;

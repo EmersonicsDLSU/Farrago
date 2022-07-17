@@ -4,8 +4,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TimelineTriggerIdentification : MonoBehaviour
+public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private string id;
+
+    [ContextMenu("Generate guid for id")]
+    private void GenerateGuid() 
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
+
     public CutSceneTypes sceneType = CutSceneTypes.None;
 
     public bool isRepeated = false;
@@ -17,6 +25,7 @@ public class TimelineTriggerIdentification : MonoBehaviour
     
     private void Start()
     {
+        GenerateGuid();
         if (timelineLevelSc == null)
         {
             if (FindObjectOfType<TimelineLevel>() != null) timelineLevelSc = FindObjectOfType<TimelineLevel>();
@@ -32,6 +41,24 @@ public class TimelineTriggerIdentification : MonoBehaviour
             if (FindObjectOfType<TimelineLevel>() != null) respawnManagerSc = FindObjectOfType<RespawnManager>();
             else Debug.LogError($"Missing \"RespawnManager script\" in {this.gameObject.name}");
         }
+    }
+    
+    public void LoadData(GameData data) 
+    {
+        data.cutsceneTriggerPassed.TryGetValue(id, out onceUsed);
+        if (onceUsed) 
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    public void SaveData(GameData data) 
+    {
+        if (data.cutsceneTriggerPassed.ContainsKey(id))
+        {
+            data.cutsceneTriggerPassed.Remove(id);
+        }
+        data.cutsceneTriggerPassed.Add(id, onceUsed);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MainPlayerSc : MonoBehaviour
+public class MainPlayerSc : MonoBehaviour, IDataPersistence
 {
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public CharacterController playerCharController;
@@ -45,6 +45,9 @@ public class MainPlayerSc : MonoBehaviour
         }
         playerDetectCollision = this.GetComponentInChildren<PlayerCollisionDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
+        DataPersistenceManager.instance.SearchForPersistenceObjInScene();
+        DataPersistenceManager.instance.LoadGame();
+        this.enabled = true;
     }
 
     // Update is called once per frame
@@ -53,5 +56,16 @@ public class MainPlayerSc : MonoBehaviour
         playerMovementSc.update(this);
         playerInventory.update(this);
         PotionAbsorptionSC.update(this);
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.respawnPoint;
+    }
+
+    public void SaveData(GameData data)
+    {
+        Debug.LogError($"Saved Position: {transform.position}");
+        data.respawnPoint = this.transform.position;
     }
 }

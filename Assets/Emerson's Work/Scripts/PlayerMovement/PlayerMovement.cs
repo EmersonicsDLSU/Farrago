@@ -41,10 +41,12 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.LogError($"Ressurected: {MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint}");
             MainCharacterStructs.Instance.playerSavedAttrib.IsDead = false;
+            /*
             GameObject.FindGameObjectWithTag("Player").transform.position = 
-                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;;
-            FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
                 MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
+            */
+            FindObjectOfType<MainPlayerSc>().gameObject.transform.position =
+                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
         }
     }
     private void Start()
@@ -71,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
                 this.dead_ticks = 0.0f;
             }
         }
+        Debug.LogError($"Is Dead: {MainCharacterStructs.Instance.playerSavedAttrib.IsDead}");
         // checks if the player has touched an enemy
         PlayerTouchedEnemy(ref mainPlayer);
         // checks if the player is on the ground; checks both feet(left and right)
@@ -141,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
             // re-position the player transform to its latest re-spawn point
             Debug.LogError($"Dead: {mainPlayer.timelineLevelSc.lastPlayedSceneType}");
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
+                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
 
         }
     }
@@ -194,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError($"Dead");
             // re-position the player transform to its latest re-spawn point
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
+                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
 
             /* // replays the cutscene **Don't Delete**
             int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);

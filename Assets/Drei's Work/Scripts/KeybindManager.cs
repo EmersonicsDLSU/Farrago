@@ -42,7 +42,7 @@ public class KeybindManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-            Instance = this;
+        Instance = this;
         
         DontDestroyOnLoad(this);
 
