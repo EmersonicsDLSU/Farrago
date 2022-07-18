@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class RespawnTrigger : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] private string id;
-
-    [ContextMenu("Generate guid for id")]
-    private void GenerateGuid() 
-    {
-        id = System.Guid.NewGuid().ToString();
-    }
-
     //external scripts
     public RespawnManager respawnManagerSc = null;
     public MainPlayerSc player_mainSc = null;
@@ -20,7 +12,6 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
     
     private void Start()
     {
-        GenerateGuid();
         if (respawnManagerSc == null)
         {
             if (FindObjectOfType<TimelineLevel>() != null) respawnManagerSc = FindObjectOfType<RespawnManager>();

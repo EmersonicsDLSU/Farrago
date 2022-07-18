@@ -62,7 +62,6 @@ public class JournalBookInteraction : MonoBehaviour
                 playerJournal.journalEntries.Add(key, journalSecondPage);
 
                 this.isEPressed = false;
-                this.interactableParent.SetActive(false);
                 this.gameObject.SetActive(false);
 
                 //journalObtainHelp.GetComponent<Animator>().SetBool("toTriggerHelp", false);

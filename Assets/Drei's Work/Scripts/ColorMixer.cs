@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 // A class the represents the color of the mainPlayer
 public class ColorMixer
 {

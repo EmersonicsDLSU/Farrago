@@ -22,7 +22,7 @@ public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
     void Start()
     {
         _careerProperty.total_deaths = 0;
-        _careerProperty.total_visit = 0;
+        _careerProperty.total_visit = 1;
         _careerProperty.total_time_played = 0;
     }
 
@@ -32,8 +32,10 @@ public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
         _careerProperty.total_time_played += Time.deltaTime;
     }
 
+    private int visit_count = 0;
     void OnApplicationQuit()
     {
+        visit_count++;
         DataPersistenceManager.instance.SaveCareerGame();
     }
     
@@ -47,7 +49,7 @@ public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
     public void SaveData(CareerData data)
     {
         data.total_deaths = _careerProperty.total_deaths;
-        data.total_visit += 1;
+        data.total_visit += visit_count;
         data.total_time_played = _careerProperty.total_time_played;
     }
 }

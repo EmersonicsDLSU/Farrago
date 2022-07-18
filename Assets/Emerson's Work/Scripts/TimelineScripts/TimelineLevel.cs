@@ -220,7 +220,6 @@ public class TimelineLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogError($"QUEST: {GameObject.Find("QuestGiver").GetComponent<QuestGiver>().lastQuestDone.questID}");
         //reset a specific scene: chase rat scene
         if(lastPlayedSceneType == CutSceneTypes.Level6Dead)
         {

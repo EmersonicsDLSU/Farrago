@@ -26,7 +26,6 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.LogError($"Test");
         playerTrans = this.GetComponent<Transform>(); ;
         playerCharController = this.GetComponentInChildren<CharacterController>();
         playerSkinMesh = this.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -46,16 +45,6 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         playerDetectCollision = this.GetComponentInChildren<PlayerCollisionDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
 
-        
-        // TODO: if player first time playing, we saved the first
-        DataPersistenceManager.instance.SaveCareerGame();
-        DataPersistenceManager.instance.SearchForPersistenceObjInScene();
-        if (DataPersistenceManager.instance.currentLoadedData.total_tries == 0)
-        {
-            DataPersistenceManager.instance.SaveGame();
-        }
-        DataPersistenceManager.instance.LoadGame();
-        this.enabled = true;
     }
 
     void Start()
@@ -74,7 +63,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         // if first try, then we do not translate the player 
-        if (DataPersistenceManager.instance.currentLoadedData.total_tries != 0)
+        if (DataPersistenceManager.instance.currentLoadedData.total_tries != 1)
         {
             Debug.LogError($"Translate to :{data.respawnPoint}");
             this.transform.position = data.respawnPoint;
@@ -83,7 +72,6 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     
     public void SaveData(GameData data)
     {
-        data.total_tries += 1;
         data.respawnPoint = this.transform.position;
     }
 }

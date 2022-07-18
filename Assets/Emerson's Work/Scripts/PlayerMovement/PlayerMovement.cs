@@ -73,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
                 this.dead_ticks = 0.0f;
             }
         }
-        Debug.LogError($"Is Dead: {MainCharacterStructs.Instance.playerSavedAttrib.IsDead}");
         // checks if the player has touched an enemy
         PlayerTouchedEnemy(ref mainPlayer);
         // checks if the player is on the ground; checks both feet(left and right)

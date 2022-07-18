@@ -6,6 +6,6 @@ using UnityEngine;
 public class CareerStats
 {
     public int total_deaths = 0;
-    public int total_visit = 0;
+    public int total_visit = 1;
     public float total_time_played = 0;
 }

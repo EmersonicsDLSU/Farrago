@@ -47,6 +47,9 @@ public class Object_ID : MonoBehaviour
 
     private void OnValidate()
     {
-        GetComponent<Collider>().isTrigger = true;
+        if (GetComponent<Collider>() != null)
+        {
+            GetComponent<Collider>().isTrigger = true;
+        }
     }
 }

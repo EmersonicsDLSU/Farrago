@@ -40,7 +40,7 @@ public class DataPersistenceManager : MonoBehaviour
         this.careerDataHandler = new FileDataHandler(Application.persistentDataPath, careerFileName, useEncryption_1);
         // Load Career File
         SearchForPersistenceCareerObjInScene();
-        LoadGame();
+        LoadCareerData();
     }
 
     public void SearchForPersistenceObjInScene()
@@ -65,15 +65,15 @@ public class DataPersistenceManager : MonoBehaviour
     {
         // load any saved data from a file using the data handler
         this.gameData = dataHandler.LoadPlayerData();
-        this.careerData = careerDataHandler.LoadCareerData();
         
         // if no PLAYER data can be loaded, initialize to a new game
         if (this.gameData == null) 
         {
-            Debug.Log("No data was found.");
+            Debug.Log("No player data was found.");
+            // NewGame should not be place here; place it in a UI button event
             NewGame();
         }
-        
+        SearchForPersistenceObjInScene();
         if (dataPersistenceObjects != null)
         {
             // push the loaded data to all other scripts that need it
@@ -84,6 +84,12 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         currentLoadedData = gameData;
+    }
+
+    public void LoadCareerData()
+    {
+        // load any saved data from a file using the data handler
+        this.careerData = careerDataHandler.LoadCareerData();
         
         // if no CAREER data can be loaded, initialize to a new game
         if (this.careerData == null) 
@@ -102,12 +108,10 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         currentLoadedCareerData = careerData;
-        
     }
 
     public void SaveGame()
     {
-        Debug.LogError($"Save Player File!");
         // pass the data to other scripts so they can update it
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
         {
@@ -119,7 +123,6 @@ public class DataPersistenceManager : MonoBehaviour
     }
     public void SaveCareerGame()
     {
-        Debug.LogError($"Save Career File!");
         // pass the data to other scripts so they can update it
         foreach (ICareerDataPersistence dataPersistenceObj in careerDataPersistenceObjects) 
         {

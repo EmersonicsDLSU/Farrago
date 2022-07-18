@@ -6,14 +6,6 @@ using UnityEngine;
 
 public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] private string id;
-
-    [ContextMenu("Generate guid for id")]
-    private void GenerateGuid() 
-    {
-        id = System.Guid.NewGuid().ToString();
-    }
-
     public CutSceneTypes sceneType = CutSceneTypes.None;
 
     public bool isRepeated = false;
@@ -28,7 +20,6 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        GenerateGuid();
         if (timelineLevelSc == null)
         {
             if (FindObjectOfType<TimelineLevel>() != null) timelineLevelSc = FindObjectOfType<TimelineLevel>();
@@ -79,7 +70,6 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
         //activates the timeline for this trigger
         if(checkTriggerCondition(this.sceneType) && !this.onceUsed)
         {
-            Debug.LogError($"Cutscene Start Playing");
             this.onceUsed = true;
             timelineLevelSc.ActivateTimeline(this.sceneType, this.gameObject);
         }
