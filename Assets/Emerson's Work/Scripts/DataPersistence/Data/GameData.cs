@@ -6,7 +6,6 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public string saveGameName;
     public Vector3 respawnPoint;
     public int total_tries;
 
@@ -18,7 +17,6 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData()
     {
-        saveGameName = null;
         respawnPoint = Vector3.zero;
         this.total_tries = 0;
         respawnTriggerPassed = new SerializableDictionary<int, bool>();

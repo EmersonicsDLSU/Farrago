@@ -18,6 +18,12 @@ public class FileDataHandler
         this.useEncryption = useEncryption;
     }
 
+    public void DeleteFile()
+    {
+        Debug.LogError($"Deleted");
+        File.Delete(Path.Combine(dataDirPath, dataFileName));
+    }
+
     public GameData LoadPlayerData() 
     {
         // use Path.Combine to account for different OS's having different path separators

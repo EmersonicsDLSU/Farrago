@@ -16,11 +16,13 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
         DataPersistenceManager.instance.SaveCareerGame();
         DataPersistenceManager.instance.LoadCareerData();
         // Loads the saved game file
-        DataPersistenceManager.instance.LoadGame();
-        total_tries++;
-        if (total_tries == 1)
+        DataPersistenceManager.instance.LoadGame(
+            DataPersistenceManager.instance.currentSaveFile);
+        if (++total_tries == 1)
         {
-            DataPersistenceManager.instance.SaveGame();
+            Debug.LogError($"Save First Try");
+            DataPersistenceManager.instance.SaveGame(
+                DataPersistenceManager.instance.currentSaveFile);
         }
     }
     

@@ -33,10 +33,9 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         {
             //MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint = this.transform.position;
             MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum = respawnPointEnum;
-            // newGame function shouldn't be here
-            DataPersistenceManager.instance.NewGame();
             is_entered = true;
-            DataPersistenceManager.instance.SaveGame();
+            DataPersistenceManager.instance.SaveGame(
+                DataPersistenceManager.instance.currentSaveFile);
             Debug.LogError($"Respawn Point Save In: {this.transform.name}");
         }
         
