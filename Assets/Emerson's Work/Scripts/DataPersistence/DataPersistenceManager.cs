@@ -62,6 +62,34 @@ public class DataPersistenceManager : MonoBehaviour
         SearchForPersistenceCareerObjInScene();
         LoadCareerData();
     }
+    
+    public GameData GetGameData(SaveFile saveFile)
+    {
+        GameData gameData = null;
+        switch (saveFile)
+        {
+            case SaveFile.FILE_0:
+            {
+                if (dataHandler_0.LoadPlayerData() != null)
+                    gameData = dataHandler_0.LoadPlayerData();
+            }
+                break;
+            case SaveFile.FILE_1:
+            {
+                if (dataHandler_1.LoadPlayerData() != null)
+                    gameData = dataHandler_1.LoadPlayerData();
+            }
+                break;
+            case SaveFile.FILE_2:
+            {
+                if (dataHandler_2.LoadPlayerData() != null)
+                    gameData = dataHandler_2.LoadPlayerData();
+            }
+                break;
+        }
+
+        return gameData;
+    }
 
     public bool CheckIfSaveFileExist(SaveFile saveFile)
     {

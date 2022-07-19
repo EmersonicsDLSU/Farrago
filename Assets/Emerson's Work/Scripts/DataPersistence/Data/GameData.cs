@@ -6,6 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    public string dateCreated;
+    public string timeCreated;
     public Vector3 respawnPoint;
     public int total_tries;
 
