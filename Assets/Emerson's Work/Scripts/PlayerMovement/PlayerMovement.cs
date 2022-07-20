@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine.Playables;
 
 public class PlayerMovement : MonoBehaviour
@@ -49,6 +50,13 @@ public class PlayerMovement : MonoBehaviour
                 DataPersistenceManager.instance.currentLoadedData.respawnPoint;
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Handles.DrawWireDisc(groundCheckLeft.position, Vector3.forward, groundCheckRad);
+        Handles.DrawWireDisc(groundCheckRight.position, Vector3.forward, groundCheckRad);
+    }
+
     private void Start()
     {
         _playerProperty.speed = _playerProperty.maxSpeed;
@@ -78,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         // checks if the player is on the ground; checks both feet(left and right)
         _playerProperty.isGround = 
             Physics.CheckSphere(groundCheckRight.position,
-         groundCheckRad, groundLayer) && Physics.CheckSphere(groundCheckLeft.position,
+         groundCheckRad, groundLayer) || Physics.CheckSphere(groundCheckLeft.position,
          groundCheckRad, groundLayer) ? true : false;
         // configures the idle animation for the mainPlayer
         mainPlayer.playerAngelaAnim.IH_IsGroundAnim(ref mainPlayer); 
@@ -304,7 +312,7 @@ public class PlayerMovement : MonoBehaviour
         }
         // this is for the case when the player is repeatedly mashing the space / jump button
         if ((_playerProperty.earlyJumpTicks > 0) && (_playerProperty.onGroundTicks > 0) &&
-            _playerProperty.isGround && _playerProperty.canJump)
+            _playerProperty.isGround)
         {
             //restart the ticks
             _playerProperty.earlyJumpTicks = 0;
@@ -312,13 +320,13 @@ public class PlayerMovement : MonoBehaviour
             // apply downward velocity
             velocity.y = Mathf.Sqrt(_playerProperty.jumpHeight * -2.0f * gravity * _playerProperty.playerWeight);
             // for jumpDelay
-            _playerProperty.canJump = false;
+            //_playerProperty.canJump = false;
             // end of jump delay
             _playerProperty.isJump = true;
             mainPlayer.playerAngelaAnim.IH_JumpAnim(ref mainPlayer);
         }
         // player is above the ground; free falling
-        else if (!_playerProperty.isGround  && !_playerProperty.canJump) //(!isGround && !canJump) -- this is for jump delay
+        else if (!_playerProperty.isGround) //(!_playerProperty.isGround  && !_playerProperty.canJump) -- this is for jump delay
         {
             // Reset properties relating to jump mechanic
             _playerProperty.canWalk = false;
@@ -342,11 +350,13 @@ public class PlayerMovement : MonoBehaviour
             _playerProperty.jumpTicks += Time.deltaTime;
 
              // this is for jump delay
+             /*
             if (_playerProperty.jumpTicks >= _playerProperty.jumpTimer)
             {
                 _playerProperty.jumpTicks = 0.0f;
                 _playerProperty.canJump = true;
             }
+            */
             // end of jump delay
             
         }

@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 8341049429807911816}
   - component: {fileID: 1682235952300374398}
   - component: {fileID: 8366368495850549833}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: GroundPlane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 4421067488300745597}
   - component: {fileID: 5670789731007179060}
   - component: {fileID: 8315846385881828608}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: GroundPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
