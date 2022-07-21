@@ -438,7 +438,7 @@ public class PlayerMovement : MonoBehaviour
     // current angle of the character in Y-axis; reference position starts from the right
     float angle = 0.0f;
     // how smooth the rotation of the player should be
-    float rotate_interval = 0.1f;
+    public float rotate_interval = 0.1f;
     private void FlipCharacter(ref MainPlayerSc mainPlayer)
     {
         // change orientation based on the direction
