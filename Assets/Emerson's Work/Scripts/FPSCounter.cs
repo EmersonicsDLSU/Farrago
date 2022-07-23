@@ -24,6 +24,8 @@ public class FPSCounter : MonoBehaviour
         Instance = this;
         
         DontDestroyOnLoad(this);
+
+        //Application.targetFrameRate = 60;
     }
 
  

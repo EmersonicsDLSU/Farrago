@@ -45,8 +45,7 @@ public class KeybindManager : MonoBehaviour
         Instance = this;
         
         DontDestroyOnLoad(this);
-
-        Application.targetFrameRate = 60;
+        
     }
 
     // Start is called before the first frame update
