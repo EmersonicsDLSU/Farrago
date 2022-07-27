@@ -34,6 +34,9 @@ public class HUD_Controller : MonoBehaviour
     PlayerSFX_Manager playerSFX;
 
     private Journal playerJournal;
+    private GameObject journalNextKey;
+    private GameObject journalPrevKey;
+
     public QuestGiver questGiver; 
 
     private void Awake()
@@ -226,7 +229,7 @@ public class HUD_Controller : MonoBehaviour
         {
             playerJournal.journalEntries[key2].enabled = true;
         }
-           
+
         /*
         if (playerJournal.journalEntries.Count > 0)
         {
