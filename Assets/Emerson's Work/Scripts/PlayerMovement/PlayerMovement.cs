@@ -34,21 +34,11 @@ public class PlayerMovement : MonoBehaviour
     private KeybindReceiver local_keybind;
 
     [SerializeField]private Transform modelTransform;
+
+    private MainPlayerSc MPsc;
     private void Awake()
     {
-        //respawns back the player to the last saved point
-        //Debug.LogError($"IsDead: {MainCharacterStructs.Instance.playerSavedAttrib.IsDead}");
-        if(MainCharacterStructs.Instance.playerSavedAttrib.IsDead)
-        {
-            //Debug.LogError($"Ressurected: {MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint}");
-            MainCharacterStructs.Instance.playerSavedAttrib.IsDead = false;
-            /*
-            GameObject.FindGameObjectWithTag("Player").transform.position = 
-                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint;
-            */
-            FindObjectOfType<MainPlayerSc>().gameObject.transform.position =
-                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
-        }
+
     }
 
     void OnDrawGizmos()
@@ -59,12 +49,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        MPsc = FindObjectOfType<MainPlayerSc>();
+
         _playerProperty.speed = _playerProperty.maxSpeed;
         if (FindObjectOfType<KeybindReceiver>() != null)
         {
             local_keybind = FindObjectOfType<KeybindReceiver>();
         }
+
+        AddDelegates();
     }
+
+    private void AddDelegates()
+    {
+        Gameplay_DelegateHandler.D_OnDeath += (c_onDeath) =>
+        {
+            // if the player is captured
+            MPsc.playerDetectCollision.isPlayerCaptured = c_onDeath.isPlayerCaptured;
+            // spawns back the player to the last saved point
+            MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
+            // increment death count
+            CareerStatsHandler.instance._careerProperty.total_deaths += 1;
+
+            // reset a specific scene: chase rat scene
+            if (MPsc.timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage)
+            {
+                MPsc.timelineLevelSc.resetCutscene(CutSceneTypes.Level4RatCage);
+            }
+
+            Debug.LogError($"Dead");
+            // re-position the player transform to its latest re-spawn point
+            FindObjectOfType<MainPlayerSc>().gameObject.transform.position =
+                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
+
+            /* // replays the cutscene **Don't Delete**
+            int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);
+            for(int i = start; i < mainPlayer.timelineLevelSc.triggerObjectList.Count; i++)
+            {
+                mainPlayer.timelineLevelSc.triggerObjectList[i].SetActive(true);
+            }
+            */
+        };
+    }
+
     // timer attribute for dead ticks 
     private float dead_ticks = 0.0f;
     // 'update()' is called once per frame
@@ -81,8 +108,17 @@ public class PlayerMovement : MonoBehaviour
                 this.dead_ticks = 0.0f;
             }
         }
+        // NOTE: Currently, this is called in the frame. This should be placed on the collider trigger
+        // so it's memory call will not be wasted
+        // Checks if the player touched an enemy; if was touched, player gets killed
         // checks if the player has touched an enemy
-        PlayerTouchedEnemy(ref mainPlayer);
+        /*
+        if (mainPlayer.playerDetectCollision.isPlayerCaptured)
+        {
+            // resets the 'isPlayerCaptured' boolean
+            Gameplay_DelegateHandler.D_OnDeath(new Gameplay_DelegateHandler.C_OnDeath(isPlayerCaptured:false));
+        }
+        */
         // checks if the player is on the ground; checks both feet(left and right)
         _playerProperty.isGround = 
             Physics.CheckSphere(groundCheckRight.position,
@@ -124,39 +160,6 @@ public class PlayerMovement : MonoBehaviour
         if(!MainCharacterStructs.Instance.playerSavedAttrib.IsDead)
             mainPlayer.playerCharController.Move(velocity * Time.deltaTime);
     }
-    // NOTE: Currently, this is called in the frame. This should be placed on the collider trigger
-    // so it's memory call will not be wasted
-    // Checks if the player touched an enemy; if was touched, player gets killed
-    private void PlayerTouchedEnemy(ref MainPlayerSc mainPlayer)
-    {
-        //if the enemy touches the player; gameover
-        if (mainPlayer.playerDetectCollision.isPlayerCaptured)
-        {
-            mainPlayer.playerDetectCollision.isPlayerCaptured = false;
-
-            /*
-            //shows the HUD display when the player lose
-            GameObject.Find("InGameHUD").GetComponent<HUD_Controller>().On_Lose();
-            */
-
-            //respawns back the player to the last saved point
-            MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
-            // increment death count
-            CareerStatsHandler.instance._careerProperty.total_deaths += 1;
-            //FindObjectOfType<Loader>().LoadLevel(1);
-            
-            //reset a specific scene: chase rat scene
-            if(mainPlayer.timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage)
-            {
-                mainPlayer.timelineLevelSc.resetCutscene(CutSceneTypes.Level4RatCage);
-            }
-            // re-position the player transform to its latest re-spawn point
-            Debug.LogError($"Dead: {mainPlayer.timelineLevelSc.lastPlayedSceneType}");
-            FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
-
-        }
-    }
     // Checks if the player starts to fall 
     private void CheckFalling(ref MainPlayerSc mainPlayer)
     {
@@ -193,35 +196,7 @@ public class PlayerMovement : MonoBehaviour
         //if the player reach the fell distance threshold, then it will result into an instant death 
         if (_playerProperty.fall_Distance >= _playerProperty.distanceForDeath)
         {
-            // spawns back the player to the last saved point
-            MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
-            // increment death count
-            CareerStatsHandler.instance._careerProperty.total_deaths += 1;
-            //FindObjectOfType<Loader>().LoadLevel(1);
-            
-            // reset a specific scene: chase rat scene
-            if(mainPlayer.timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage)
-            {
-                mainPlayer.timelineLevelSc.resetCutscene(CutSceneTypes.Level4RatCage);
-            }
-
-            Debug.LogError($"Dead");
-            // re-position the player transform to its latest re-spawn point
-            FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
-
-            /* // replays the cutscene **Don't Delete**
-            int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);
-            for(int i = start; i < mainPlayer.timelineLevelSc.triggerObjectList.Count; i++)
-            {
-                mainPlayer.timelineLevelSc.triggerObjectList[i].SetActive(true);
-            }
-            */
-
-            /*
-            //lead to the gameover UI
-            GameObject.Find("InGameHUD").GetComponent<HUD_Controller>().On_Lose();
-            */
+            Gameplay_DelegateHandler.D_OnDeath(new Gameplay_DelegateHandler.C_OnDeath(isPlayerCaptured:false));
         }
         //Debug.LogError($"Player Fell Distance: {this.fall_Distance}");
     }

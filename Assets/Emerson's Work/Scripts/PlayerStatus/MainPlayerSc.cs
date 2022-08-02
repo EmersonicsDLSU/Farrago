@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class MainPlayerSc : MonoBehaviour, IDataPersistence
 {
@@ -50,7 +51,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 
     void Start()
     {
-
+        Debug.LogError("Start to Respawn");
     }
 
     // Update is called once per frame
@@ -63,6 +64,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        /*
         Debug.LogError($"Total Tries :{DataPersistenceManager.instance.currentLoadedData.total_tries}");
         // if first try, then we do not translate the player 
         if (DataPersistenceManager.instance.currentLoadedData.total_tries != 0)
@@ -70,6 +72,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
             Debug.LogError($"Translate to :{data.respawnPoint}");
             this.transform.position = data.respawnPoint;
         }
+        */
     }
     
     public void SaveData(GameData data)
@@ -78,5 +81,24 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         var temp = DateTime.Now;
         data.dateCreated = $"{temp.Day}/{temp.Month}/{temp.Year}";
         data.timeCreated = $"{temp.Hour}:{temp.Minute}";
+    }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += SceneLoaded; //You add your method to the delegate
+    }
+     
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= SceneLoaded;
+    }
+    private void SceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "GameScene")
+        {
+            var data = DataPersistenceManager.instance.currentLoadedData;
+            Debug.LogError($"Translate to :{data.respawnPoint} to {this.name}");
+            this.transform.position = data.respawnPoint;
+        }
     }
 }

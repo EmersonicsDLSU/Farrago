@@ -205,8 +205,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: ffffffffffffffffffffffffffffffff030000000400000005000000
-      _HashCodes: 7ebf05008cbf0500a2bf0500b6bf0500dabf0500d4bf050000000000
+      _Buckets: 030000000400000005000000ffffffffffffffffffffffffffffffff
+      _HashCodes: 14120a0022120a0038120a004c120a0070120a006a120a0000000000
       _Next: ffffffff00000000ffffffff0100000002000000ffffffff00000000
       _Count: 6
       _Version: 6
@@ -455,7 +455,7 @@ MonoBehaviour:
     oldSphereScale: {x: 0, y: 0, z: 0}
     reductionStrength: 0
     reductionPending: 0
-    prevFeasibleTarget: {fileID: 0}
+    prevFeasibleTarget: {fileID: 1289495901946627516}
     runOnThreads: 1
     triangleCount: 1678
     lastDrawer: {fileID: 0}

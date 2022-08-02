@@ -165,6 +165,8 @@ public class TimelineLevel : MonoBehaviour
         yield return new WaitForSeconds(timelineDuration);
         // timeline was finished
         this.currentTrigger.GetComponent<TimelineTriggerIdentification>().isCompleted = true;
+        DataPersistenceManager.instance.SaveGame(
+            DataPersistenceManager.instance.currentSaveFile);
         //calls the timeline deactivator
         this.timelinePlayIsFinished = true;
         TimelineActiveChecker();

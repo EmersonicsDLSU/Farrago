@@ -10,7 +10,6 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Awake()
     {
-        // TODO: if player first time playing, we saved the first
         // We saved career file again because we want to add the minutes played on the 
         // main menu portion
         DataPersistenceManager.instance.SaveCareerGame();

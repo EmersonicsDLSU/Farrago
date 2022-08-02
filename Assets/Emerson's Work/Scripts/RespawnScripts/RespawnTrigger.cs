@@ -25,7 +25,6 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         DataPersistenceManager.instance.SearchForPersistenceObjInScene();
     }
     
-
     private void OnTriggerEnter(Collider other)
     {
         //assigns the location point of this trigger area to be set as a respawn point
@@ -39,7 +38,7 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
             Debug.LogError($"Respawn Point Save In: {this.transform.name}");
         }
         
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
     }
     
     public void LoadData(GameData data)

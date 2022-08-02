@@ -41,6 +41,7 @@ public class DataPersistenceManager : MonoBehaviour
     [HideInInspector] public SaveFile currentSaveFile = SaveFile.NONE;
 
     public static DataPersistenceManager instance { get; private set; }
+    
 
     private void Awake() 
     {

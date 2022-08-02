@@ -8,7 +8,6 @@ public class Gameplay_DelegateHandler : MonoBehaviour
 {
     public static Gameplay_DelegateHandler instance { get; private set; }
     
-
     private void Awake() 
     {
         if (instance != null) 
@@ -19,5 +18,18 @@ public class Gameplay_DelegateHandler : MonoBehaviour
         DontDestroyOnLoad(this);
         
     }
-    
+
+    // Action Delegates w/ its corresponding class parameter
+    public class C_OnDeath
+    {
+        public bool isPlayerCaptured;
+
+        public C_OnDeath(bool isPlayerCaptured = false)
+        {
+            this.isPlayerCaptured = isPlayerCaptured;
+        }
+    }
+
+    public static Action<C_OnDeath> D_OnDeath = null;
+
 }

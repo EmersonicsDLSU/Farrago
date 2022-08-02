@@ -34,6 +34,10 @@ public class PlayerCollisionDetection : MonoBehaviour
                 }
                 else if(hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc != null)
                     hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc.enemyPool.ReleasePoolable(hit.transform.parent.gameObject);
+
+                
+                // resets the 'isPlayerCaptured' boolean
+                Gameplay_DelegateHandler.D_OnDeath(new Gameplay_DelegateHandler.C_OnDeath(isPlayerCaptured:false));
             }
         }
     }
