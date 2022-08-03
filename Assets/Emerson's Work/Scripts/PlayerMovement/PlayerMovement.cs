@@ -359,23 +359,15 @@ public class PlayerMovement : MonoBehaviour
         // Evaluates the translation value from the customized method
         movementX = CustomizedGetAxis(local_keybind.left, local_keybind.right, movementX);
         movementY = CustomizedGetAxis(local_keybind.back, local_keybind.fwd, movementY);
-
-        /*
-        public KeyCode fwd = KeyCode.D,
-        right = KeyCode.S,
-        left = KeyCode.W,
-        back = KeyCode.A;
-        */
-
+        
         // translates the player
         Vector3 move = transform.right * movementX + transform.forward * movementY;
         FlipCharacter(ref mainPlayer);
         mainPlayer.playerCharController.Move(move * _playerProperty.speed * Time.deltaTime);
-        //mainPlayer.gameObject.transform.position = mainPlayer.playerAnim.gameObject.transform.position;
         // check if the total value for x and y movement is not equal to 0; means its moving
         mainPlayer.playerAngelaAnim.IH_MoveAnim(ref mainPlayer);
-        // Rotates the character depending on its corresponding movement
     }
+
     // NOTE: THIS IS NOT EFFICIENT, CUSTOM METHODS LIKE THIS SHOULD BE PLACED IN A SEPARATE CLASS 
     // THAT CONSIST OF DIFFERENT SELECTIONS/BEHAVIORS
     // Customized method for player movement
@@ -410,6 +402,7 @@ public class PlayerMovement : MonoBehaviour
         (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval);
         //modelTransform.rotation = Quaternion.Euler(0.0f, -angle, 0.0f);
     }
+
     // current angle of the character in Y-axis; reference position starts from the right
     float angle = 0.0f;
     // how smooth the rotation of the player should be
