@@ -19,7 +19,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     [HideInInspector] public PlayerMovement playerMovementSc;
     [HideInInspector] public Inventory playerInventory;
     [HideInInspector] public PuzzleInventory player_puzzleInventory;
-    [HideInInspector] public PlayerCollisionDetection playerDetectCollision = null;
+    [HideInInspector] public CharacterControllerDetection characterControllerDetection = null;
     [HideInInspector] public PotionAbsorption PotionAbsorptionSC = null;
 
     //external scripts
@@ -44,7 +44,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<TimelineLevel>() != null) timelineLevelSc = FindObjectOfType<TimelineLevel>();
             else Debug.LogError($"Missing \"TimelineLevel script\" in {this.gameObject.name}");
         }
-        playerDetectCollision = this.GetComponentInChildren<PlayerCollisionDetection>();
+        characterControllerDetection = this.GetComponentInChildren<CharacterControllerDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
 
     }

@@ -3050,7 +3050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6471407947056833818}
   - component: {fileID: 5946123222742613922}
-  - component: {fileID: 5946123222742613924}
+  - component: {fileID: 5266704180937371706}
   - component: {fileID: 5946123222742613925}
   - component: {fileID: 2921527398446742912}
   m_Layer: 7
@@ -3099,9 +3099,10 @@ MonoBehaviour:
   playerInventory: {fileID: 0}
   player_puzzleInventory: {fileID: 0}
   playerDetectCollision: {fileID: 0}
+  characterControllerDetection: {fileID: 0}
   PotionAbsorptionSC: {fileID: 0}
   timelineLevelSc: {fileID: 0}
---- !u!114 &5946123222742613924
+--- !u!114 &5266704180937371706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3110,11 +3111,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5946123222742613920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9258eba8e85ae674d8a6129bef80d68b, type: 3}
+  m_Script: {fileID: 11500000, guid: dd06c446fa5e0b043899da44af3fba93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerCaptured: 0
-  distance_captured: 2
+  distance_captured: 0.5
 --- !u!143 &5946123222742613925
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3151,8 +3152,8 @@ MonoBehaviour:
       undoOperations: []
       redoOperations: []
     objectMeshPairs:
-      _Buckets: 070000000600000000000000ffffffff01000000ffffffffffffffff0200000004000000ffffffffffffffffffffffffffffffff05000000ffffffffffffffff03000000
-      _HashCodes: b01d01005c1e0100c61d0100241e0100941d0100321e0100481e01008c1d0100000000000000000000000000000000000000000000000000000000000000000000000000
+      _Buckets: ffffffffffffffffffffffffffffffff05000000ffffffffffffffff03000000070000000600000000000000ffffffff01000000ffffffffffffffff0200000004000000
+      _HashCodes: 50a50300fca5030066a50300c4a5030034a50300d2a50300e8a503002ca50300000000000000000000000000000000000000000000000000000000000000000000000000
       _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
       _Count: 8
       _Version: 8
@@ -3438,10 +3439,10 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: 0, y: -0.03, z: 0}
+    objPositionPrevFrame: {x: -46.4, y: 12.13, z: -3.83}
     objScalePrevFrame: {x: 28, y: 28, z: 28}
     considerChildrenBatchFew: 1
-    autoLODSavePath: Assets/
+    autoLODSavePath: Assets/SimplifiedMesh
     foldoutAdditionalOpts: 0
     generateUV2LODs: 0
     copyParentStaticFlags: 0

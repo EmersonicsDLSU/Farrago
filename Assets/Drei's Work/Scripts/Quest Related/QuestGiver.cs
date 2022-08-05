@@ -28,14 +28,11 @@ public class QuestGiver : MonoBehaviour
 
         //FOR TESTING, delete when there are multiple levels
         //check first if the player is in a tutorial level
-        //insert code here; di na cacall
-        //Debug.LogError($"Test Cheez1: {questDescriptions.tutorial_color_r3}");
         questCollection.initializeTutorialQuests();
         questCollection.initializeRoom5Quest();
         questCollection.initializeRoom6Quest();
         currentQuest = null;
         lastQuestDone = null;
-        //Debug.LogError($"Test Cheez3: {questDescriptions.tutorial_color_r3}");
 
     }
 

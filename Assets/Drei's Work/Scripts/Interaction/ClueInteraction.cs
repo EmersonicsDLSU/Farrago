@@ -8,7 +8,8 @@ public class ClueInteraction : MonoBehaviour
 {
     [SerializeField] private Image clueImage;
 
-    [Space] [Header("Interactables")] public GameObject interactableParent;
+    [Space] [Header("Interactables")] 
+    public GameObject interactableParent;
     public Image interactableFill;
 
     private Journal playerJournal;

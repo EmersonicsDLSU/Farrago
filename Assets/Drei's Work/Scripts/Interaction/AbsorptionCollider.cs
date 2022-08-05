@@ -8,7 +8,7 @@ using UnityEngine.UI;
 // This class has its own reference in each interactable objects
 public class AbsorptionCollider : MonoBehaviour
 {
-    //MainPlayerSc script component
+    // MainPlayerSc script component
     [SerializeField] private MainPlayerSc MainPlayerScript;
     private PotionAbsorption potionAbsSc;
     // Interactable UI(Icon); Heads Up Display

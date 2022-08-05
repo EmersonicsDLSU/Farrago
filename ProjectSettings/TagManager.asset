@@ -23,6 +23,7 @@ TagManager:
   - ToTurnOn
   - Interactable Vine
   - L6_LeftLight
+  - Color
   layers:
   - Default
   - TransparentFX

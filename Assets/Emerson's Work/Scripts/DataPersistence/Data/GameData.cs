@@ -14,6 +14,8 @@ public class GameData
     // List of respawn and cutscene elements in the game
     public SerializableDictionary<int, bool> respawnTriggerPassed;
     public SerializableDictionary<int, bool> cutsceneTriggerPassed;
+    public SerializableDictionary<int, bool> objectivesDone;
+    public SerializableDictionary<int, bool> journalImagesTaken;
 
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
@@ -23,5 +25,7 @@ public class GameData
         this.total_tries = 0;
         respawnTriggerPassed = new SerializableDictionary<int, bool>();
         cutsceneTriggerPassed = new SerializableDictionary<int, bool>();
+        objectivesDone = new SerializableDictionary<int, bool>();
+        journalImagesTaken = new SerializableDictionary<int, bool>();
     }
 }

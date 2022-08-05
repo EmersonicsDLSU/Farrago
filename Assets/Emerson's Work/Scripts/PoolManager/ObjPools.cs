@@ -146,6 +146,7 @@ public class ObjPools
                 //poolable now exist in the game
                 usedObjects[usedObjects.Count - 1].SetActive(true);
                 Debug.LogError($"{color_code.ToString()} is found!");
+                break;
             }
         }
     }
@@ -162,6 +163,7 @@ public class ObjPools
     {
         if(usedObjects.Contains(go) || go != null)
         {
+            Debug.Log($"Color is release");
             availableObjects.Add(go);
             usedObjects.Remove(go);
             availableObjects[availableObjects.Count - 1].transform.SetParent(this.poolableLocation);

@@ -8,13 +8,10 @@ using UnityEngine.UI;
 
 public sealed class Journal
 {
-    private Journal()
-    {
-        
-
-       
-    }
-
+    public Dictionary<string, Image> journalEntries = new Dictionary<string, Image>();
+    public List<Tuple<Image, Image>> journalPages = new List<Tuple<Image, Image>>();
+    public bool isJournalObtained = false;
+    
     private static Journal instance = null;
 
     public static Journal Instance
@@ -58,21 +55,4 @@ public sealed class Journal
         }
     }
 
-    public Dictionary<string, Image> journalEntries = new Dictionary<string, Image>();
-    public List<Tuple<Image, Image>> journalPages = new List<Tuple<Image, Image>>();
-
-    public bool isJournalObtained = false;
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         Gameplay_DelegateHandler.D_OnDeath += (c_onDeath) =>
         {
             // if the player is captured
-            MPsc.playerDetectCollision.isPlayerCaptured = c_onDeath.isPlayerCaptured;
+            MPsc.characterControllerDetection.isPlayerCaptured = c_onDeath.isPlayerCaptured;
             // spawns back the player to the last saved point
             MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
             // increment death count

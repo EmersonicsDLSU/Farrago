@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class PuzzleItemInteraction : MonoBehaviour
 {
-    [SerializeField] private CharacterController controller;
-
     [HideInInspector] public bool canInteract = false;
-    public GameObject puzzleItem;
     PuzzleInventory playerPuzzleInv;
     private QuestGiver questGiver;
 
@@ -23,8 +20,8 @@ public class PuzzleItemInteraction : MonoBehaviour
     {
         if(canInteract == true)
         {
-            playerPuzzleInv.AddToInventory(puzzleItem);
-            puzzleItem.SetActive(false);
+            playerPuzzleInv.AddToInventory(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 

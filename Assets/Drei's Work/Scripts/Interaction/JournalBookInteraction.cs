@@ -18,7 +18,38 @@ public class JournalBookInteraction : MonoBehaviour
     public Image journalSecondPage;
     private string key;
     private Object_ID object_ID;
+    
+    void Start()
+    {
+        if (Journal.Instance.isJournalObtained == false)
+        {
+            journalHUDText.SetActive(false);
+        }
+        else
+        {
+            journalHUDText.SetActive(true);
+        }
+        
+        playerJournal = Journal.Instance;
+        journalObtainHelp = GameObject.Find("TooltipText");
+        object_ID = GetComponent<Object_ID>();
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && isEPressed == false && isPlayerInJournalArea == true)
+        {
+            this.isEPressed = true;
+        }
+
+        /*
+        if (playerJournal.isJournalObtained == true)
+        {
+            journalHUDText.SetActive(true);
+        }
+        */
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -70,7 +101,6 @@ public class JournalBookInteraction : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -80,40 +110,6 @@ public class JournalBookInteraction : MonoBehaviour
             this.isEPressed = false;
         }
         
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (Journal.Instance.isJournalObtained == false)
-        {
-            journalHUDText.SetActive(false);
-        }
-        else
-        {
-            journalHUDText.SetActive(true);
-        }
-        
-        playerJournal = Journal.Instance;
-        journalObtainHelp = GameObject.Find("TooltipText");
-        object_ID = GetComponent<Object_ID>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && isEPressed == false && isPlayerInJournalArea == true)
-        {
-            this.isEPressed = true;
-        }
-
-        /*
-        if (playerJournal.isJournalObtained == true)
-        {
-            journalHUDText.SetActive(true);
-        }
-        */
     }
 
     public void resetJournalStatusOnQuit()
