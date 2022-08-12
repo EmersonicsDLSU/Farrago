@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* // transferred this to 'EnumHandler.cs'
 public enum objectCode
 {
     redLines = 0,
@@ -15,12 +16,13 @@ public enum objectCode
     JOURNAL,
     NOTE
 };
+*/
 
 public class Object_ID : MonoBehaviour
 {
     [HideInInspector] public string objectName;
 
-    public objectCode objectCode;
+    public ObjectCode objectCode;
 
     [TextArea]
     public string[] Texts;

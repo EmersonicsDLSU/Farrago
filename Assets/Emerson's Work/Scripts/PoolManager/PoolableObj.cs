@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//General Identification of the pool type
-public enum Pool_Type { NONE = -1, ENEMY = 0, COLOR};
-
 public class PoolableObj : APoolable
 {
     [SerializeField] private Pool_Type poolType;

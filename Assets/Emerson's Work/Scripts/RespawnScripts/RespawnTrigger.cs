@@ -5,18 +5,12 @@ using UnityEngine;
 public class RespawnTrigger : MonoBehaviour, IDataPersistence
 {
     //external scripts
-    public RespawnManager respawnManagerSc = null;
     public MainPlayerSc player_mainSc = null;
     public RespawnPoints respawnPointEnum;
     private bool is_entered = false;
     
     private void Start()
     {
-        if (respawnManagerSc == null)
-        {
-            if (FindObjectOfType<TimelineLevel>() != null) respawnManagerSc = FindObjectOfType<RespawnManager>();
-            else Debug.LogError($"Missing \"RespawnManager script\" in {this.gameObject.name}");
-        }
         if (player_mainSc == null)
         {
             if (FindObjectOfType<MainPlayerSc>() != null) player_mainSc = FindObjectOfType<MainPlayerSc>();

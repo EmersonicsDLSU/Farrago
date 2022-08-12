@@ -44,7 +44,7 @@ public class PuzzleLightInteraction : MonoBehaviour
         }
 
         //FOR ROOM 6
-        else if (questGiver.currentQuest.QuestID == questDescriptions.color_r6)
+        else if (questGiver.currentQuest.questID == QuestDescriptions.color_r6)
         {
             //if the wire connected to the light is repaired, turn on light
             if (isWireRepaired == true)

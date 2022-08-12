@@ -15,7 +15,6 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
     //external scripts
     public TimelineLevel timelineLevelSc = null;
     public MainPlayerSc player_mainSc = null;
-    public RespawnManager respawnManagerSc = null;
     
 
     private void Start()
@@ -30,33 +29,11 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<MainPlayerSc>() != null) player_mainSc = FindObjectOfType<MainPlayerSc>();
             else Debug.LogError($"Missing \"MainPlayerSc script\" in {this.gameObject.name}");
         }
-        if (respawnManagerSc == null)
-        {
-            if (FindObjectOfType<TimelineLevel>() != null) respawnManagerSc = FindObjectOfType<RespawnManager>();
-            else Debug.LogError($"Missing \"RespawnManager script\" in {this.gameObject.name}");
-        }
         DataPersistenceManager.instance.SearchForPersistenceObjInScene();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //assigns the latest cutscene
-        if(player_mainSc != null)
-        {
-            MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger = this.gameObject;
-        }
-        //assigns the location point of this trigger area to be set as a respawn point
-        if(respawnManagerSc != null)
-        {
-            if(this.respawnManagerSc.respawnDictionary.ContainsKey(this.sceneType))
-            {
-                MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint = 
-                    this.respawnManagerSc.respawnDictionary[this.sceneType].transform.position;
-                
-                this.gameObject.SetActive(this.respawnManagerSc.respawnDictionary[this.sceneType]);
-                //Debug.LogError($"Respawn Point Saved: {this.transform.position}");
-            }
-        }
 
     }
     void OnEnable()

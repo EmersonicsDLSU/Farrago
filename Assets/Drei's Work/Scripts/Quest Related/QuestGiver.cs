@@ -17,6 +17,7 @@ public class QuestGiver : MonoBehaviour
     private TimelineLevel TimelineLevel;
     public bool isInQuest;
     public AQuest lastQuestDone;
+    private ObjectivePool objectivePool;
 
 
     // Start is called before the first frame update
@@ -28,11 +29,12 @@ public class QuestGiver : MonoBehaviour
 
         //FOR TESTING, delete when there are multiple levels
         //check first if the player is in a tutorial level
-        questCollection.initializeTutorialQuests();
-        questCollection.initializeRoom5Quest();
-        questCollection.initializeRoom6Quest();
+        questCollection.InitializeQuests();
         currentQuest = null;
         lastQuestDone = null;
+
+        if(FindObjectOfType<ObjectivePool>() != null)
+            objectivePool = FindObjectOfType<ObjectivePool>();
 
     }
 
@@ -43,33 +45,37 @@ public class QuestGiver : MonoBehaviour
         
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level3Intro && isInQuest == false)
         {
-            currentQuest = QuestCollection.Instance.questDict[questDescriptions.tutorial_color_r3];
+            currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
             //SETTING UI OBJECTIVES
-            for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
+            for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
             {
-                objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+                //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+                objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
             }
             isInQuest = true;
         }
-        //add else ifs here for other missions
-        
 
-        
+        //add else ifs here for other missions
+
         else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL5 && isInQuest == false)
         {
-            currentQuest = questCollection.questDict[questDescriptions.color_r5];
+            currentQuest = questCollection.questDict[QuestDescriptions.color_r5];
             //SETTING UI OBJECTIVES
-            for (int i = 0; i < currentQuest.UIObjectives.Length; i++)
+            for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
             {
+                
                 objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
                 objectiveTextsPrefabs[i].fontStyle = FontStyles.Normal;
+                
+                var go = objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
+                go.GetComponent<TMP_Text>().fontStyle = FontStyles.Normal;
             }
             isInQuest = true;
         }
         
         else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL6 && isInQuest == false)
         {
-            currentQuest = questCollection.questDict[questDescriptions.color_r6];
+            currentQuest = questCollection.questDict[QuestDescriptions.color_r6];
         }
         
 
@@ -100,7 +106,7 @@ public class QuestGiver : MonoBehaviour
 
     public void checkItemObjectives()
     {
-        if (completedObjectives.Count < currentQuest.currentQuestObjectiveSize)
+        if (completedObjectives.Count < currentQuest.descriptiveObjectives.Count)
         {
             //checks every object needed to complete objective
             foreach (var gameObject in currentQuest.neededGameObjects)
@@ -125,7 +131,7 @@ public class QuestGiver : MonoBehaviour
     public void checkIfObjectivesComplete()
     {
         //IF QUEST IS COMPLETE
-        if (completedObjectives.Count == currentQuest.currentQuestObjectiveSize)
+        if (completedObjectives.Count == currentQuest.descriptiveObjectives.Count)
         {
             lastQuestDone = currentQuest;
             currentQuest.questComplete();
@@ -139,9 +145,8 @@ public class QuestGiver : MonoBehaviour
     public void clearCurrentGOObjectiveOnQuit()
     {
         //CALL IT ONLY ON UNSAVED QUIT FOR NOW
-        currentQuest.clearNeededGameObjectsOnQuit();
-        isInQuest = false;
         currentQuest.neededGameObjects.Clear();
+        isInQuest = false;
         completedObjectives.Clear();
         currentQuest = null;
     }
@@ -156,6 +161,7 @@ public class QuestGiver : MonoBehaviour
         currentQuest = null;
     }
 
+    // Doesn't check, but instantly add the description to the completed list
     public void checkPuzzleInteractionObjectives(string descriptiveObjective)
     {
         completedObjectives.Add(descriptiveObjective);

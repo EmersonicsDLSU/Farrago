@@ -104,7 +104,7 @@ public class ObjPools
         }
     }
 
-    public void RequestPoolable()
+    public GameObject RequestPoolable()
     {
         usedObjects.Add(availableObjects[0]);
         availableObjects.RemoveAt(0);
@@ -112,6 +112,7 @@ public class ObjPools
         this.poolFunctions.onRequestGo(this.spawnLocations);
         //poolable now exist in the game
         usedObjects[usedObjects.Count - 1].SetActive(true);
+        return usedObjects[usedObjects.Count - 1];
     }
     public void RequestPoolable(Enemy_Type enemy_type)
     {
@@ -163,7 +164,6 @@ public class ObjPools
     {
         if(usedObjects.Contains(go) || go != null)
         {
-            Debug.Log($"Color is release");
             availableObjects.Add(go);
             usedObjects.Remove(go);
             availableObjects[availableObjects.Count - 1].transform.SetParent(this.poolableLocation);

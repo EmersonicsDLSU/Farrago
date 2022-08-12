@@ -5,9 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 
 [System.Serializable]
-
-
 //ENUM
+/* // transferred this to 'EnumHandler.cs'
 public enum questDescriptions
 {
     tutorial_color_r3,
@@ -21,8 +20,7 @@ public enum questType
     VineInteraction,
     WireRepair,
 };
-
-
+*/
 public sealed class QuestCollection
 {
     private QuestCollection()
@@ -45,74 +43,30 @@ public sealed class QuestCollection
         }
     }
 
-
-    public Dictionary<questDescriptions, AQuest> questDict = new Dictionary<questDescriptions, AQuest>();
-
-    //QUESTS
-    public AQuest quest_color_tut_room3 = new AQuest();
-    public AQuest quest_color_room5 = new AQuest();
-    public AQuest quest_color_room6 = new AQuest();
-
-    //BOOLS
+    public Dictionary<QuestDescriptions, AQuest> questDict = new Dictionary<QuestDescriptions, AQuest>();
     public bool isInTutorialLevel;
 
-
-    //CALL THIS IN QUEST GIVER START
-    public void initializeTutorialQuests()
+    // initialize quest
+    public void InitializeQuests()
     {
-        quest_color_tut_room3.QuestID = questDescriptions.tutorial_color_r3;
-        quest_color_tut_room3.isActive = true;
-
-        //UI Objectives
-        quest_color_tut_room3.UIObjectives[0] = "- Turn on bunsen burner";
-        quest_color_tut_room3.UIObjectives[1] = "- Obtain key";
-
-        //descriptive Objectives -- FOR IN GAME CODE RECOGNITION
-        quest_color_tut_room3.descriptiveObjectives[0] = "completeFire";
-        quest_color_tut_room3.descriptiveObjectives[1] = "obtainKey";
-        quest_color_tut_room3.currentQuestObjectiveSize = 2;
-        quest_color_tut_room3.requiresObjectivesUI = true;
-
-        //needed game objects
-        quest_color_tut_room3.neededGameObjects.Add(GameObject.Find("KEY"));
+        AQuest quest1 = new AQuest(QuestDescriptions.tutorial_color_r3, true, true,
+            new List<string>() {$"completeFire", $"obtainKey"},
+            new List<string>() {$"- Turn on bunsen burner", "- Obtain key"},
+            new List<GameObject>() {GameObject.Find("KEY")});
+        AQuest quest2 = new AQuest(QuestDescriptions.color_r5, true, true,
+            new List<string>() {$"repairWire", $"onLight"},
+            new List<string>() {$"- Repair wires", "- Turn on light"},
+            new List<GameObject>());
+        quest2.wiresRepairedAmount = 0;
+        quest2.wiresToRepairAmount = 2;
+        AQuest quest3 = new AQuest(QuestDescriptions.color_r6, true, false,
+            new List<string>() {$"onLeftLight", $"onDeskLight"},
+            new List<string>(),
+            new List<GameObject>());
 
         //add to dict
-        questDict.Add(quest_color_tut_room3.QuestID, quest_color_tut_room3);
-    }
-
-    public void initializeRoom5Quest()
-    {
-        quest_color_room5.QuestID = questDescriptions.color_r5;
-        quest_color_room5.isActive = true;
-
-        //UI Objectives
-        quest_color_room5.UIObjectives[0] = "Repair wires";
-        quest_color_room5.UIObjectives[1] = "Turn on light";
-
-        //descriptive objectives
-        quest_color_room5.descriptiveObjectives[0] = "repairWire";
-        quest_color_room5.descriptiveObjectives[1] = "onLight";
-        quest_color_room5.currentQuestObjectiveSize = 2;
-        quest_color_room5.wiresRepairedAmount = 0;
-        quest_color_room5.wiresToRepairAmount = 2;
-        quest_color_room5.requiresObjectivesUI = true;
-
-        //add to dict
-        questDict.Add(quest_color_room5.QuestID, quest_color_room5);
-
-    }
-
-    public void initializeRoom6Quest()
-    {
-        quest_color_room6.QuestID = questDescriptions.color_r6;
-        quest_color_room6.isActive = true;
-
-        //descriptive objectives
-        quest_color_room5.descriptiveObjectives[0] = "onLeftLight";
-        quest_color_room5.descriptiveObjectives[1] = "onDeskLight";
-        quest_color_room5.currentQuestObjectiveSize = 2;
-        quest_color_room6.requiresObjectivesUI = false;
-
-        questDict.Add(quest_color_room6.QuestID, quest_color_room6);
+        questDict.Add(quest1.questID, quest1);
+        questDict.Add(quest2.questID, quest2);
+        questDict.Add(quest3.questID, quest3);
     }
 }

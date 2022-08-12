@@ -16,7 +16,6 @@ public class InventoryPool : MonoBehaviour, IPoolFunctions
 
     //max size of the pool and if its size isDynamic
     [SerializeField] private int maxPoolSizePerObj = 20; //default
-    [SerializeField] private int existingSpawnSize = 2; //default
     [SerializeField] private bool fixedAllocation = true; //default
 
     void Start()

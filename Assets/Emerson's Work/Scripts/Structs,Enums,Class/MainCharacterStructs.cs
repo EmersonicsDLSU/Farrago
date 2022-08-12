@@ -2,31 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RespawnPoints
-{
-    NONE = -1,
-    LEVEL1,
-    LEVEL2,
-    LEVEL3,
-    LEVEL4,
-    LEVEL4_CHASE,
-    LEVEL5,
-    LEVEL6,
-};
-
 public class SavedAttributes
 {
-    public Vector3 respawnPoint;
     public bool IsDead;
-    public GameObject recentTrigger;
     public RespawnPoints respawnPointEnum;
 
-    public SavedAttributes(Vector3 respawnPoint, bool IsJournalObtained, bool IsDead, GameObject recentTrigger)
+    public SavedAttributes(bool IsDead, RespawnPoints respawnPoint = RespawnPoints.NONE)
     {
-        this.respawnPoint = respawnPoint;
         this.IsDead = IsDead;
-        this.recentTrigger = recentTrigger;
-        this.respawnPointEnum = RespawnPoints.NONE;
+        this.respawnPointEnum = respawnPoint;
     }
 }
 
@@ -44,5 +28,5 @@ public sealed class MainCharacterStructs
         }
     }
     
-    public SavedAttributes playerSavedAttrib = new SavedAttributes(Vector3.zero, false, false, null);
+    public SavedAttributes playerSavedAttrib = new SavedAttributes(false);
 }

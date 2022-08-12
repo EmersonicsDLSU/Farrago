@@ -6,29 +6,41 @@ using UnityEngine;
 
 public class AQuest
 {
-    private const int MAX_OBJECTIVES_SIZE = 4;
-    private const int MAX_NEEDED_OBJ_SIZE = 4;
+    //private const int MAX_OBJECTIVES_SIZE = 4;
 
     [Header("Quest Identification")]
-    public questDescriptions QuestID;
-    public questType QuestType;
-    public int currentQuestObjectiveSize;
-
+    public QuestDescriptions questID;
+    public QuestType questType;
     [Space]
     public bool isActive;
     [Space]
-    
     [Header("Objectives")]
-    public string[] descriptiveObjectives = new string[MAX_OBJECTIVES_SIZE];
-    public string[] UIObjectives = new string[MAX_OBJECTIVES_SIZE];
+    public List<string> descriptiveObjectives = new List<string>();
+    public List<string> UIObjectives = new List<string>();
     public int wiresToRepairAmount;
     public int wiresRepairedAmount;
     [Space]
-
     public List<GameObject> neededGameObjects = new List<GameObject>();
-
     [Space]
     public bool requiresObjectivesUI;
+
+    // public constructor
+    public AQuest(QuestDescriptions questID, bool isActive, bool requiresObjectivesUI,  
+        List<string> descriptiveObjectives, List<string> UIObjectives, List<GameObject> neededGameObjects)
+    {
+        this.questID = questID;
+        this.isActive = isActive;
+
+        //UI Objectives
+        this.UIObjectives = UIObjectives;
+
+        //descriptive Objectives -- FOR IN GAME CODE RECOGNITION
+        this.descriptiveObjectives = descriptiveObjectives;
+        this.requiresObjectivesUI = requiresObjectivesUI;
+
+        //needed game objects
+        this.neededGameObjects = neededGameObjects;
+    }
 
     public void questComplete()
     {
@@ -36,10 +48,5 @@ public class AQuest
         isActive = false;
         Debug.LogError("OBJECTIVES COMPLETED");
     }
-
-    public void clearNeededGameObjectsOnQuit()
-    {
-        //CALL IT ONLY ON UNSAVED QUIT FOR NOW
-        neededGameObjects.Clear();
-    }
+    
 }
