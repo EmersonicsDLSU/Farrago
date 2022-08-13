@@ -38,6 +38,19 @@ public class QuestGiver : MonoBehaviour
 
     }
 
+    public void OnObjectivesTabOpen()
+    {
+        currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
+        if (currentQuest != null)
+        for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
+        {
+            // Old
+            //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+            // new
+            objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
+        } 
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -46,12 +59,16 @@ public class QuestGiver : MonoBehaviour
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level3Intro && isInQuest == false)
         {
             currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
+            /* // old
             //SETTING UI OBJECTIVES
             for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
             {
+                // Old
                 //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+                // new
                 objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
             }
+            */
             isInQuest = true;
         }
 
@@ -60,16 +77,18 @@ public class QuestGiver : MonoBehaviour
         else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL5 && isInQuest == false)
         {
             currentQuest = questCollection.questDict[QuestDescriptions.color_r5];
+            /*
             //SETTING UI OBJECTIVES
             for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
             {
-                
-                objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
-                objectiveTextsPrefabs[i].fontStyle = FontStyles.Normal;
-                
+                // Old
+                //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
+                //objectiveTextsPrefabs[i].fontStyle = FontStyles.Normal;
+                // new
                 var go = objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
                 go.GetComponent<TMP_Text>().fontStyle = FontStyles.Normal;
             }
+        */
             isInQuest = true;
         }
         
@@ -95,7 +114,13 @@ public class QuestGiver : MonoBehaviour
         {
             if (compObjText == key)
             {
-                objectiveTextsPrefabs[idx].fontStyle = FontStyles.Strikethrough;
+                // old
+                //objectiveTextsPrefabs[idx].fontStyle = FontStyles.Strikethrough;
+                // new
+                Debug.LogWarning($"Strike");
+                objectivePool.itemPool.availableObjects[idx].GetComponent<TMP_Text>().fontStyle =
+                    FontStyles.Strikethrough;
+                
             }
             else
             {
@@ -170,14 +195,19 @@ public class QuestGiver : MonoBehaviour
 
     public bool canTurnOnLight()
     {
+        Debug.LogWarning($"Repaired: {currentQuest.wiresRepairedAmount}/{currentQuest.wiresToRepairAmount}");
         if (currentQuest.wiresRepairedAmount == currentQuest.wiresToRepairAmount)
         {
+            // revert
+            /*
             completedObjectives.Add("repairWire");
             strikethroughTextByKey("repairWire");
             completedObjectives.Add("onLight");
             strikethroughTextByKey("onLight");
+            */
             return true;
         }
+        
 
         return false;
     }

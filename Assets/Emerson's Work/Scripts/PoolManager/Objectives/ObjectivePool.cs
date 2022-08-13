@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ObjectivePool : MonoBehaviour, IPoolFunctions
 {
-    
+    // parent transform
+    [SerializeField] private Transform ParentTransform; 
     //the type of pool and the originalObj; both are required, set you're preferred values for the constructors(maxSize, isFixAllocation?)
     [HideInInspector] public ObjPools itemPool;
-    public List<GameObject> originalObjs = new List<GameObject>();
+    [SerializeField] private List<GameObject> originalObjs = new List<GameObject>();
 
     //transform location of the poolStorage and spawn locations
     private Transform poolableLocation;
@@ -19,21 +21,52 @@ public class ObjectivePool : MonoBehaviour, IPoolFunctions
 
     void Start()
     {
+        spawnLocations.Add(ParentTransform);
         itemPool = new ObjPools(this.maxPoolSizePerObj, this.fixedAllocation,
             this.spawnLocations, Pool_Type.OBJECTIVE, this.GetComponent<IPoolFunctions>());
         poolableLocation = this.transform;
         this.itemPool.Initialize(ref originalObjs, poolableLocation, this);
+        
+    }
+
+    public GameObject RequestAndChangeText(string text)
+    {
+        var go = itemPool.RequestPoolable();
+        go.GetComponent<TextMeshProUGUI>().text = text;
+
+        return go;
+    }
+
+    public void EnabledAnimation(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            foreach (var obj in itemPool.usedObjects)
+            {
+                Debug.LogWarning($"Play Anim");
+                obj.GetComponent<Animator>().ResetTrigger("isEnabled");
+                obj.GetComponent<Animator>().SetTrigger("isEnabled");
+            }
+        }
+        else
+        {
+            foreach (var obj in itemPool.usedObjects)
+            {
+                obj.GetComponent<Animator>().ResetTrigger("isDisabled");
+                obj.GetComponent<Animator>().SetTrigger("isDisabled");
+            }
+        }
     }
 
     //start of "IPoolFunctions" functions 
     //**
     public void onRequestGo(List<Transform> spawnLocations)
     {
-
+        itemPool.usedObjects[itemPool.usedObjects.Count - 1].transform.parent = ParentTransform.transform;
     }
     public void onReleaseGo()
     {
-
+        itemPool.availableObjects[itemPool.availableObjects.Count - 1].transform.parent = this.transform;
     }
     //**
     //end of "IPoolFunctions" functions 

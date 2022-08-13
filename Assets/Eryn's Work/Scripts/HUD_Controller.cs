@@ -51,6 +51,7 @@ public class HUD_Controller : MonoBehaviour
     private void Update()
     {
         //DISABLE OBJECTIVES PANEL IF NOT IN MISSION
+        /* // revert
         if (questGiver.isInQuest)
         {
             objectivesPanel.SetActive(true);
@@ -59,6 +60,7 @@ public class HUD_Controller : MonoBehaviour
         {
             objectivesPanel.SetActive(false);
         }
+        */
 
         //PAUSE MENU
         if (Input.GetKeyDown(KeyCode.Escape) && canPress && isJPressed == false)
@@ -76,7 +78,9 @@ public class HUD_Controller : MonoBehaviour
             }
         }
         //OBJECTIVES UI
-        else if (Input.GetKeyDown(KeyCode.Tab) && canPress && questGiver.isInQuest)
+        // revert
+        //else if (Input.GetKeyDown(KeyCode.Tab) && canPress && questGiver.isInQuest)
+        else if (Input.GetKeyDown(KeyCode.Tab))
         {
             canPress = false;
             On_ClickObjectives();
@@ -176,15 +180,33 @@ public class HUD_Controller : MonoBehaviour
         confirmationPanel.SetActive(false);
     }
 
+    private bool isObjectivePanelEnabled = false;
     public void On_ClickObjectives()
     {
         //objectivesPanel.SetActive(true);
         canPress = true;
         
-
+        /* // old
         objectivesEnabled = objectivesPanel.GetComponent<Animator>().GetBool("isEnabled");
         Debug.LogWarning("working1");
         objectivesPanel.GetComponent<Animator>().SetBool("isEnabled", !objectivesEnabled);
+        */
+        // new
+        isObjectivePanelEnabled = !isObjectivePanelEnabled;
+        if (isObjectivePanelEnabled)
+        {
+            objectivesPanel.GetComponent<Animator>().ResetTrigger("isEnabled");
+            objectivesPanel.GetComponent<Animator>().SetTrigger("isEnabled");
+            FindObjectOfType<QuestGiver>().OnObjectivesTabOpen();
+            FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
+        }
+        else
+        {
+            objectivesPanel.GetComponent<Animator>().ResetTrigger("isDisabled");
+            objectivesPanel.GetComponent<Animator>().SetTrigger("isDisabled");
+            FindObjectOfType<ObjectivePool>().EnabledAnimation(false);
+            FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
+        }
     }
 
     public void On_OpenJournal()

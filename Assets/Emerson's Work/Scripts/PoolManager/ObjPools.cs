@@ -160,6 +160,13 @@ public class ObjPools
         this.poolFunctions.onReleaseGo();
         availableObjects[availableObjects.Count - 1].SetActive(false);
     }
+    public void ReleaseAllPoolable()
+    {
+        while (usedObjects.Count > 0)
+        {
+            ReleasePoolable(usedObjects[0]);
+        }
+    }
     public void ReleasePoolable(GameObject go)
     {
         if(usedObjects.Contains(go) || go != null)
