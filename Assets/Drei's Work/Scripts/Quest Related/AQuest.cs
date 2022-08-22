@@ -12,8 +12,6 @@ public class AQuest
     public QuestDescriptions questID;
     public QuestType questType;
     [Space]
-    public bool isActive;
-    [Space]
 
     [Header("Objectives")]
     public Dictionary<DescriptiveQuest, bool> descriptiveObjectives = 
@@ -29,11 +27,10 @@ public class AQuest
     public bool requiresObjectivesUI;
 
     // public constructor
-    public AQuest(QuestDescriptions questID, bool isActive, bool requiresObjectivesUI,  
+    public AQuest(QuestDescriptions questID, bool requiresObjectivesUI,  
         Dictionary<DescriptiveQuest, bool> descriptiveObjectives, List<string> UIObjectives, List<GameObject> neededGameObjects)
     {
         this.questID = questID;
-        this.isActive = isActive;
 
         //UI Objectives
         this.UIObjectives = UIObjectives;
@@ -45,12 +42,4 @@ public class AQuest
         //needed game objects
         this.neededGameObjects = neededGameObjects;
     }
-
-    public void questComplete()
-    {
-        neededGameObjects.Clear();
-        isActive = false;
-        Debug.LogError("OBJECTIVES COMPLETED");
-    }
-    
 }

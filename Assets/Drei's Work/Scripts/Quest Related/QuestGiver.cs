@@ -11,17 +11,43 @@ public class QuestGiver : MonoBehaviour
 {
 
     public TMP_Text[]objectiveTextsPrefabs;
-    public List<string> completedObjectives = new List<string>();
-    public QuestCollection questCollection;
     PuzzleInventory playerPuzzleInv;
-    public AQuest currentQuest;
     private TimelineLevel TimelineLevel;
-    public bool isInQuest;
-    public AQuest lastQuestDone;
     private ObjectivePool objectivePool;
 
+    // TODO: Find a better way to place the objectivesPanel activation
+    public AQuest currentQuest
+    {
+        get
+        {
+            AQuest temp = null;
+            Debug.LogError($"CurrentRespawnPoint: {RespawnPointsHandler.Instance.CurrentRespawnPoint}");
+            if (RespawnPointsHandler.Instance.CurrentRespawnPoint == RespawnPoints.LEVEL3)
+            {
+                temp = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
+                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
+            }
+            //add else ifs here for other missions
+            else if (RespawnPointsHandler.Instance.CurrentRespawnPoint == RespawnPoints.LEVEL5)
+            {
+                temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r5];
+                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
+            }
+            else if (RespawnPointsHandler.Instance.CurrentRespawnPoint == RespawnPoints.LEVEL6)
+            {
+                temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r6];
+                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
+            }
+            else
+            {
+                //DISABLE OBJECTIVES PANEL IF NOT IN MISSION
+                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(false);
+            }
+            return temp;}
+        private set
+        {}
+    }
 
-    //
     void Awake()
     {
         InitializeDelegates();
@@ -30,115 +56,28 @@ public class QuestGiver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        questCollection = QuestCollection.Instance;
         playerPuzzleInv = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PuzzleInventory>();
         TimelineLevel = GameObject.Find("TimeLines").GetComponent<TimelineLevel>();
 
         //FOR TESTING, delete when there are multiple levels
         //check first if the player is in a tutorial level
-        questCollection.InitializeQuests();
-        currentQuest = null;
-        lastQuestDone = null;
+        QuestCollection.Instance.InitializeQuests();
 
         if(FindObjectOfType<ObjectivePool>() != null)
             objectivePool = FindObjectOfType<ObjectivePool>();
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //IF PLAYER IS ON ROOM 3 TUTORIAL
-        
-        if (TimelineLevel.currentSceneType == CutSceneTypes.Level3Intro && isInQuest == false)
-        {
-            currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
-            /* // old
-            //SETTING UI OBJECTIVES
-            for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
-            {
-                // Old
-                //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
-                // new
-                objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
-            }
-            */
-            isInQuest = true;
-        }
-
-        //add else ifs here for other missions
-
-        else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL5 && isInQuest == false)
-        {
-            currentQuest = questCollection.questDict[QuestDescriptions.color_r5];
-            /*
-            //SETTING UI OBJECTIVES
-            for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
-            {
-                // Old
-                //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
-                //objectiveTextsPrefabs[i].fontStyle = FontStyles.Normal;
-                // new
-                var go = objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
-                go.GetComponent<TMP_Text>().fontStyle = FontStyles.Normal;
-            }
-        */
-            isInQuest = true;
-        }
-        
-        else if (MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum == RespawnPoints.LEVEL6 && isInQuest == false)
-        {
-            currentQuest = questCollection.questDict[QuestDescriptions.color_r6];
-        }
-        
-
-
-        if (isInQuest == true)
-        {
-            checkIfObjectivesComplete();
-        }
-        
-    }
-    
-    
-    // Refactored; Only call this everytime a objective is completed
-    public void checkIfObjectivesComplete()
-    {
-        // Check if all objectives are completed
-        if (QuestCollection.Instance.questDict[currentQuest.questID].descriptiveObjectives.Values.All(e => e == true))
-        {
-            lastQuestDone = currentQuest;
-            currentQuest.questComplete();
-            isInQuest = false;
-            currentQuest.neededGameObjects.Clear();
-            currentQuest = null;
-        }
-    }
-
-    public void clearCurrentGOObjectiveOnQuit()
-    {
-        //CALL IT ONLY ON UNSAVED QUIT FOR NOW
-        currentQuest.neededGameObjects.Clear();
-        isInQuest = false;
-        currentQuest = null;
-    }
-
-    public void setQuestComplete()
-    {
-        lastQuestDone = currentQuest;
-        currentQuest.questComplete();
-        isInQuest = false;
-        currentQuest.neededGameObjects.Clear();
-        currentQuest = null;
-    }
     
     public void UpdateObjectiveList()
     {
         // TODO: What if the objectiveTab is Open, the recently done objective will not be seen as completed through the fontStyle
-
+        
+        /*
         // WARNING: This line below is temporary !!!!
         Debug.LogError($"Warning: Delete the line below; temporary only!!!");
         currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
+        */
+
         // get the order list of the completed objectives
         var objectiveList = currentQuest.descriptiveObjectives.Values.ToList();
         Debug.LogError($"Objective Count: {objectiveList.Count}");
@@ -157,6 +96,13 @@ public class QuestGiver : MonoBehaviour
                 // pop the element from the list
                 objectiveList.RemoveAt(0);
             } 
+        }
+        
+        // Check if all objectives are completed
+        if (currentQuest != null &&
+            QuestCollection.Instance.questDict[currentQuest.questID].descriptiveObjectives.Values.All(e => e == true))
+        {
+            currentQuest.neededGameObjects.Clear();
         }
     }
 
@@ -187,7 +133,6 @@ public class QuestGiver : MonoBehaviour
             return true;
         }
         
-
         return false;
     }
 }

@@ -11,6 +11,8 @@ public class GameData
     public Vector3 respawnPoint;
     public int total_tries;
 
+    public int currentRespawnPoint;
+
     // List of respawn and cutscene elements in the game
     public SerializableDictionary<int, bool> respawnTriggerPassed;
     public SerializableDictionary<int, bool> cutsceneTriggerPassed;

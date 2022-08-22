@@ -31,7 +31,10 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
                 DataPersistenceManager.instance.currentSaveFile);
             Debug.LogError($"Respawn Point Save In: {this.transform.name}");
         }
-        
+        // add the current respawnPoint
+        RespawnPointsHandler.Instance.CurrentRespawnPoint = respawnPointEnum;
+        // purpose: call the properties function only
+        var temp = FindObjectOfType<QuestGiver>().currentQuest;
         //this.gameObject.SetActive(false);
     }
     

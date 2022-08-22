@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -86,6 +87,13 @@ public class PuzzleInteraction : MonoBehaviour
             FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
             FindObjectOfType<QuestGiver>().UpdateObjectiveList();
             FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
+            
+            // Check if all objectives are completed
+            if (FindObjectOfType<QuestGiver>().currentQuest != null &&
+                QuestCollection.Instance.questDict[FindObjectOfType<QuestGiver>().currentQuest.questID].descriptiveObjectives.Values.All(e => e == true))
+            {
+                FindObjectOfType<QuestGiver>().currentQuest.neededGameObjects.Clear();
+            }
         };
     }
 

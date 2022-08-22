@@ -96,7 +96,8 @@ public class PuzzleLightInteraction : MonoBehaviour
                 // Invoke anim
                 assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
                 Invoke("stopVineAnim", 3.0f);
-                questGiver.setQuestComplete();
+                // revert
+                //questGiver.setQuestComplete();
 
                 if (GameObject.Find("TimeLines").GetComponent<TimelineLevel>().lastPlayedSceneType == CutSceneTypes.Level6Transition)
                 {

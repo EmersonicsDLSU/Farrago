@@ -50,18 +50,6 @@ public class HUD_Controller : MonoBehaviour
 
     private void Update()
     {
-        //DISABLE OBJECTIVES PANEL IF NOT IN MISSION
-        /* // revert
-        if (questGiver.isInQuest)
-        {
-            objectivesPanel.SetActive(true);
-        }
-        else
-        {
-            objectivesPanel.SetActive(false);
-        }
-        */
-
         //PAUSE MENU
         if (Input.GetKeyDown(KeyCode.Escape) && canPress && isJPressed == false)
         {
@@ -78,9 +66,7 @@ public class HUD_Controller : MonoBehaviour
             }
         }
         //OBJECTIVES UI
-        // revert
-        //else if (Input.GetKeyDown(KeyCode.Tab) && canPress && questGiver.isInQuest)
-        else if (Input.GetKeyDown(KeyCode.Tab))
+        else if (Input.GetKeyDown(KeyCode.Tab) && canPress && questGiver.currentQuest != null)
         {
             canPress = false;
             On_ClickObjectives();
