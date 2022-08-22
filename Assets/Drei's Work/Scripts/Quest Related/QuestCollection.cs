@@ -50,17 +50,20 @@ public sealed class QuestCollection
     public void InitializeQuests()
     {
         AQuest quest1 = new AQuest(QuestDescriptions.tutorial_color_r3, true, true,
-            new List<string>() {$"completeFire", $"obtainKey"},
+            new Dictionary<DescriptiveQuest, bool>() 
+                {{DescriptiveQuest.R3_COMPLETED_FIRE, false}, {DescriptiveQuest.R3_OBTAINKEY, false}},
             new List<string>() {$"- Turn on bunsen burner", "- Obtain key"},
             new List<GameObject>() {GameObject.Find("KEY")});
         AQuest quest2 = new AQuest(QuestDescriptions.color_r5, true, true,
-            new List<string>() {$"repairWire", $"onLight"},
+            new Dictionary<DescriptiveQuest, bool>() 
+                {{DescriptiveQuest.R5_REPAIR_WIRE, false}, {DescriptiveQuest.R5_ON_LIGHT, false}},
             new List<string>() {$"- Repair wires", "- Turn on light"},
             new List<GameObject>());
         quest2.wiresRepairedAmount = 0;
         quest2.wiresToRepairAmount = 2;
         AQuest quest3 = new AQuest(QuestDescriptions.color_r6, true, false,
-            new List<string>() {$"onLeftLight", $"onDeskLight"},
+            new Dictionary<DescriptiveQuest, bool>() 
+                {{DescriptiveQuest.R6_ON_LEFT_LIGHT, false}, {DescriptiveQuest.R6_ON_DESKLIGHT, false}},
             new List<string>(),
             new List<GameObject>());
 

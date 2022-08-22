@@ -29,7 +29,24 @@ public class Gameplay_DelegateHandler : MonoBehaviour
             this.isPlayerCaptured = isPlayerCaptured;
         }
     }
-
     public static Action<C_OnDeath> D_OnDeath = null;
+    
+    public class C_R3_OnCompletedFire
+    {
+        public C_R3_OnCompletedFire()
+        {
+
+        }
+    }
+    public static Action<C_R3_OnCompletedFire> D_R3_OnCompletedFire = null;
+
+    public class C_R3_OnAcquiredKey
+    {
+        public C_R3_OnAcquiredKey()
+        {
+
+        }
+    }
+    public static Action<C_R3_OnAcquiredKey> D_R3_OnAcquiredKey = null;
 
 }

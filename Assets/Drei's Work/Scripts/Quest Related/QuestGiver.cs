@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,12 @@ public class QuestGiver : MonoBehaviour
     private ObjectivePool objectivePool;
 
 
+    //
+    void Awake()
+    {
+        InitializeDelegates();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,19 +43,6 @@ public class QuestGiver : MonoBehaviour
         if(FindObjectOfType<ObjectivePool>() != null)
             objectivePool = FindObjectOfType<ObjectivePool>();
 
-    }
-
-    public void OnObjectivesTabOpen()
-    {
-        currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
-        if (currentQuest != null)
-        for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
-        {
-            // Old
-            //objectiveTextsPrefabs[i].text = currentQuest.UIObjectives[i];
-            // new
-            objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
-        } 
     }
 
     // Update is called once per frame
@@ -101,68 +95,22 @@ public class QuestGiver : MonoBehaviour
 
         if (isInQuest == true)
         {
-            checkItemObjectives();
             checkIfObjectivesComplete();
         }
         
     }
-
-    public void strikethroughTextByKey(string key)
-    {
-        int idx = 0;
-        foreach (var compObjText in completedObjectives)
-        {
-            if (compObjText == key)
-            {
-                // old
-                //objectiveTextsPrefabs[idx].fontStyle = FontStyles.Strikethrough;
-                // new
-                Debug.LogWarning($"Strike");
-                objectivePool.itemPool.availableObjects[idx].GetComponent<TMP_Text>().fontStyle =
-                    FontStyles.Strikethrough;
-                
-            }
-            else
-            {
-                idx++;
-            }
-        }
-    }
-
-    public void checkItemObjectives()
-    {
-        if (completedObjectives.Count < currentQuest.descriptiveObjectives.Count)
-        {
-            //checks every object needed to complete objective
-            foreach (var gameObject in currentQuest.neededGameObjects)
-            {
-                //Debug.LogWarning(gameObject.name);
-                switch (gameObject.name)
-                {
-                    //IF A KEY IS REQUIRED
-                    case "KEY":
-                        //IF A KEY IS OBTAINED
-                        if (playerPuzzleInv.FindInInventory("KEY"))
-                        {
-                            completedObjectives.Add("obtainKey");
-                            strikethroughTextByKey("obtainKey");
-                        }
-                        break;
-                }
-            }
-        }
-    }
-
+    
+    
+    // Refactored; Only call this everytime a objective is completed
     public void checkIfObjectivesComplete()
     {
-        //IF QUEST IS COMPLETE
-        if (completedObjectives.Count == currentQuest.descriptiveObjectives.Count)
+        // Check if all objectives are completed
+        if (QuestCollection.Instance.questDict[currentQuest.questID].descriptiveObjectives.Values.All(e => e == true))
         {
             lastQuestDone = currentQuest;
             currentQuest.questComplete();
             isInQuest = false;
             currentQuest.neededGameObjects.Clear();
-            completedObjectives.Clear();
             currentQuest = null;
         }
     }
@@ -172,7 +120,6 @@ public class QuestGiver : MonoBehaviour
         //CALL IT ONLY ON UNSAVED QUIT FOR NOW
         currentQuest.neededGameObjects.Clear();
         isInQuest = false;
-        completedObjectives.Clear();
         currentQuest = null;
     }
 
@@ -182,15 +129,49 @@ public class QuestGiver : MonoBehaviour
         currentQuest.questComplete();
         isInQuest = false;
         currentQuest.neededGameObjects.Clear();
-        completedObjectives.Clear();
         currentQuest = null;
     }
-
-    // Doesn't check, but instantly add the description to the completed list
-    public void checkPuzzleInteractionObjectives(string descriptiveObjective)
+    
+    public void UpdateObjectiveList()
     {
-        completedObjectives.Add(descriptiveObjective);
-        strikethroughTextByKey(descriptiveObjective);
+        // TODO: What if the objectiveTab is Open, the recently done objective will not be seen as completed through the fontStyle
+
+        // WARNING: This line below is temporary !!!!
+        Debug.LogError($"Warning: Delete the line below; temporary only!!!");
+        currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
+        // get the order list of the completed objectives
+        var objectiveList = currentQuest.descriptiveObjectives.Values.ToList();
+        Debug.LogError($"Objective Count: {objectiveList.Count}");
+        // makes sure that the player is in a quest
+        if (currentQuest != null)
+        {
+            for (int i = 0; i < currentQuest.UIObjectives.Count; i++)
+            {
+                // edit the UI Text content based from the set UIObjectives
+                var go = objectivePool.RequestAndChangeText(currentQuest.UIObjectives[i]);
+                // if objective is completed, then strikeThrough the text
+                if (objectiveList[0])
+                {
+                    go.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+                }
+                // pop the element from the list
+                objectiveList.RemoveAt(0);
+            } 
+        }
+    }
+
+    private void InitializeDelegates()
+    {
+        Gameplay_DelegateHandler.D_R3_OnAcquiredKey += (c_onAcquireKey) =>
+        {
+            // set the key objective as completed
+            QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
+                .descriptiveObjectives[DescriptiveQuest.R3_OBTAINKEY] = true;
+            // Update the objectiveList as well; double update 
+            FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
+            UpdateObjectiveList();
+            FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
+        };
     }
 
     public bool canTurnOnLight()
@@ -200,9 +181,7 @@ public class QuestGiver : MonoBehaviour
         {
             // revert
             /*
-            completedObjectives.Add("repairWire");
             strikethroughTextByKey("repairWire");
-            completedObjectives.Add("onLight");
             strikethroughTextByKey("onLight");
             */
             return true;

@@ -197,7 +197,7 @@ public class HUD_Controller : MonoBehaviour
         {
             objectivesPanel.GetComponent<Animator>().ResetTrigger("isEnabled");
             objectivesPanel.GetComponent<Animator>().SetTrigger("isEnabled");
-            FindObjectOfType<QuestGiver>().OnObjectivesTabOpen();
+            FindObjectOfType<QuestGiver>().UpdateObjectiveList();
             FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
         }
         else

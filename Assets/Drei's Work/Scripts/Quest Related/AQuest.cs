@@ -14,11 +14,15 @@ public class AQuest
     [Space]
     public bool isActive;
     [Space]
+
     [Header("Objectives")]
-    public List<string> descriptiveObjectives = new List<string>();
+    public Dictionary<DescriptiveQuest, bool> descriptiveObjectives = 
+        new Dictionary<DescriptiveQuest, bool> ();
     public List<string> UIObjectives = new List<string>();
+
     public int wiresToRepairAmount;
     public int wiresRepairedAmount;
+
     [Space]
     public List<GameObject> neededGameObjects = new List<GameObject>();
     [Space]
@@ -26,7 +30,7 @@ public class AQuest
 
     // public constructor
     public AQuest(QuestDescriptions questID, bool isActive, bool requiresObjectivesUI,  
-        List<string> descriptiveObjectives, List<string> UIObjectives, List<GameObject> neededGameObjects)
+        Dictionary<DescriptiveQuest, bool> descriptiveObjectives, List<string> UIObjectives, List<GameObject> neededGameObjects)
     {
         this.questID = questID;
         this.isActive = isActive;

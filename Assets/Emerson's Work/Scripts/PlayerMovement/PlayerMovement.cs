@@ -57,10 +57,10 @@ public class PlayerMovement : MonoBehaviour
             local_keybind = FindObjectOfType<KeybindReceiver>();
         }
 
-        AddDelegates();
+        InitializeDelegates();
     }
 
-    private void AddDelegates()
+    private void InitializeDelegates()
     {
         Gameplay_DelegateHandler.D_OnDeath += (c_onDeath) =>
         {

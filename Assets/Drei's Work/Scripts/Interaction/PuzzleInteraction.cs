@@ -72,6 +72,21 @@ public class PuzzleInteraction : MonoBehaviour
         //FOR MONOLOGUES
         colorPuzzleUIText = GameObject.Find("PuzzleInteractText");
 
+        InitializeDelegates();
+    }
+    
+    private void InitializeDelegates()
+    {
+        Gameplay_DelegateHandler.D_R3_OnCompletedFire += (c_onCompletedFire) =>
+        {
+            // set the key objective as completed
+            QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
+                .descriptiveObjectives[DescriptiveQuest.R3_COMPLETED_FIRE] = true;
+            // Update the objectiveList as well; double update 
+            FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
+            FindObjectOfType<QuestGiver>().UpdateObjectiveList();
+            FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
+        };
     }
 
     // Start is called before the first frame update
@@ -119,7 +134,7 @@ public class PuzzleInteraction : MonoBehaviour
                                 triggerPuzzleUITextCorrect();
 
                                 //CHECK QUEST GIVER IF CURRENT QUEST HAS FIRE OBJECTIVE. IF IT HAS, MARK IT AS COMPLETE
-                                QuestGiverRef.checkPuzzleInteractionObjectives("completeFire");
+                                Gameplay_DelegateHandler.D_R3_OnCompletedFire(new Gameplay_DelegateHandler.C_R3_OnCompletedFire());
 
                                 //CHANGE FIRE COLOR
                                 ParticleSystem.Play();

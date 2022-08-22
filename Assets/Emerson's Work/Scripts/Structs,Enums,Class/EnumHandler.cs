@@ -27,6 +27,15 @@ public enum QuestDescriptions
     color_r5,
     color_r6
 };
+public enum DescriptiveQuest
+{
+    R3_COMPLETED_FIRE = 0,
+    R3_OBTAINKEY,
+    R5_REPAIR_WIRE,
+    R5_ON_LIGHT,
+    R6_ON_LEFT_LIGHT,
+    R6_ON_DESKLIGHT
+}
 
 public enum QuestType
 {

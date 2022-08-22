@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PuzzleItemInteraction : MonoBehaviour
 {
-    [HideInInspector] public bool canInteract = false;
     PuzzleInventory playerPuzzleInv;
     private QuestGiver questGiver;
 
@@ -14,28 +13,23 @@ public class PuzzleItemInteraction : MonoBehaviour
         questGiver = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
         playerPuzzleInv = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PuzzleInventory>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(canInteract == true)
-        {
-            playerPuzzleInv.AddToInventory(this.gameObject);
-            this.gameObject.SetActive(false);
-        }
-    }
+    
 
 
     private void OnTriggerEnter(Collider other)
     {
-        canInteract = true;
+        playerPuzzleInv.AddToInventory(this.gameObject);
+        this.gameObject.SetActive(false);
+        // call the delegate for the key captured interaction
+        Gameplay_DelegateHandler.D_R3_OnAcquiredKey(new Gameplay_DelegateHandler.C_R3_OnAcquiredKey());
+
         //questGiver.checkItemObjectives();
         //questGiver.checkIfObjectivesComplete();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        canInteract = false;
+
     }
 
 
