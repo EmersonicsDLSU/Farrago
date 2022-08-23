@@ -4,23 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-[System.Serializable]
-//ENUM
-/* // transferred this to 'EnumHandler.cs'
-public enum questDescriptions
-{
-    tutorial_color_r3,
-    color_r5,
-    color_r6
-};
-
-public enum questType
-{
-    ObjectActivation,
-    VineInteraction,
-    WireRepair,
-};
-*/
 public sealed class QuestCollection
 {
     private QuestCollection()
@@ -28,18 +11,18 @@ public sealed class QuestCollection
 
     }
 
-    private static QuestCollection instance = null;
+    private static QuestCollection _instance = null;
 
     public static QuestCollection Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new QuestCollection();
+                _instance = new QuestCollection();
             }
 
-            return instance;
+            return _instance;
         }
     }
 

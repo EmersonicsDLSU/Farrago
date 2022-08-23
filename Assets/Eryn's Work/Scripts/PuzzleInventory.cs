@@ -28,18 +28,31 @@ public class PuzzleInventory : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = new PuzzleInventory();
-                puzzleItems = new Dictionary<PuzzleItem, C_PuzzleItem>(){};
+                _instance = FindObjectOfType<PuzzleInventory>();
+                
+                if (_instance == null)
+                {
+                    _instance = new GameObject().AddComponent<PuzzleInventory>();
+                }
             }
+            
             return _instance;
         }
     }
-    
-    
+
+    void Awake()
+    {
+        if(_instance != null) Destroy(this);
+        DontDestroyOnLoad(this);
+    }
+
+    void Start()
+    {
+        puzzleItems = new Dictionary<PuzzleItem, C_PuzzleItem>(){};
+    }
 
     public void AddToInventory(PuzzleItem identity, GameObject obj)
     {
-        Debug.LogWarning($"Added Item: {identity} : {obj.name}");
         puzzleItems.Add(identity, new C_PuzzleItem(identity, obj));
     }
 
@@ -52,7 +65,6 @@ public class PuzzleInventory : MonoBehaviour
     {
         if (puzzleItems.ContainsKey(item))
         {
-            Debug.LogWarning("FOUND OBJECT: " + name);
             return true;
         }
         return false;
