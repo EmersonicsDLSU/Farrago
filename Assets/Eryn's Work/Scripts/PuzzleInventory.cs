@@ -19,6 +19,8 @@ public class C_PuzzleItem
 public class PuzzleInventory : MonoBehaviour
 {
     private static PuzzleInventory _instance;
+    
+    public static Dictionary<PuzzleItem, C_PuzzleItem> puzzleItems;
 
     public static PuzzleInventory Instance
     {
@@ -27,19 +29,17 @@ public class PuzzleInventory : MonoBehaviour
             if (_instance == null)
             {
                 _instance = new PuzzleInventory();
+                puzzleItems = new Dictionary<PuzzleItem, C_PuzzleItem>(){};
             }
             return _instance;
         }
     }
-    public Dictionary<PuzzleItem, C_PuzzleItem> puzzleItems;
-
-    public void Start()
-    {
-        puzzleItems = new Dictionary<PuzzleItem, C_PuzzleItem>();
-    }
+    
+    
 
     public void AddToInventory(PuzzleItem identity, GameObject obj)
     {
+        Debug.LogWarning($"Added Item: {identity} : {obj.name}");
         puzzleItems.Add(identity, new C_PuzzleItem(identity, obj));
     }
 

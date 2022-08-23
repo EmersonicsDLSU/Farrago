@@ -20,6 +20,7 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     }
 
     // Action Delegates w/ its corresponding class parameter
+    //
     public class C_OnDeath
     {
         public bool isPlayerCaptured;
@@ -31,6 +32,7 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     }
     public static Action<C_OnDeath> D_OnDeath = null;
     
+    //
     public class C_R3_OnCompletedFire
     {
         public C_R3_OnCompletedFire()
@@ -39,7 +41,8 @@ public class Gameplay_DelegateHandler : MonoBehaviour
         }
     }
     public static Action<C_R3_OnCompletedFire> D_R3_OnCompletedFire = null;
-
+    
+    //
     public class C_R3_OnAcquiredKey
     {
         public C_R3_OnAcquiredKey()
@@ -48,5 +51,16 @@ public class Gameplay_DelegateHandler : MonoBehaviour
         }
     }
     public static Action<C_R3_OnAcquiredKey> D_R3_OnAcquiredKey = null;
+
+    //
+    public class C_R3_OnDoorOpen
+    {
+        public GameObject doorObj;
+        public C_R3_OnDoorOpen(GameObject doorObj)
+        {
+            this.doorObj = doorObj;
+        }
+    }
+    public static Action<C_R3_OnDoorOpen> D_R3_OnDoorOpen = null;
 
 }

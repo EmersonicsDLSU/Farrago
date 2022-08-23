@@ -42,14 +42,13 @@ public class QuestGiver : MonoBehaviour
                 //DISABLE OBJECTIVES PANEL IF NOT IN MISSION
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(false);
             }
-            return temp;}
+            // edit the 'return' statement if you want to debug a particular room/level
+            // e.g. return QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
+            return temp;
+
+        }
         private set
         {}
-    }
-
-    void Awake()
-    {
-        InitializeDelegates();
     }
 
     // Start is called before the first frame update
@@ -71,12 +70,6 @@ public class QuestGiver : MonoBehaviour
     {
         // TODO: What if the objectiveTab is Open, the recently done objective will not be seen as completed through the fontStyle
         
-        /*
-        // WARNING: This line below is temporary !!!!
-        Debug.LogError($"Warning: Delete the line below; temporary only!!!");
-        currentQuest = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
-        */
-
         // get the order list of the completed objectives
         var objectiveList = currentQuest.descriptiveObjectives.Values.ToList();
         Debug.LogError($"Objective Count: {objectiveList.Count}");
@@ -104,20 +97,7 @@ public class QuestGiver : MonoBehaviour
             currentQuest.neededGameObjects.Clear();
         }
     }
-
-    private void InitializeDelegates()
-    {
-        Gameplay_DelegateHandler.D_R3_OnAcquiredKey += (c_onAcquireKey) =>
-        {
-            // set the key objective as completed
-            QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
-                .descriptiveObjectives[DescriptiveQuest.R3_OBTAINKEY] = true;
-            // Update the objectiveList as well; double update 
-            FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
-            UpdateObjectiveList();
-            FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
-        };
-    }
+    
 
     public bool canTurnOnLight()
     {

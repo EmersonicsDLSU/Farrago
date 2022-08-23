@@ -84,5 +84,6 @@ public enum Pool_Type
 public enum PuzzleItem
 {
     NONE = -1,
-    KEY
+    KEY,
+    DOOR
 }
