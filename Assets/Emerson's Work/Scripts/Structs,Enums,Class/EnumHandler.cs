@@ -79,3 +79,10 @@ public enum Pool_Type
     COLOR,
     OBJECTIVE
 };
+
+//
+public enum PuzzleItem
+{
+    NONE = -1,
+    KEY
+}

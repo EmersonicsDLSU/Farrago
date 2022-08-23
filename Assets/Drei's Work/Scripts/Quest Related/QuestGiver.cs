@@ -21,19 +21,18 @@ public class QuestGiver : MonoBehaviour
         get
         {
             AQuest temp = null;
-            Debug.LogError($"CurrentRespawnPoint: {RespawnPointsHandler.Instance.CurrentRespawnPoint}");
-            if (RespawnPointsHandler.Instance.CurrentRespawnPoint == RespawnPoints.LEVEL3)
+            if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL3)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
             //add else ifs here for other missions
-            else if (RespawnPointsHandler.Instance.CurrentRespawnPoint == RespawnPoints.LEVEL5)
+            else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL5)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r5];
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
-            else if (RespawnPointsHandler.Instance.CurrentRespawnPoint == RespawnPoints.LEVEL6)
+            else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL6)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r6];
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
@@ -122,17 +121,15 @@ public class QuestGiver : MonoBehaviour
 
     public bool canTurnOnLight()
     {
-        Debug.LogWarning($"Repaired: {currentQuest.wiresRepairedAmount}/{currentQuest.wiresToRepairAmount}");
+        // revert
+        /*
         if (currentQuest.wiresRepairedAmount == currentQuest.wiresToRepairAmount)
         {
-            // revert
-            /*
             strikethroughTextByKey("repairWire");
             strikethroughTextByKey("onLight");
-            */
             return true;
         }
-        
+        */
         return false;
     }
 }

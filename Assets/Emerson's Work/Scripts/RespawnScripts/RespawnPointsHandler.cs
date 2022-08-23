@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
 {
-    private static RespawnPointsHandler instance = null;
+    private static RespawnPointsHandler _instance;
 
     public static RespawnPointsHandler Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new RespawnPointsHandler();
+                _instance = new RespawnPointsHandler();
             }
 
-            return instance;
+            return _instance;
         }
     }
 
-    public RespawnPoints CurrentRespawnPoint = RespawnPoints.NONE;
+    public static RespawnPoints CurrentRespawnPoint;
 
     public void LoadData(GameData data)
     {

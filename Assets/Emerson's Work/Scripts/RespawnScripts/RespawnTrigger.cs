@@ -24,15 +24,12 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         //assigns the location point of this trigger area to be set as a respawn point
         if(player_mainSc != null)
         {
-            //MainCharacterStructs.Instance.playerSavedAttrib.respawnPoint = this.transform.position;
             MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum = respawnPointEnum;
             is_entered = true;
-            DataPersistenceManager.instance.SaveGame(
-                DataPersistenceManager.instance.currentSaveFile);
-            Debug.LogError($"Respawn Point Save In: {this.transform.name}");
+            DataPersistenceManager.instance.SaveGame(DataPersistenceManager.instance.currentSaveFile);
         }
         // add the current respawnPoint
-        RespawnPointsHandler.Instance.CurrentRespawnPoint = respawnPointEnum;
+        RespawnPointsHandler.CurrentRespawnPoint = respawnPointEnum;
         // purpose: call the properties function only
         var temp = FindObjectOfType<QuestGiver>().currentQuest;
         //this.gameObject.SetActive(false);
