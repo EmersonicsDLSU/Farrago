@@ -40,12 +40,6 @@ public class PuzzleInventory : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        if(_instance != null) Destroy(this);
-        DontDestroyOnLoad(this);
-    }
-
     void Start()
     {
         puzzleItems = new Dictionary<PuzzleItem, C_PuzzleItem>(){};

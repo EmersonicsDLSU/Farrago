@@ -85,5 +85,8 @@ public enum PuzzleItem
 {
     NONE = -1,
     KEY,
-    DOOR
+    DOOR,
+    BUNSENBURNER,
+    VINE,
+    WIRE
 }

@@ -32,6 +32,7 @@ public class Key : PuzzleItemInteraction
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.LogError($"Key Acquired!!!");
         PuzzleInventory.Instance.AddToInventory(Item_Identification, this.gameObject);
         this.gameObject.SetActive(false);
         // call the delegate for the key captured interaction

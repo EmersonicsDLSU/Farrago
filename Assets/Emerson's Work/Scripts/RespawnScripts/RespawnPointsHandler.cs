@@ -12,7 +12,12 @@ public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
         {
             if (_instance == null)
             {
-                _instance = new RespawnPointsHandler();
+                _instance = FindObjectOfType<RespawnPointsHandler>();
+
+                if (_instance == null)
+                {
+                    _instance = new RespawnPointsHandler();
+                }
             }
 
             return _instance;

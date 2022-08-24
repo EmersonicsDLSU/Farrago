@@ -6,17 +6,30 @@ using UnityEngine.UI;
 
 public class Gameplay_DelegateHandler : MonoBehaviour
 {
-    public static Gameplay_DelegateHandler instance { get; private set; }
+    public static Gameplay_DelegateHandler _instance { get; private set; }
     
-    private void Awake() 
+    public static Gameplay_DelegateHandler Instance
     {
-        if (instance != null) 
+        get
         {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<Gameplay_DelegateHandler>();
+
+                if (_instance == null)
+                {
+                    _instance = new Gameplay_DelegateHandler();
+                }
+            }
+
+            return _instance;
         }
-        instance = this;
+    }
+    
+    void Awake()
+    {
+        if(_instance != null) Destroy(this);
         DontDestroyOnLoad(this);
-        
     }
 
     // Action Delegates w/ its corresponding class parameter
@@ -62,5 +75,6 @@ public class Gameplay_DelegateHandler : MonoBehaviour
         }
     }
     public static Action<C_R3_OnDoorOpen> D_R3_OnDoorOpen = null;
+    
 
 }

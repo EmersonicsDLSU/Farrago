@@ -7,13 +7,9 @@ using UnityEngine.UI;
 // Abstract class to be inherited by puzzle Item class
 public abstract class PuzzleItemInteraction : MonoBehaviour
 {
-    public List<PuzzleItem> objectsRequired;
-
     //Interact
     [HideInInspector] public bool canInteract = false;
     [HideInInspector] public float timePress;
-    [HideInInspector] public bool interactAgain = true;
-    [HideInInspector] public bool interacted = false;
     
     public PuzzleItem Item_Identification;
 
@@ -45,23 +41,26 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
 
     }
 
+    // this is the default condition interaction
+    public virtual bool ConditionBeforeInteraction()
+    {
+        return true;
+    }
+
     // Default Update content
     public virtual void InheritorsUpdate()
     {
-        if (canInteract && !interacted)
+        if (canInteract)
         {
             interactableParent.SetActive(true);
-            Debug.LogError($"Can interact with Door: {objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e))} : {PuzzleInventory.puzzleItems.Count}");
-            // Checks if all items are found in the inventory
-            if (objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e)))
+            if(ConditionBeforeInteraction())
             {
                 if (Input.GetKeyUp(KeyCode.E))
                 {
                     timePress = 0;
                     interactableFill.fillAmount = 0.0f;
-                    interactAgain = true;
                 }
-                else if (Input.GetKey(KeyCode.E) && interactAgain)
+                else if (Input.GetKey(KeyCode.E))
                 {
                     mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                     timePress += Time.deltaTime;
@@ -74,8 +73,6 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
 
                         timePress = 0;
                         interactableFill.fillAmount = 0.0f;
-                        interactAgain = false;
-                        interacted = true;
                     }
                 }
             }
@@ -88,6 +85,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
         }
     }
 
+    // Add here the delegate to be called for a specific puzzle
     protected void CallItemEvents(PuzzleItem item)
     {
         switch (item)
@@ -97,6 +95,25 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
             case PuzzleItem.DOOR:
                 Gameplay_DelegateHandler.D_R3_OnDoorOpen(new Gameplay_DelegateHandler.C_R3_OnDoorOpen(this.gameObject));
                 break;
+            case PuzzleItem.BUNSENBURNER:
+                Gameplay_DelegateHandler.D_R3_OnCompletedFire(new Gameplay_DelegateHandler.C_R3_OnCompletedFire());
+                break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            this.canInteract = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            this.canInteract = false;
         }
     }
 }

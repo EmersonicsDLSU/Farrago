@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class PuzzleInteraction : MonoBehaviour
+public class PuzzleInteraction : PuzzleItemInteraction
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private ParticleSystem ParticleSystem;
@@ -19,19 +19,11 @@ public class PuzzleInteraction : MonoBehaviour
     
     
     public Animator anim;
-
-    [Space]
-    [Header("Interactables")]
-    public GameObject interactableParent;
-    public Image interactableFill;
-
+    
     [Space] [Header("Puzzle Light Interaction")] 
     [SerializeField] private PuzzleLightInteraction lightPuzzleSc;
-
-    [HideInInspector]public bool canInteract = false;
+    
     private bool isColorCorrect = false;
-    private float timePress;
-    private bool interactAgain = true;
 
     private GameObject colorPuzzleUIText;
     
@@ -39,8 +31,7 @@ public class PuzzleInteraction : MonoBehaviour
     private List<string> characterResponsesCorrect = new List<string>();
     private List<string> characterResponsesIncorrect = new List<string>();
     private int randomMonologueHolder;
-
-    private MainPlayerSc mainPlayer;
+    
     private QuestGiver QuestGiverRef;
 
     void Awake()
@@ -65,8 +56,7 @@ public class PuzzleInteraction : MonoBehaviour
 
         ma = ParticleSystem.main;
         tr = ParticleSystem.trails;
-
-        mainPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<MainPlayerSc>();
+        
         //GET QUEST GIVER REFERENCE
         QuestGiverRef = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
 
@@ -119,9 +109,8 @@ public class PuzzleInteraction : MonoBehaviour
             {
                 timePress = 0;
                 interactableFill.fillAmount = 0.0f;
-                interactAgain = true;
             }
-            if (Input.GetKey(KeyCode.E) && interactAgain)
+            if (Input.GetKey(KeyCode.E))
             {
                 mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                 timePress += Time.deltaTime;
@@ -132,40 +121,6 @@ public class PuzzleInteraction : MonoBehaviour
                     Debug.Log($"Hitted obj: {this.transform.name}");
                     switch (this.transform.tag)
                     {
-                        case "Interactable Fire":
-                            isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color);
-                            Debug.Log("is color correct: " + isColorCorrect);
-
-                            if (isColorCorrect == true)
-                            {
-                                //TRIGGER CORRECT MONOLOGUE
-                                triggerPuzzleUITextCorrect();
-
-                                //CHECK QUEST GIVER IF CURRENT QUEST HAS FIRE OBJECTIVE. IF IT HAS, MARK IT AS COMPLETE
-                                Gameplay_DelegateHandler.D_R3_OnCompletedFire(new Gameplay_DelegateHandler.C_R3_OnCompletedFire());
-
-                                //CHANGE FIRE COLOR
-                                ParticleSystem.Play();
-                                ParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                ma.startColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
-
-                                //FOR ICE ANIM
-                                if (anim != null)
-                                {
-                                    anim.SetBool("will fade", true);
-                                    anim.gameObject.GetComponent<BoxCollider>().enabled = false;
-                                    if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
-                                        anim.gameObject.GetComponent<AudioSource>().Play();
-                                }
-                               
-                            }
-                            else
-                            {
-                                //TRIGGER INCORRECT MONOLOGUE
-                                triggerPuzzleUITextIncorrect();
-                            }
-                            break;
-
                         case "Interactable Electricity":
                             isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color);
                             Debug.Log("is color correct: " + isColorCorrect);
@@ -231,7 +186,6 @@ public class PuzzleInteraction : MonoBehaviour
 
                     timePress = 0;
                     interactableFill.fillAmount = 0.0f;
-                    interactAgain = false;
                 }
             }
         }
