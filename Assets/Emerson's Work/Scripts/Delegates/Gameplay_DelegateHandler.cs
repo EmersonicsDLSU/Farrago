@@ -75,6 +75,34 @@ public class Gameplay_DelegateHandler : MonoBehaviour
         }
     }
     public static Action<C_R3_OnDoorOpen> D_R3_OnDoorOpen = null;
-    
 
+    //
+    public class C_R5_OnWire
+    {
+        public C_R5_OnWire()
+        {
+
+        }
+    }
+    public static Action<C_R5_OnWire> D_R5_OnWire = null;
+
+    //
+    public class C_R6_OnVineGrow
+    {
+        public C_R6_OnVineGrow()
+        {
+
+        }
+    }
+    public static Action<C_R6_OnVineGrow> D_R6_OnVineGrow = null;
+    
+    //
+    public class C_R6_OnWire
+    {
+        public C_R6_OnWire()
+        {
+
+        }
+    }
+    public static Action<C_R6_OnWire> D_R6_OnWire = null;
 }

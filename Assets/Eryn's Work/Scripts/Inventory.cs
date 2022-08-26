@@ -16,7 +16,7 @@ public class Slots
     // COLORITEM IS FOR POTION PREFAB HOLDER
     public GameObject colorItem;
     // ColorMixer Object
-    public ColorMixer color;
+    public ColorMixer colorMixer;
 }
 public class Inventory : MonoBehaviour
 {
@@ -83,10 +83,10 @@ public class Inventory : MonoBehaviour
         if (inventorySlots[0].isFull == true)
         {
             // terminate the function if the same color is absorbed
-            if (color.color_code == inventorySlots[0].color.color_code)
+            if (color.color_code == inventorySlots[0].colorMixer.color_code)
                 return;
             Debug.LogError($"Combine!!!");
-            AssignColor(inventorySlots[0].color + color);
+            AssignColor(inventorySlots[0].colorMixer + color);
         }
         else // simply assigns the new color
         {
@@ -108,7 +108,7 @@ public class Inventory : MonoBehaviour
         //this.inventoryPoolSc.setCurrentColorPosition(inventorySlots[0].inventorySlot.transform);
         inventorySlots[0].colorItem = 
             this.inventoryPoolSc.itemPool.usedObjects[this.inventoryPoolSc.itemPool.usedObjects.Count - 1];
-        inventorySlots[0].color = color;
+        inventorySlots[0].colorMixer = color;
     }
     // PUBLIC FUNCTION FOR CHECKING IF INVENTORY IS FULL
     // CAN BE USED IN OTHER SCRIPTS FOR CHECKING INVENTORY STATUS

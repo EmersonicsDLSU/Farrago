@@ -12,52 +12,77 @@ public class BunsenBurner : PuzzleItemInteraction
     [SerializeField] private ParticleSystem ParticleSystem;
     private ParticleSystem.MainModule ma;
     public Animator anim;
-    private GameObject colorPuzzleUIText;
+
+    // References
+    private Inventory inventory;
+    private ObjectivePool objectivePool;
+    private QuestGiver questGiver;
     
-    // Start is called before the first frame update
-    void Start()
+    public override void InheritorsStart()
     {
+        inventory = FindObjectOfType<Inventory>();
+        if (inventory == null)
+        {
+            Debug.LogError($"Missing Script: Inventory.cs");
+        }
+        
+        objectivePool = FindObjectOfType<ObjectivePool>();
+        if (objectivePool == null)
+        {
+            Debug.LogError($"Missing Script: ObjectivePool.cs");
+        }
+
+        questGiver = FindObjectOfType<QuestGiver>();
+        if (questGiver == null)
+        {
+            Debug.LogError($"Missing Script: QuestGiver.cs");
+        }
+
         ma = ParticleSystem.main;
         
-        //FOR MONOLOGUES
-        colorPuzzleUIText = GameObject.Find("PuzzleInteractText");
-
         anim.SetBool("will fade", false);
 
         //DISABLE FIRE PARTICLE SYSTEM
         if(ParticleSystem.gameObject.transform.parent.tag == "Interactable Fire")
             ParticleSystem.Stop();
     }
-    
+
+    // Subscribe event should only be called once to avoid duplication
     public override void InitializeDelegates()
     {
-        Gameplay_DelegateHandler.D_R3_OnCompletedFire += (c_onCompletedFire) =>
+        Gameplay_DelegateHandler.D_R3_OnCompletedFire += (e) =>
         {
             // Check if color is correct
-            if (FindObjectOfType<Inventory>().inventorySlots[0].color.color_code == ColorCode.RED)
+            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.ORANGE)
             {
+                // disables the interactable UI
+                interactableParent.SetActive(false);
+
+                /* Start of Objective Completion / Setting strikethrough to the text's fontStyle*/
                 // set the fire objective as completed
                 QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
                     .descriptiveObjectives[DescriptiveQuest.R3_COMPLETED_FIRE] = true;
+
                 // Update the objectiveList as well; double update 
-                FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
-                FindObjectOfType<QuestGiver>().UpdateObjectiveList();
-                FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
-            
+                objectivePool.itemPool.ReleaseAllPoolable();
+                questGiver.UpdateObjectiveList();
+                objectivePool.EnabledAnimation(true);
+
                 // Check if all objectives are completed
-                if (FindObjectOfType<QuestGiver>().currentQuest != null &&
-                    QuestCollection.Instance.questDict[FindObjectOfType<QuestGiver>().currentQuest.questID].descriptiveObjectives.Values.All(e => e == true))
+                if (questGiver.currentQuest != null && QuestCollection.Instance.questDict[questGiver.currentQuest.questID].
+                        descriptiveObjectives.Values.All(e => e == true))
                 {
-                    FindObjectOfType<QuestGiver>().currentQuest.neededGameObjects.Clear();
+                    questGiver.currentQuest.neededGameObjects.Clear();
                 }
-                
+                /* End of Objective Completion */
+
                 //TRIGGER CORRECT MONOLOGUE
                 Monologues.Instance.triggerPuzzleUITextCorrect();
                 
                 //CHANGE FIRE COLOR
                 ParticleSystem.Play();
                 ParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                ma.startColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
+                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
 
                 //FOR ICE ANIM
                 if (anim != null)
@@ -76,5 +101,6 @@ public class BunsenBurner : PuzzleItemInteraction
             }
         };
     }
+    
     
 }

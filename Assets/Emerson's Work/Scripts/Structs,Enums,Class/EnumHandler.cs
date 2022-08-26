@@ -88,5 +88,23 @@ public enum PuzzleItem
     DOOR,
     BUNSENBURNER,
     VINE,
-    WIRE
+    WIRE_R5,
+    WIRE_R6
+}
+
+//
+public enum CutSceneTypes
+{
+    None = 0,
+    Level1Intro,
+    Level2Intro,
+    Level2JournalChecker,
+    Level3Intro,
+    Level3End,
+    Level4Intro,
+    Level4RatCage,
+    MeltIceScene,
+    Level5PlantGrow,
+    Level6Transition,
+    Level6Dead
 }

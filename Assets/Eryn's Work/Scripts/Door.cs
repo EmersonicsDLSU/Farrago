@@ -8,14 +8,25 @@ public class Door : PuzzleItemInteraction
 {
     public List<PuzzleItem> objectsRequired;
 
+    public override void InheritorsAwake()
+    {
+        // empty
+    }
+    
+    public override void InheritorsStart()
+    {
+        // empty
+    }
+
+    // Subscribe event should only be called once to avoid duplication
     public override void InitializeDelegates()
     {
-        Gameplay_DelegateHandler.D_R3_OnDoorOpen += (c_onDoorOpen) =>
+        Gameplay_DelegateHandler.D_R3_OnDoorOpen += (e) =>
         {
-            c_onDoorOpen.doorObj.GetComponent<AudioSource>().Play();
-            if (c_onDoorOpen.doorObj.gameObject.activeSelf != false)
+            e.doorObj.GetComponent<AudioSource>().Play();
+            if (e.doorObj.gameObject.activeSelf != false)
             {
-                Animator animator = c_onDoorOpen.doorObj.GetComponent<Animator>();
+                Animator animator = e.doorObj.GetComponent<Animator>();
 
                 if (animator != null)
                 {
@@ -29,6 +40,13 @@ public class Door : PuzzleItemInteraction
     {
         // Checks if all items are found in the inventory
         if (objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e)))
+            return true;
+        return false;
+    }
+    
+    public override bool ConditionFillCompletion()
+    {
+        if(interactableFill.fillAmount >= 1.0f && !this.GetComponent<AudioSource>().isPlaying)
             return true;
         return false;
     }

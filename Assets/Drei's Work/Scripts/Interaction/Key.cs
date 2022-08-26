@@ -5,20 +5,20 @@ using UnityEngine;
 public class Key : PuzzleItemInteraction
 {
     private QuestGiver questGiver;
-    
-    // Start is called before the first frame update
-    void Start()
+    public override void InheritorsStart()
     {
         questGiver = FindObjectOfType<QuestGiver>();
     }
-
+    // removes the default update
     public override void InheritorsUpdate()
     {
         // empty
     }
+
+    // Subscribe event should only be called once to avoid duplication
     public override void InitializeDelegates()
     {
-        Gameplay_DelegateHandler.D_R3_OnAcquiredKey += (c_onAcquireKey) =>
+        Gameplay_DelegateHandler.D_R3_OnAcquiredKey += (e) =>
         {
             // set the key objective as completed
             QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]

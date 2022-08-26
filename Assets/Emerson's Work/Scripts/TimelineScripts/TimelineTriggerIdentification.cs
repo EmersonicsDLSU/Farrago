@@ -82,11 +82,19 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         data.cutsceneTriggerPassed.TryGetValue((int)sceneType, out isCompleted);
-        if (isConditional) 
+        if (isCompleted)
         {
             GetComponent<BoxCollider>().enabled = false;
         }
-        GetComponent<BoxCollider>().enabled = !isCompleted;
+        else
+        {
+            GetComponent<BoxCollider>().enabled = true;
+        }
+        // if the trigger has a condition before enabling the timelineTrigger
+        if (isConditional && !isCompleted) 
+        {
+            GetComponent<BoxCollider>().enabled = false;
+        }
     }
 
     public void SaveData(GameData data)

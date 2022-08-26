@@ -14,6 +14,7 @@ public class AQuest
     [Space]
 
     [Header("Objectives")]
+    // boolean is used to check whether the objective is done
     public Dictionary<DescriptiveQuest, bool> descriptiveObjectives = 
         new Dictionary<DescriptiveQuest, bool> ();
     public List<string> UIObjectives = new List<string>();

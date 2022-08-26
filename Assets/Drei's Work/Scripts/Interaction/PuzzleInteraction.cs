@@ -36,34 +36,7 @@ public class PuzzleInteraction : PuzzleItemInteraction
 
     void Awake()
     {
-        characterResponsesCorrect.Add("Brilliant!");
-        characterResponsesCorrect.Add("I knew it");
-        characterResponsesCorrect.Add("I knew that was right");
-        characterResponsesCorrect.Add("That makes sense!");
-        characterResponsesCorrect.Add("All that research pays off");
 
-        characterResponsesIncorrect.Add("That’s not it…");
-        characterResponsesIncorrect.Add("That can’t be it…");
-        characterResponsesIncorrect.Add("I don’t think this is working");
-        characterResponsesIncorrect.Add("There has to be another way…");
-        characterResponsesIncorrect.Add("Maybe… something else");
-        characterResponsesIncorrect.Add("I’ll try something else");
-        characterResponsesIncorrect.Add("Need to think of something better…");
-        characterResponsesIncorrect.Add("I’m sure there’s a better solution");
-        characterResponsesIncorrect.Add("This doesn’t make sense…");
-        characterResponsesIncorrect.Add("This isn’t it");
-        characterResponsesIncorrect.Add("I’m… guessing this isn’t right");
-
-        ma = ParticleSystem.main;
-        tr = ParticleSystem.trails;
-        
-        //GET QUEST GIVER REFERENCE
-        QuestGiverRef = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
-
-        //FOR MONOLOGUES
-        colorPuzzleUIText = GameObject.Find("PuzzleInteractText");
-
-        InitializeDelegates();
     }
     
     private void InitializeDelegates()
@@ -129,10 +102,10 @@ public class PuzzleInteraction : PuzzleItemInteraction
                             {
                                 colorToAssign = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
 
-                                //ADD WIRE REPAIRED AMOUNT TO CURRENT QUEST
+                                //ADD WIRE REPAIRED AMOUNT TO CURRENT QUEST; FOR ROOM 5 ONLY
                                 QuestGiverRef.currentQuest.wiresRepairedAmount++;
 
-                                //FOR PUZZLE LIGHT INTERACTION
+                                //FOR PUZZLE LIGHT INTERACTION; FOR ROOM 6 ONLY
                                 if(lightPuzzleSc != null)
                                     lightPuzzleSc.isWireRepaired = true;
 
@@ -153,35 +126,6 @@ public class PuzzleInteraction : PuzzleItemInteraction
                                 triggerPuzzleUITextIncorrect();
                             }
                             break;
-
-                        case "Interactable Vine":
-                            isColorCorrect = colorChecker(this.transform.tag, GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color);
-                            Debug.Log("is color correct: " + isColorCorrect);
-
-                            if (isColorCorrect == true)
-                            {
-                                colorToAssign = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>().material.color;
-
-
-                                // ------- TEMP CODE FOR LEVEL 6, REMOVE SOON -------------
-                                interactableParent.SetActive(false);
-                                this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
-                                Invoke("stopVineAnim", 3.0f);
-                                // --------------------------------------------------------
-
-                                //TRIGGER CORRECT MONOLOGUE
-                                triggerPuzzleUITextCorrect();
-
-                                //CHANGE VINE COLOR
-                                this.gameObject.GetComponent<Renderer>().material.color = colorToAssign;
-                            }
-                            else
-                            {
-                                //TRIGGER INCORRECT MONOLOGUE
-                                triggerPuzzleUITextIncorrect();
-                            }
-                            break;
-
                     }
 
                     timePress = 0;
@@ -258,10 +202,5 @@ public class PuzzleInteraction : PuzzleItemInteraction
 
         colorPuzzleUIText.GetComponent<Animator>().SetBool("toTriggerCorrect", true);
         Invoke("closePuzzleUITextCorrect", 2.0f);
-    }
-
-    private void stopVineAnim()
-    {
-        this.gameObject.GetComponent<Animator>().enabled = false;
     }
 }

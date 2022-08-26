@@ -22,31 +22,54 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
     
     void Awake()
     {
-        InitializeDelegates();
+        // if delegate should only be subscribe once
+        if(isDelegateInitializedOnce)
+        {
+            // if delegate has not yet subscribed to
+            if (!hasInitializedOnce)
+            {
+                hasInitializedOnce = true;
+                InitializeDelegates();
+            }
+        }
+        else
+        {
+            InitializeDelegates();
+        }
+        mainPlayer = FindObjectOfType<MainPlayerSc>();
+        InheritorsAwake();
+    }
+    // overridable function for Awake method
+    public virtual void InheritorsAwake()
+    {
+
     }
 
     void Start()
     {
-        mainPlayer = FindObjectOfType<MainPlayerSc>();
+        InheritorsStart();
     }
     
-    public void Update()
+    // overridable function for Start method
+    public virtual void InheritorsStart()
     {
-        InheritorsUpdate();
+
     }
     
+    /* Important Field */
+    [HideInInspector]public bool hasInitializedOnce = false;
+    public bool isDelegateInitializedOnce = false;
     // Inherited class should override this method if they want to add events to the item interaction
     public virtual void InitializeDelegates()
     {
 
     }
 
-    // this is the default condition interaction
-    public virtual bool ConditionBeforeInteraction()
+    public void Update()
     {
-        return true;
+        InheritorsUpdate();
     }
-
+    
     // Default Update content
     public virtual void InheritorsUpdate()
     {
@@ -66,7 +89,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
                     timePress += Time.deltaTime;
                     interactableFill.fillAmount = timePress / 2.0f;
 
-                    if (interactableFill.fillAmount == 1.0f && !this.GetComponent<AudioSource>().isPlaying)
+                    if (ConditionFillCompletion())
                     {
                         // call the item's events
                         CallItemEvents(Item_Identification);
@@ -84,6 +107,21 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
             interactableParent.SetActive(false);
         }
     }
+    
+    // this is the default condition for interaction
+    public virtual bool ConditionBeforeInteraction()
+    {
+        return true;
+    }
+
+    // this is the default condition for radial-fill completion
+    public virtual bool ConditionFillCompletion()
+    {
+        if(interactableFill.fillAmount >= 1.0f)
+            return true;
+        return false;
+    }
+
 
     // Add here the delegate to be called for a specific puzzle
     protected void CallItemEvents(PuzzleItem item)
@@ -97,6 +135,11 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
                 break;
             case PuzzleItem.BUNSENBURNER:
                 Gameplay_DelegateHandler.D_R3_OnCompletedFire(new Gameplay_DelegateHandler.C_R3_OnCompletedFire());
+                break;
+            case PuzzleItem.WIRE_R5:
+                Gameplay_DelegateHandler.D_R5_OnWire(new Gameplay_DelegateHandler.C_R5_OnWire());
+                break;
+            case PuzzleItem.WIRE_R6:
                 break;
         }
     }

@@ -9,22 +9,20 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 {
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public CharacterController playerCharController;
-    //[HideInInspector] public Rigidbody agentRigid;
-    //[HideInInspector] public MeshRenderer agentMesh;
     [HideInInspector] public SkinnedMeshRenderer playerSkinMesh;
     public Animator playerAnim;
     [HideInInspector] public PlayerAngelaAnimations playerAngelaAnim;
 
-    //other player scripts
+    // other player scripts
     [HideInInspector] public PlayerMovement playerMovementSc;
     [HideInInspector] public Inventory playerInventory;
     [HideInInspector] public PuzzleInventory player_puzzleInventory;
     [HideInInspector] public CharacterControllerDetection characterControllerDetection = null;
     [HideInInspector] public PotionAbsorption PotionAbsorptionSC = null;
 
-    //external scripts
+    // external scripts
     public TimelineLevel timelineLevelSc = null;
-    
+
     // Start is called before the first frame update
     void Awake()
     {

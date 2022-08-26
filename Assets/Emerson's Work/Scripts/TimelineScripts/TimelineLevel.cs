@@ -5,31 +5,14 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public enum CutSceneTypes
-{
-    None = 0,
-    Level1Intro,
-    Level2Intro,
-    Level2JournalChecker,
-    Level3Intro,
-    Level3End,
-    Level4Intro,
-    Level4RatCage,
-    MeltIceScene,
-    Level5PlantGrow,
-    Level6Transition,
-    Level6Dead
-}
-
-
 public class TimelineLevel : MonoBehaviour
 {
     //list of timelines in the scene
     [SerializeField] private List<GameObject> timelineObjectsList = new List<GameObject>();
     public List<GameObject> triggerObjectList = new List<GameObject>();
 
-    private Dictionary<CutSceneTypes, GameObject> timelineCollection = new Dictionary<CutSceneTypes, GameObject>();
-    private Dictionary<CutSceneTypes, GameObject> timelineTriggerCollection = new Dictionary<CutSceneTypes, GameObject>();
+    public Dictionary<CutSceneTypes, GameObject> timelineCollection = new Dictionary<CutSceneTypes, GameObject>();
+    public Dictionary<CutSceneTypes, GameObject> timelineTriggerCollection = new Dictionary<CutSceneTypes, GameObject>();
     //current timeline being used / played
     public PlayableDirector currentTimeline = null;
     //current sceneType
