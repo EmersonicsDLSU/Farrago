@@ -44,7 +44,7 @@ public class QuestGiver : MonoBehaviour
             }
             // edit the 'return' statement if you want to debug a particular room/level
             // e.g. return QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
-            return temp;
+            return QuestCollection.Instance.questDict[QuestDescriptions.color_r6];
 
         }
         private set

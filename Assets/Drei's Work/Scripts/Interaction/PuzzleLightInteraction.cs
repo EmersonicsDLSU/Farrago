@@ -35,16 +35,8 @@ public class PuzzleLightInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //FOR ROOM 5
-        if (questGiver.canTurnOnLight() && special_lightInteractionType == SpecialLightInteraction.NONE)
-        {
-            Debug.LogError($"None");
-            GetComponent<Light>().enabled = true;
-            level5CutsceneTrigger.SetActive(true);
-        }
-
         //FOR ROOM 6
-        else if (questGiver.currentQuest.questID == QuestDescriptions.color_r6)
+        if (questGiver.currentQuest.questID == QuestDescriptions.color_r6)
         {
             //if the wire connected to the light is repaired, turn on light
             if (isWireRepaired == true)

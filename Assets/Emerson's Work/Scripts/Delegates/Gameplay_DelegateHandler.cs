@@ -79,9 +79,10 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     //
     public class C_R5_OnWire
     {
-        public C_R5_OnWire()
+        public R5_Wires wireR5;
+        public C_R5_OnWire(R5_Wires wireR5)
         {
-
+            this.wireR5 = wireR5;
         }
     }
     public static Action<C_R5_OnWire> D_R5_OnWire = null;
@@ -97,12 +98,32 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     public static Action<C_R6_OnVineGrow> D_R6_OnVineGrow = null;
     
     //
-    public class C_R6_OnWire
+    public class C_R6_RightWire
     {
-        public C_R6_OnWire()
+        public C_R6_RightWire()
         {
 
         }
     }
-    public static Action<C_R6_OnWire> D_R6_OnWire = null;
+    public static Action<C_R6_RightWire> D_R6_RightWire = null;
+
+    //
+    public class C_R6_LeftWire
+    {
+        public C_R6_LeftWire()
+        {
+
+        }
+    }
+    public static Action<C_R6_LeftWire> D_R6_LeftWire = null;
+
+    //
+    public class C_R6_DeskLamp
+    {
+        public C_R6_DeskLamp()
+        {
+
+        }
+    }
+    public static Action<C_R6_DeskLamp> D_R6_DeskLamp = null;
 }

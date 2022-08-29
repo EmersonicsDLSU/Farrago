@@ -84,12 +84,14 @@ public enum Pool_Type
 public enum PuzzleItem
 {
     NONE = -1,
-    KEY,
-    DOOR,
-    BUNSENBURNER,
-    VINE,
-    WIRE_R5,
-    WIRE_R6
+    R3_KEY,
+    R3_DOOR,
+    R3_BUNSEN_BURNER,
+    R5_WIRES,
+    R6_VINE,
+    R6_LEFT_WIRE,
+    R6_RIGHT_WIRE,
+    R6_DESK_LAMP
 }
 
 //

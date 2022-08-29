@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public abstract class PuzzleItemInteraction : MonoBehaviour
 {
     //Interact
-    [HideInInspector] public bool canInteract = false;
+    [HideInInspector] public bool canInteract;
+    [HideInInspector] public bool isActive;
     [HideInInspector] public float timePress;
     
     public PuzzleItem Item_Identification;
@@ -22,20 +23,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
     
     void Awake()
     {
-        // if delegate should only be subscribe once
-        if(isDelegateInitializedOnce)
-        {
-            // if delegate has not yet subscribed to
-            if (!hasInitializedOnce)
-            {
-                hasInitializedOnce = true;
-                InitializeDelegates();
-            }
-        }
-        else
-        {
-            InitializeDelegates();
-        }
+        InitializeDelegates();
         mainPlayer = FindObjectOfType<MainPlayerSc>();
         InheritorsAwake();
     }
@@ -48,6 +36,10 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
     void Start()
     {
         InheritorsStart();
+
+        // assign value to fields
+        canInteract = false;
+        isActive = true;
     }
     
     // overridable function for Start method
@@ -56,9 +48,6 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
 
     }
     
-    /* Important Field */
-    [HideInInspector]public bool hasInitializedOnce = false;
-    public bool isDelegateInitializedOnce = false;
     // Inherited class should override this method if they want to add events to the item interaction
     public virtual void InitializeDelegates()
     {
@@ -128,25 +117,26 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
     {
         switch (item)
         {
-            case PuzzleItem.KEY:
+            case PuzzleItem.R3_KEY:
                 break;
-            case PuzzleItem.DOOR:
+            case PuzzleItem.R3_DOOR:
                 Gameplay_DelegateHandler.D_R3_OnDoorOpen(new Gameplay_DelegateHandler.C_R3_OnDoorOpen(this.gameObject));
                 break;
-            case PuzzleItem.BUNSENBURNER:
+            case PuzzleItem.R3_BUNSEN_BURNER:
                 Gameplay_DelegateHandler.D_R3_OnCompletedFire(new Gameplay_DelegateHandler.C_R3_OnCompletedFire());
                 break;
-            case PuzzleItem.WIRE_R5:
-                Gameplay_DelegateHandler.D_R5_OnWire(new Gameplay_DelegateHandler.C_R5_OnWire());
+            case PuzzleItem.R5_WIRES:
+                Gameplay_DelegateHandler.D_R5_OnWire(new Gameplay_DelegateHandler.C_R5_OnWire(GetComponent<R5_Wires>()));
                 break;
-            case PuzzleItem.WIRE_R6:
+            case PuzzleItem.R6_VINE:
+                Gameplay_DelegateHandler.D_R6_OnVineGrow(new Gameplay_DelegateHandler.C_R6_OnVineGrow());
                 break;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isActive)
         {
             this.canInteract = true;
         }
