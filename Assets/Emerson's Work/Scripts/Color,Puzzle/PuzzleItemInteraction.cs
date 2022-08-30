@@ -131,6 +131,15 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
             case PuzzleItem.R6_VINE:
                 Gameplay_DelegateHandler.D_R6_OnVineGrow(new Gameplay_DelegateHandler.C_R6_OnVineGrow());
                 break;
+            case PuzzleItem.R6_LEFT_WIRE:
+                Gameplay_DelegateHandler.D_R6_LeftWire(new Gameplay_DelegateHandler.C_R6_LeftWire());
+                break;
+            case PuzzleItem.R6_RIGHT_WIRE:
+                Gameplay_DelegateHandler.D_R6_RightWire(new Gameplay_DelegateHandler.C_R6_RightWire());
+                break;
+            case PuzzleItem.R6_DESK_LAMP:
+                Gameplay_DelegateHandler.D_R6_DeskLamp(new Gameplay_DelegateHandler.C_R6_DeskLamp());
+                break;
         }
     }
 

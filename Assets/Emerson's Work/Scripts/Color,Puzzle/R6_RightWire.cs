@@ -6,8 +6,12 @@ using UnityEngine;
 public class R6_RightWire : PuzzleItemInteraction
 {
     [SerializeField] private ParticleSystem ParticleSystem;
+    private ParticleSystem.MainModule ma;
+    private ParticleSystem.MainModule subEmitter;
+    private ParticleSystem.TrailModule tr;
     [SerializeField] private GameObject lightToOpen;
     [SerializeField] private GameObject assignedVine;
+    [SerializeField] private GameObject Level6DeadTrigger;
 
     // References
     private Inventory inventory;
@@ -18,10 +22,11 @@ public class R6_RightWire : PuzzleItemInteraction
     // Conditions
     // for scripts with delegates that should be initialized once
     private bool isInitialized = false;
-
+    
     public override void InheritorsAwake()
     {
-
+        ma = ParticleSystem.main;
+        tr = ParticleSystem.trails;
     }
 
     public override void InheritorsStart()
@@ -55,10 +60,10 @@ public class R6_RightWire : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void InitializeDelegates()
     {
-        Gameplay_DelegateHandler.D_R3_OnCompletedFire += (e) =>
+        Gameplay_DelegateHandler.D_R6_RightWire += (e) =>
         {
             // Check if color is correct and if the left wire is turned on
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW && FindObjectOfType<R6_LeftWire>().isActive)
+            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
             {
                 // disables the interactable UI
                 interactableParent.SetActive(false);
@@ -67,10 +72,22 @@ public class R6_RightWire : PuzzleItemInteraction
                 // open the light component from the wire
                 lightToOpen.SetActive(true);
                 
-                //enable anim of correct vine length
-                assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
-                assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
-                Invoke("StopVineAnim", 3.0f);
+                //CHANGE ELECTRICITY COLOR
+                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+                tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+                ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+                subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+                subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
+
+                // If left wire is open / or the objective is not active anymore; then vine will bridge the rat
+                if (!FindObjectOfType<R6_LeftWire>().isActive)
+                {
+                    // enable the death timeline trigger
+                    Level6DeadTrigger.GetComponent<BoxCollider>().enabled = true;
+                    //enable anim of correct vine length
+                    assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
+                    assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
+                }
 
                 //TRIGGER CORRECT MONOLOGUE
                 Monologues.Instance.triggerPuzzleUITextCorrect();
@@ -81,10 +98,5 @@ public class R6_RightWire : PuzzleItemInteraction
                 Monologues.Instance.triggerPuzzleUITextIncorrect();
             }
         };
-    }
-    
-    private void StopVineAnim()
-    {
-        assignedVine.GetComponent<Animator>().enabled = false;
     }
 }

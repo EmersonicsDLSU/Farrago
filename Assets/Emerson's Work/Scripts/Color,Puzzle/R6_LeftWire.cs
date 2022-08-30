@@ -6,8 +6,12 @@ using UnityEngine;
 public class R6_LeftWire : PuzzleItemInteraction
 {
     [SerializeField] private ParticleSystem ParticleSystem;
+    private ParticleSystem.MainModule ma;
+    private ParticleSystem.MainModule subEmitter;
+    private ParticleSystem.TrailModule tr;
     [SerializeField] private GameObject lightToOpen;
     [SerializeField] private GameObject assignedVine;
+    [SerializeField] private GameObject Level6DeadTrigger;
 
     // References
     private Inventory inventory;
@@ -18,10 +22,11 @@ public class R6_LeftWire : PuzzleItemInteraction
     // Conditions
     // for scripts with delegates that should be initialized once
     private bool isInitialized = false;
-
+    
     public override void InheritorsAwake()
     {
-
+        ma = ParticleSystem.main;
+        tr = ParticleSystem.trails;
     }
 
     public override void InheritorsStart()
@@ -55,10 +60,10 @@ public class R6_LeftWire : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void InitializeDelegates()
     {
-        Gameplay_DelegateHandler.D_R3_OnCompletedFire += (e) =>
+        Gameplay_DelegateHandler.D_R6_LeftWire += (e) =>
         {
             // Check if color is correct
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.ORANGE)
+            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
             {
                 // disables the interactable UI
                 interactableParent.SetActive(false);
@@ -66,6 +71,13 @@ public class R6_LeftWire : PuzzleItemInteraction
 
                 // open the light component from the wire
                 lightToOpen.SetActive(true);
+
+                //CHANGE ELECTRICITY COLOR
+                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+                tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+                ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+                subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+                subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
 
                 // if left wire is the only one activated
                 if (FindObjectOfType<R6_RightWire>().isActive)
@@ -76,6 +88,8 @@ public class R6_LeftWire : PuzzleItemInteraction
                 // if the right wire has already been activated
                 else
                 {
+                    // enable the death timeline trigger
+                    Level6DeadTrigger.GetComponent<BoxCollider>().enabled = true;
                     assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
                     assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
                 }

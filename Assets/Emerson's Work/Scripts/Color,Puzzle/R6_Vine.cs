@@ -31,7 +31,6 @@ public class R6_Vine : PuzzleItemInteraction
 
                 // play the stem growing animation
                 this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
-                Invoke("StopVineAnim", 3.0f);
                 
                 //CHANGE VINE COLOR
                 this.gameObject.GetComponent<Renderer>().material.color = 
@@ -47,8 +46,4 @@ public class R6_Vine : PuzzleItemInteraction
         };
     }
     
-    private void StopVineAnim()
-    {
-        this.gameObject.GetComponent<Animator>().enabled = false;
-    }
 }

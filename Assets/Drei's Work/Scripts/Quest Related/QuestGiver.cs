@@ -97,19 +97,4 @@ public class QuestGiver : MonoBehaviour
             currentQuest.neededGameObjects.Clear();
         }
     }
-    
-
-    public bool canTurnOnLight()
-    {
-        // TODO: Fix this
-        // revert
-        if (currentQuest.wiresRepairedAmount == currentQuest.wiresToRepairAmount)
-        {
-            //strikethroughTextByKey("repairWire");
-            //strikethroughTextByKey("onLight");
-            return true;
-        }
-        
-        return false;
-    }
 }
