@@ -30,6 +30,7 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     {
         if(_instance != null) Destroy(this);
         DontDestroyOnLoad(this);
+        
     }
 
     // Action Delegates w/ its corresponding class parameter
@@ -45,6 +46,16 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     }
     public static Action<C_OnDeath> D_OnDeath = null;
     
+    //
+    public class C_R2_OnAcquiredJournal
+    {
+        public C_R2_OnAcquiredJournal()
+        {
+
+        }
+    }
+    public static Action<C_R2_OnAcquiredJournal> D_R2_OnAcquiredJournal = null;
+
     //
     public class C_R3_OnCompletedFire
     {
@@ -68,11 +79,7 @@ public class Gameplay_DelegateHandler : MonoBehaviour
     //
     public class C_R3_OnDoorOpen
     {
-        public GameObject doorObj;
-        public C_R3_OnDoorOpen(GameObject doorObj)
-        {
-            this.doorObj = doorObj;
-        }
+
     }
     public static Action<C_R3_OnDoorOpen> D_R3_OnDoorOpen = null;
 

@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         // IDLE CHECKER
         if(this.MovementX != 0 || this.MovementY != 0)
         {
-            TextControl.textInstance.idleReset();
+            TextControl.Instance.idleReset();
         }
         // sets the velocity to a constant value when player is on the ground
         if (_playerProperty.isGround && velocity.y < 0)

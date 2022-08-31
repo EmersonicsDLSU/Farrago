@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // Abstract class to be inherited by puzzle Item class
-public abstract class PuzzleItemInteraction : MonoBehaviour
+public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
 {
     //Interact
     [HideInInspector] public bool canInteract;
-    [HideInInspector] public bool isActive;
+    [HideInInspector] public bool isActive = true;
     [HideInInspector] public float timePress;
     
-    public PuzzleItem Item_Identification;
+    [HideInInspector] public PuzzleItem Item_Identification;
 
     [Space]
     [Header("Interactables")]
@@ -23,37 +23,20 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
     
     void Awake()
     {
-        InitializeDelegates();
+        ODelegates();
         mainPlayer = FindObjectOfType<MainPlayerSc>();
-        InheritorsAwake();
-    }
-    // overridable function for Awake method
-    public virtual void InheritorsAwake()
-    {
-
+        OAwake();
     }
 
     void Start()
     {
-        InheritorsStart();
+        OStart();
 
         // assign value to fields
         canInteract = false;
         isActive = true;
     }
     
-    // overridable function for Start method
-    public virtual void InheritorsStart()
-    {
-
-    }
-    
-    // Inherited class should override this method if they want to add events to the item interaction
-    public virtual void InitializeDelegates()
-    {
-
-    }
-
     public void Update()
     {
         InheritorsUpdate();
@@ -62,29 +45,38 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
     // Default Update content
     public virtual void InheritorsUpdate()
     {
-        if (canInteract)
+        if (canInteract && isActive)
         {
             interactableParent.SetActive(true);
-            if(ConditionBeforeInteraction())
+            if(OBeforeInteraction())
             {
                 if (Input.GetKeyUp(KeyCode.E))
                 {
                     timePress = 0;
-                    interactableFill.fillAmount = 0.0f;
+                    if (interactableFill != null)
+                    {
+                        interactableFill.fillAmount = 0.0f;
+                    }
                 }
-                else if (Input.GetKey(KeyCode.E))
+                else if (OInput())
                 {
                     mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                     timePress += Time.deltaTime;
-                    interactableFill.fillAmount = timePress / 2.0f;
+                    if (interactableFill != null)
+                    {
+                        interactableFill.fillAmount = timePress / 2.0f;
+                    }
 
-                    if (ConditionFillCompletion())
+                    if (OFillCompletion())
                     {
                         // call the item's events
                         CallItemEvents(Item_Identification);
 
                         timePress = 0;
-                        interactableFill.fillAmount = 0.0f;
+                        if (interactableFill != null)
+                        {
+                            interactableFill.fillAmount = 0.0f;
+                        }
                     }
                 }
             }
@@ -92,35 +84,26 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
         else
         {
             timePress = 0;
-            interactableFill.fillAmount = 0.0f;
+            if (interactableFill != null)
+            {
+                interactableFill.fillAmount = 0.0f;
+            }
             interactableParent.SetActive(false);
         }
     }
     
-    // this is the default condition for interaction
-    public virtual bool ConditionBeforeInteraction()
-    {
-        return true;
-    }
-
-    // this is the default condition for radial-fill completion
-    public virtual bool ConditionFillCompletion()
-    {
-        if(interactableFill.fillAmount >= 1.0f)
-            return true;
-        return false;
-    }
-
-
     // Add here the delegate to be called for a specific puzzle
     protected void CallItemEvents(PuzzleItem item)
     {
         switch (item)
         {
+            case PuzzleItem.R2_JOURNAL:
+                Gameplay_DelegateHandler.D_R2_OnAcquiredJournal(new Gameplay_DelegateHandler.C_R2_OnAcquiredJournal());
+                break;
             case PuzzleItem.R3_KEY:
                 break;
             case PuzzleItem.R3_DOOR:
-                Gameplay_DelegateHandler.D_R3_OnDoorOpen(new Gameplay_DelegateHandler.C_R3_OnDoorOpen(this.gameObject));
+                Gameplay_DelegateHandler.D_R3_OnDoorOpen(new Gameplay_DelegateHandler.C_R3_OnDoorOpen());
                 break;
             case PuzzleItem.R3_BUNSEN_BURNER:
                 Gameplay_DelegateHandler.D_R3_OnCompletedFire(new Gameplay_DelegateHandler.C_R3_OnCompletedFire());
@@ -145,17 +128,109 @@ public abstract class PuzzleItemInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        OOnTriggerEnter(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        OOnTriggerExit(other);
+    }
+
+    // Load system
+    public void LoadData(GameData data)
+    {
+        if (data.objectivesDone.ContainsKey((int) Item_Identification))
+        {
+            data.objectivesDone.TryGetValue((int)Item_Identification, out isActive);
+            if (!isActive)
+            {
+                Debug.LogError($"Load: {Item_Identification}");
+                OLoadData(data);
+            }
+        }
+    }
+    
+    // Save system
+    public void SaveData(GameData data)
+    {
+        if (data.objectivesDone.ContainsKey((int)Item_Identification))
+        {
+            data.objectivesDone.Remove((int)Item_Identification);
+        }
+        data.objectivesDone.Add((int)Item_Identification, isActive);
+
+        OSaveData(data);
+    }
+
+    /* VIRTUAL METHODS */
+    
+    // overridable function for Awake method; Default
+    public virtual void OAwake()
+    {
+
+    }
+
+    // overridable function for Start method; Default
+    public virtual void OStart()
+    {
+
+    }
+    
+    // Inherited class should override this method if they want to add events to the item interaction; Default
+    public virtual void ODelegates()
+    {
+
+    }
+
+    // input pressed condition; Default
+    public virtual bool OInput()
+    {
+        return Input.GetKey(KeyCode.E);
+    }
+
+    // this is the default condition for interaction; Default
+    public virtual bool OBeforeInteraction()
+    {
+        return true;
+    }
+
+    // this is the default condition for radial-fill completion; Default
+    public virtual bool OFillCompletion()
+    {
+        if(interactableFill != null && interactableFill.fillAmount >= 1.0f)
+            return true;
+        return false;
+    }
+    
+    // this is the default condition for OnTriggerEnter; Default
+    public virtual void OOnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Player") && isActive)
         {
             this.canInteract = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    // this is the default condition for OnTriggerExit; Default
+    public virtual void OOnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             this.canInteract = false;
         }
     }
+
+    // overridable function for load method
+    public virtual void OLoadData(GameData data)
+    {
+        CallItemEvents(Item_Identification);
+    }
+    
+    // overridable function for save method
+    public virtual void OSaveData(GameData data)
+    {
+
+    }
+    
+    
 }

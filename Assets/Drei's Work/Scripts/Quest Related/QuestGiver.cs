@@ -32,19 +32,25 @@ public class QuestGiver : MonoBehaviour
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r5];
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
+            /*
             else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL6)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r6];
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
+            */
             else
             {
                 //DISABLE OBJECTIVES PANEL IF NOT IN MISSION
-                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(false);
+                if (FindObjectOfType<HUD_Controller>().objectivesPanel.activeSelf)
+                {
+                    FindObjectOfType<HUD_Controller>().On_ClickObjectives();
+                    FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(false);
+                }
             }
             // edit the 'return' statement if you want to debug a particular room/level
             // e.g. return QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
-            return QuestCollection.Instance.questDict[QuestDescriptions.color_r6];
+            return temp;
 
         }
         private set
@@ -52,7 +58,7 @@ public class QuestGiver : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         playerPuzzleInv = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PuzzleInventory>();
         TimelineLevel = GameObject.Find("TimeLines").GetComponent<TimelineLevel>();
@@ -68,11 +74,13 @@ public class QuestGiver : MonoBehaviour
     
     public void UpdateObjectiveList()
     {
-        // TODO: What if the objectiveTab is Open, the recently done objective will not be seen as completed through the fontStyle
-        
+        if (currentQuest == null)
+        {
+            Debug.LogError($"Current Quest is currently empty!");
+            return;
+        }
         // get the order list of the completed objectives
         var objectiveList = currentQuest.descriptiveObjectives.Values.ToList();
-        Debug.LogError($"Objective Count: {objectiveList.Count}");
         // makes sure that the player is in a quest
         if (currentQuest != null)
         {

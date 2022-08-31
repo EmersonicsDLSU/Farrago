@@ -33,6 +33,7 @@ public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
+        Debug.LogError($"Saved Respawn Point!!");
         data.currentRespawnPoint = (int)CurrentRespawnPoint;
     }
 }

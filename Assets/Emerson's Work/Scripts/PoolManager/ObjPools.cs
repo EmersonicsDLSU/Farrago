@@ -162,6 +162,7 @@ public class ObjPools
     }
     public void ReleaseAllPoolable()
     {
+        Debug.LogError($"Object Counts: {usedObjects.Count}");
         while (usedObjects.Count > 0)
         {
             ReleasePoolable(usedObjects[0]);
@@ -179,7 +180,7 @@ public class ObjPools
         }
         else
         {
-            //Debug.LogError($"Object doesn't exist in the list.");
+            Debug.LogError($"Object doesn't exist in the list.");
         }
     }
 }

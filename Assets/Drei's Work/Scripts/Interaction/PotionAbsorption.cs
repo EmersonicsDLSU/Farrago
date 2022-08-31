@@ -136,11 +136,11 @@ public class PotionAbsorption : MonoBehaviour
                     }
                     // call Monologue Text methods 
                     if (object_ID != null)
-                        TextControl.textInstance.Interact(
+                        TextControl.Instance.Interact(
                             (TextControl.textType)System.Enum.Parse(typeof(TextControl.textType),
                                 object_ID.objectCode.ToString())
                             );
-                    TextControl.textInstance.delayReset();
+                    TextControl.Instance.delayReset();
                 }
             }
 

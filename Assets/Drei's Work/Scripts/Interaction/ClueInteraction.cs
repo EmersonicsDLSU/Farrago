@@ -90,8 +90,8 @@ private void OnTriggerEnter(Collider other)
 
                 this.isEPressed = false;
 
-                TextControl.textInstance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
-                TextControl.textInstance.delayReset();
+                TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
+                TextControl.Instance.delayReset();
 
                 clueUIText.GetComponent<Animator>().SetBool("isClueObtained", true);
                 journalHelpButton.GetComponent<Animator>().SetBool("isClueObtained", true);
@@ -126,8 +126,8 @@ private void OnTriggerEnter(Collider other)
                 Invoke("closeUIText", 2.0f);
                 isFirstInteract = false;
 
-                TextControl.textInstance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
-                TextControl.textInstance.delayReset();
+                TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
+                TextControl.Instance.delayReset();
             }
 
         }

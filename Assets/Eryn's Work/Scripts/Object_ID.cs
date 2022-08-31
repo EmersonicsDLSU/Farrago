@@ -2,22 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/* // transferred this to 'EnumHandler.cs'
-public enum objectCode
-{
-    redLines = 0,
-    blueLines,
-    yellowLines,
-    orangeLines,
-    violetLines,
-    whiteLines,
-    blackLines,
-    blocker,
-    JOURNAL,
-    NOTE
-};
-*/
-
 public class Object_ID : MonoBehaviour
 {
     [HideInInspector] public string objectName;
@@ -43,7 +27,7 @@ public class Object_ID : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            TextControl.textInstance.clearQueue();
+            TextControl.Instance.clearQueue();
         }
     }
 

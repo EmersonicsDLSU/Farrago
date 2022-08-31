@@ -62,15 +62,14 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        /*
-        Debug.LogError($"Total Tries :{DataPersistenceManager.instance.currentLoadedData.total_tries}");
+        //Debug.LogError($"Total Tries :{DataPersistenceManager.instance.currentLoadedData.total_tries}");
         // if first try, then we do not translate the player 
         if (DataPersistenceManager.instance.currentLoadedData.total_tries != 0)
         {
             Debug.LogError($"Translate to :{data.respawnPoint}");
             this.transform.position = data.respawnPoint;
         }
-        */
+        
     }
     
     public void SaveData(GameData data)
@@ -80,7 +79,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         data.dateCreated = $"{temp.Day}/{temp.Month}/{temp.Year}";
         data.timeCreated = $"{temp.Hour}:{temp.Minute}";
     }
-    
+    /*
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded; //You add your method to the delegate
@@ -99,4 +98,5 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
             this.transform.position = data.respawnPoint;
         }
     }
+    */
 }

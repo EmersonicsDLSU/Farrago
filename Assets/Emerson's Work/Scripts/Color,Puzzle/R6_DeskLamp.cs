@@ -11,7 +11,6 @@ public class R6_DeskLamp : PuzzleItemInteraction
     private ParticleSystem.TrailModule tr;
     [SerializeField] private GameObject lightToOpen;
     [SerializeField] private GameObject assignedVine;
-    [SerializeField] private GameObject Level6DeadTrigger;
 
     // References
     private Inventory inventory;
@@ -23,14 +22,14 @@ public class R6_DeskLamp : PuzzleItemInteraction
     // for scripts with delegates that should be initialized once
     private bool isInitialized = false;
     
-    public override void InheritorsAwake()
+    public override void OAwake()
     {
         ma = ParticleSystem.main;
         tr = ParticleSystem.trails;
-    }
 
-    public override void InheritorsStart()
-    {
+        // set the item identification
+        Item_Identification = PuzzleItem.R6_DESK_LAMP;
+
         inventory = FindObjectOfType<Inventory>();
         if (inventory == null)
         {
@@ -56,9 +55,14 @@ public class R6_DeskLamp : PuzzleItemInteraction
         }
         
     }
+    
+    public override void OStart()
+    {
+
+    }
 
     // Subscribe event should only be called once to avoid duplication
-    public override void InitializeDelegates()
+    public override void ODelegates()
     {
         Gameplay_DelegateHandler.D_R6_DeskLamp += (e) =>
         {
@@ -68,6 +72,7 @@ public class R6_DeskLamp : PuzzleItemInteraction
                 // disables the interactable UI
                 interactableParent.SetActive(false);
                 isActive = false;
+                canInteract = false;
 
                 // open the light component from the wire
                 lightToOpen.SetActive(true);
@@ -82,7 +87,10 @@ public class R6_DeskLamp : PuzzleItemInteraction
                 // play the vine animation
                 assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
                 // enable the death timeline trigger
-                //Level6DeadTrigger.GetComponent<BoxCollider>().enabled = true;
+                timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Transition].
+                    GetComponent<BoxCollider>().enabled = true;
+                // disable the death timeline trigger
+                //Level6DeadTrigger.GetComponent<BoxCollider>().enabled = false;
 
                 //TRIGGER CORRECT MONOLOGUE
                 Monologues.Instance.triggerPuzzleUITextCorrect();
@@ -95,4 +103,29 @@ public class R6_DeskLamp : PuzzleItemInteraction
         };
     }
     
+    public override void OLoadData(GameData data)
+    {
+        // disables the interactable UI
+        interactableParent.SetActive(false);
+        isActive = false;
+        canInteract = false;
+
+        // open the light component from the wire
+        lightToOpen.SetActive(true);
+
+        //CHANGE ELECTRICITY COLOR
+        ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+        tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+        ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+        subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+        subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
+                
+        // play the vine animation
+        assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
+        // enable the death timeline trigger
+        timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Transition].
+            GetComponent<BoxCollider>().enabled = true;
+        // disable the death timeline trigger
+        //Level6DeadTrigger.GetComponent<BoxCollider>().enabled = false;
+    }
 }

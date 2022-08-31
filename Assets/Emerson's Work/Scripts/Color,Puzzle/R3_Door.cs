@@ -8,29 +8,31 @@ public class R3_Door : PuzzleItemInteraction
 {
     public List<PuzzleItem> objectsRequired;
 
-    public override void InheritorsAwake()
+    public override void OAwake()
     {
-        // empty
+        // set the item identification
+        Item_Identification = PuzzleItem.R3_DOOR;
     }
     
-    public override void InheritorsStart()
+    public override void OStart()
     {
-        // empty
+
     }
 
     // Subscribe event should only be called once to avoid duplication
-    public override void InitializeDelegates()
+    public override void ODelegates()
     {
         Gameplay_DelegateHandler.D_R3_OnDoorOpen += (e) =>
         {
             // disables the interactable UI
             interactableParent.SetActive(false);
             isActive = false;
+            canInteract = false;
 
-            e.doorObj.GetComponent<AudioSource>().Play();
-            if (e.doorObj.gameObject.activeSelf != false)
+            GetComponent<AudioSource>().Play();
+            if (gameObject.activeSelf != false)
             {
-                Animator animator = e.doorObj.GetComponent<Animator>();
+                Animator animator = GetComponent<Animator>();
 
                 if (animator != null)
                 {
@@ -40,15 +42,35 @@ public class R3_Door : PuzzleItemInteraction
         };
     }
 
-    public override bool ConditionBeforeInteraction()
+    public override void OLoadData(GameData data)
     {
+        // disables the interactable UI
+        interactableParent.SetActive(false);
+        isActive = false;
+        canInteract = false;
+
+        GetComponent<AudioSource>().Play();
+        if (gameObject.activeSelf != false)
+        {
+            Animator animator = GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.SetTrigger("Interact");
+            }
+        }
+    }
+
+    public override bool OBeforeInteraction()
+    {
+        Debug.LogError($"IsKeyFound: {objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e))}");
         // Checks if all items are found in the inventory
         if (objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e)))
             return true;
         return false;
     }
     
-    public override bool ConditionFillCompletion()
+    public override bool OFillCompletion()
     {
         if(interactableFill.fillAmount >= 1.0f && !this.GetComponent<AudioSource>().isPlaying)
             return true;

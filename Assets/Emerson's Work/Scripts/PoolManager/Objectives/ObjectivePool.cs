@@ -19,7 +19,7 @@ public class ObjectivePool : MonoBehaviour, IPoolFunctions
     [SerializeField] private int maxPoolSizePerObj = 20; //default
     [SerializeField] private bool fixedAllocation = true; //default
 
-    void Start()
+    void Awake()
     {
         spawnLocations.Add(ParentTransform);
         itemPool = new ObjPools(this.maxPoolSizePerObj, this.fixedAllocation,

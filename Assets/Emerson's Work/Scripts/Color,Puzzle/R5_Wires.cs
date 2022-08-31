@@ -21,15 +21,15 @@ public class R5_Wires : PuzzleItemInteraction
     // Conditions
     // for scripts with delegates that should be initialized once
     private bool isInitialized = false;
-
-    public override void InheritorsAwake()
+    
+    public override void OAwake()
     {
         ma = ParticleSystem.main;
         tr = ParticleSystem.trails;
-    }
 
-    public override void InheritorsStart()
-    {
+        // set the item identification
+        Item_Identification = PuzzleItem.R5_WIRES;
+
         inventory = FindObjectOfType<Inventory>();
         if (inventory == null)
         {
@@ -56,9 +56,12 @@ public class R5_Wires : PuzzleItemInteraction
 
         ma = ParticleSystem.main;
     }
+    public override void OStart()
+    {
 
+    }
     // Subscribe event should only be called once to avoid duplication
-    public override void InitializeDelegates()
+    public override void ODelegates()
     {
         // if all related scripts are not yet initialize
         if (FindObjectsOfType<R5_Wires>().All(x => !x.isInitialized))
@@ -74,6 +77,7 @@ public class R5_Wires : PuzzleItemInteraction
                     // disables the interactable UI
                     wireR5.interactableParent.SetActive(false);
                     wireR5.isActive = false;
+                    wireR5.canInteract = false;
 
                     // open the light component from the wire
                     wireR5.wireLight.SetActive(true);
@@ -88,8 +92,8 @@ public class R5_Wires : PuzzleItemInteraction
                     // TRIGGER CORRECT MONOLOGUE
                     Monologues.Instance.triggerPuzzleUITextCorrect();
                 
-                    // check if both wire lights are open or has been fixed
-                    if (FindObjectsOfType<R5_Wires>().All(x => x.gameObject.activeSelf))
+                    // check if both wire lights are open or has been fixed / or all wires objective are inactive
+                    if (FindObjectsOfType<R5_Wires>().All(x => !x.isActive))
                     {
                         // enable the timeline trigger for plant growing cut-scene
                         wireR5.timelineLevel.timelineTriggerCollection[CutSceneTypes.Level5PlantGrow].
@@ -125,5 +129,49 @@ public class R5_Wires : PuzzleItemInteraction
                 }
             };
         }
+    }
+
+    public override void OLoadData(GameData data)
+    {
+        // disables the interactable UI
+        interactableParent.SetActive(false);
+        isActive = false;
+        canInteract = false;
+
+        // open the light component from the wire
+        wireLight.SetActive(true);
+                
+        //CHANGE ELECTRICITY COLOR
+        ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+        tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+        ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+        subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+        subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
+        
+        // enable the timeline trigger for plant growing cut-scene
+        timelineLevel.timelineTriggerCollection[CutSceneTypes.Level5PlantGrow].
+            GetComponent<BoxCollider>().enabled = true;
+        // open the light component from the lampLight
+        lampLight.GetComponent<Light>().enabled = true;
+
+        /* Start of Objective Completion / Setting strikethrough to the text's fontStyle*/
+        // set the two objectives as complete
+        QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
+            .descriptiveObjectives[DescriptiveQuest.R5_REPAIR_WIRE] = true;
+        QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
+            .descriptiveObjectives[DescriptiveQuest.R5_ON_LIGHT] = true;
+
+        // Update the objectiveList as well; double update 
+        objectivePool.itemPool.ReleaseAllPoolable();
+        questGiver.UpdateObjectiveList();
+        objectivePool.EnabledAnimation(true);
+
+        // Check if all objectives are completed
+        if (questGiver.currentQuest != null && QuestCollection.Instance.questDict[questGiver.currentQuest.questID].
+                descriptiveObjectives.Values.All(e => e == true))
+        {
+            questGiver.currentQuest.neededGameObjects.Clear();
+        }
+        /* End of Objective Completion */
     }
 }

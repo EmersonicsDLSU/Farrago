@@ -11,7 +11,7 @@ public class TextControl : MonoBehaviour
     public TextMesh textHolder;
     public TMP_Text textPro;
 
-    public static TextControl textInstance;
+    public static TextControl _instance;
 
     public Camera camRef;
 
@@ -139,17 +139,23 @@ public class TextControl : MonoBehaviour
         "I know this hallway",
         "The room I need is just on the other side of this hallway"
     };
-
-    private void Awake()
+    
+    public static TextControl Instance
     {
-        if (textInstance != null && textInstance != this)
+        get
         {
-            Destroy(this.gameObject);
-            return;
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<TextControl>();
+                
+                if (_instance == null)
+                {
+                    _instance = new GameObject().AddComponent<TextControl>();
+                }
+            }
+            
+            return _instance;
         }
-
-        textInstance = this;
-        //DontDestroyOnLoad(this);
     }
 
     private void Start()

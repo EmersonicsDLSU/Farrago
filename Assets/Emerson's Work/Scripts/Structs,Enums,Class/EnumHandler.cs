@@ -84,6 +84,7 @@ public enum Pool_Type
 public enum PuzzleItem
 {
     NONE = -1,
+    R2_JOURNAL,
     R3_KEY,
     R3_DOOR,
     R3_BUNSEN_BURNER,

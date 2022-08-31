@@ -41,7 +41,7 @@ public class Area_Identifier : MonoBehaviour
             }
             
 
-            TextControl.textInstance.queueLevelText(Texts, level);
+            TextControl.Instance.queueLevelText(Texts, level);
             levelClear = true;
         }
     }
@@ -54,7 +54,7 @@ public class Area_Identifier : MonoBehaviour
                 AudioClip clip = BGM_Manager.Instance.getClipByLabel("BGMLevel" + level);
                 StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
             }
-            TextControl.textInstance.clearQueue();
+            TextControl.Instance.clearQueue();
         }
     }
 

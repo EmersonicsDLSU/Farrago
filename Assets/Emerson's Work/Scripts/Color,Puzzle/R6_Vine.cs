@@ -5,21 +5,24 @@ using UnityEngine;
 public class R6_Vine : PuzzleItemInteraction
 {
     private Inventory inventory;
-    public override void InheritorsAwake()
+    public override void OAwake()
     {
+        // set the item identification
+        Item_Identification = PuzzleItem.R6_VINE;
 
-    }
-
-    public override void InheritorsStart()
-    {
         inventory = FindObjectOfType<Inventory>();
         if (inventory == null)
         {
             Debug.LogError($"Missing Script: Inventory.cs");
         }
     }
+
+    public override void OStart()
+    {
+
+    }
     
-    public override void InitializeDelegates()
+    public override void ODelegates()
     {
         Gameplay_DelegateHandler.D_R6_OnVineGrow += (e) =>
         {
@@ -28,6 +31,7 @@ public class R6_Vine : PuzzleItemInteraction
                 // disables the interactable UI
                 interactableParent.SetActive(false);
                 isActive = false;
+                canInteract = false;
 
                 // play the stem growing animation
                 this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
@@ -35,6 +39,7 @@ public class R6_Vine : PuzzleItemInteraction
                 //CHANGE VINE COLOR
                 this.gameObject.GetComponent<Renderer>().material.color = 
                     inventory.inventorySlots[0].colorMixer.color;
+
                 //TRIGGER CORRECT MONOLOGUE
                 Monologues.Instance.triggerPuzzleUITextCorrect();
             }
@@ -45,5 +50,20 @@ public class R6_Vine : PuzzleItemInteraction
             }
         };
     }
-    
+
+    public override void OLoadData(GameData data)
+    {
+        // disables the interactable UI
+        interactableParent.SetActive(false);
+        isActive = false;
+        canInteract = false;
+
+        // play the stem growing animation
+        this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
+                
+        //CHANGE VINE COLOR
+        this.gameObject.GetComponent<Renderer>().material.color = 
+            inventory.inventorySlots[0].colorMixer.color;
+    }
+
 }
