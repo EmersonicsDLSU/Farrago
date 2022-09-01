@@ -96,6 +96,16 @@ public enum PuzzleItem
 }
 
 //
+public enum E_ClueInteraction
+{
+    NONE = -1,
+    R2_BUNSEN,
+    R2_FIRE,
+    R5_POTPLANT,
+    R5_LIGHTPLANT
+}
+
+//
 public enum CutSceneTypes
 {
     None = 0,
