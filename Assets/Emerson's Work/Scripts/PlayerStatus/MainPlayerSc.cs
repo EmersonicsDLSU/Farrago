@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public CharacterController playerCharController;
     [HideInInspector] public SkinnedMeshRenderer playerSkinMesh;
-    public Animator playerAnim;
+    [HideInInspector] public Animator playerAnim;
     [HideInInspector] public PlayerAngelaAnimations playerAngelaAnim;
 
     // other player scripts
@@ -21,11 +22,12 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     [HideInInspector] public PotionAbsorption PotionAbsorptionSC = null;
 
     // external scripts
-    public TimelineLevel timelineLevelSc = null;
+    [HideInInspector] public TimelineLevel timelineLevelSc = null;
 
     // Start is called before the first frame update
     void Awake()
     {
+        Debug.LogError("Start to Awake");
         playerTrans = this.GetComponent<Transform>(); ;
         playerCharController = this.GetComponentInChildren<CharacterController>();
         playerSkinMesh = this.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -79,24 +81,4 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         data.dateCreated = $"{temp.Day}/{temp.Month}/{temp.Year}";
         data.timeCreated = $"{temp.Hour}:{temp.Minute}";
     }
-    /*
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += SceneLoaded; //You add your method to the delegate
-    }
-     
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= SceneLoaded;
-    }
-    private void SceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "GameScene")
-        {
-            var data = DataPersistenceManager.instance.currentLoadedData;
-            Debug.LogError($"Translate to :{data.respawnPoint} to {this.name}");
-            this.transform.position = data.respawnPoint;
-        }
-    }
-    */
 }

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
 {
     // opening the gameScene
-    private int total_tries = 0;
+    [HideInInspector] public int total_tries = 0;
     
     void Awake()
     {
@@ -18,9 +19,15 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+    
+    public void LoadGameFromIntroDelay()
+    {
         // Loads the saved game file
         DataPersistenceManager.instance.LoadGame(DataPersistenceManager.instance.currentSaveFile);
-        if (++total_tries == 1)
+        Debug.LogError($"Load from GameScene {FindObjectOfType<GS_SaveLoadHandler>().total_tries}");
+        if (++FindObjectOfType<GS_SaveLoadHandler>().total_tries == 1)
         {
             Debug.LogError($"Save First Try");
             DataPersistenceManager.instance.SaveGame(
@@ -30,6 +37,7 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        Debug.LogError($"Total tries: {data.total_tries}");
         total_tries = data.total_tries;
     }
     
@@ -37,4 +45,6 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     {
         data.total_tries = total_tries;
     }
+    
+
 }

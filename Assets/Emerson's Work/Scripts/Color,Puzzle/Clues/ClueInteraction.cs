@@ -148,10 +148,12 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
     
     private void OnTriggerExit(Collider other)
     {
-        clueImage.rectTransform.anchoredPosition = imageInitPos;
-        if(Journal.Instance.journalEntries.ContainsKey(key))
-            Journal.Instance.journalEntries[key].enabled = false;
-
+        if (other.CompareTag("Player"))
+        {
+            clueImage.rectTransform.anchoredPosition = imageInitPos;
+            if(Journal.Instance.journalEntries.ContainsKey(key))
+                Journal.Instance.journalEntries[key].enabled = false;
+        }
         OOnTriggerExit(other);
     }
     

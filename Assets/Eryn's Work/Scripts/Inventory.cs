@@ -34,7 +34,7 @@ public class Inventory : MonoBehaviour
     // PlayerSFXManager Instance reference - used for absorbed sfx
     private PlayerSFX_Manager playerSFX;
     // InventoryPool script component
-    [SerializeField] private InventoryPool inventoryPoolSc;
+    private InventoryPool inventoryPoolSc;
 
     //DEFAULT ANGELA COLORS
     private Color coatBaseColor;

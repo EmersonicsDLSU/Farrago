@@ -68,7 +68,7 @@ public enum RespawnPoints
     LEVEL4,
     LEVEL4_CHASE,
     LEVEL5,
-    LEVEL6,
+    LEVEL6
 };
 
 //General Identification of the pool type

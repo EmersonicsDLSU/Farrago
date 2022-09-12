@@ -35,7 +35,7 @@ public class TimelineLevel : MonoBehaviour
     private MainPlayerSc mainPlayer;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         mainPlayer = FindObjectOfType<MainPlayerSc>();
 
@@ -148,14 +148,16 @@ public class TimelineLevel : MonoBehaviour
         yield return new WaitForSeconds(timelineDuration);
         // timeline was finished
         this.currentTrigger.GetComponent<TimelineTriggerIdentification>().isCompleted = true;
-        DataPersistenceManager.instance.SaveGame(
-            DataPersistenceManager.instance.currentSaveFile);
         //calls the timeline deactivator
         this.timelinePlayIsFinished = true;
         TimelineActiveChecker();
         //resetting journalchecker cutscene
         if(this.lastPlayedSceneType == CutSceneTypes.Level2JournalChecker)
+        {
             this.resetCutscene(CutSceneTypes.Level2JournalChecker);
+        }
+        // save the last position
+        DataPersistenceManager.instance.SaveGame(DataPersistenceManager.instance.currentSaveFile);
     }
 
     private void TimelineActiveChecker()

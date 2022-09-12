@@ -44,7 +44,8 @@ public class PPVolumeSc : MonoBehaviour
     //this is a specific function for the eye opening effect in the 1STlevelIntro Cutscene
     private void VignetteEffect()
     {
-        if (this.timelineLevelSc.currentSceneType == CutSceneTypes.Level1Intro && !this.IsDoneLevel1Intro)
+        if (timelineLevelSc.currentSceneType == CutSceneTypes.Level1Intro && 
+            !timelineLevelSc.timelinePlayIsFinished)
         {
             if (this.timelineLevelSc.currentTimeline.time < 4.0f)
             {
@@ -81,5 +82,24 @@ public class PPVolumeSc : MonoBehaviour
                 this.IsDoneLevel1Intro = true;
             }
         }
+    }
+
+    public void closeVignette()
+    {
+        Debug.LogError($"Black Screen");
+        Vector2 closing = new Vector2(-1.0f, -1.0f);
+        this.vignetteProfile.center.value = closing;
+        this.vignetteProfile.intensity.value = 1.0f;
+        this.vignetteProfile.smoothness.value = 1.0f;
+    }
+
+    public void openVignette()
+    {
+        Debug.LogError($"Restart Screen");
+        Vector2 closing = new Vector2(-1.0f, -1.0f);
+        this.vignetteProfile.center.value = closing;
+        this.vignetteProfile.intensity.value = 0.0f;
+        this.vignetteProfile.smoothness.value = 0.0f;
+        this.IsDoneLevel1Intro = true;
     }
 }

@@ -28,7 +28,7 @@ public class TextControl : MonoBehaviour
 
     public Queue<string> levelMonologue;
 
-    public Animator animator;
+    private Animator animator;
     private TimelineLevel TimelineLevel;
 
 
@@ -44,21 +44,21 @@ public class TextControl : MonoBehaviour
 
 
     private string[] redLines = 
-        { "I’m red", 
+        { "Iâ€™m red", 
         "Red liquid makes me red",
         "Red.", 
-        "Now I’m red" };
+        "Now Iâ€™m red" };
 
     private string[] yellowLines =
-        { "I’m yellow now!",
+        { "Iâ€™m yellow now!",
 		"Yellow means yellow",
 		"Yellow." };
 
     private string[] orangeLines =
     {
         "Yellow and red makes orange",
-        "Now i’m orange",
-        "What to do with this…",
+        "Now iâ€™m orange",
+        "What to do with thisâ€¦",
         "Orange.",
         "Orange now"
     };
@@ -75,31 +75,31 @@ public class TextControl : MonoBehaviour
 
     private string[] wrongSolution =
     {
-        "That’s not it…",
-        "That can’t be it…",
-        "I don’t think this is working",
-        "There has to be another way…",
-        "Maybe… something else",
-        "I’ll try something else",
-        "Need to think of something better…",
-        "I’m sure there’s a better solution",
-        "This doesn’t make sense…",
-        "This isn’t it",
-        "I’m… guessing this isn’t right"
+        "Thatâ€™s not itâ€¦",
+        "That canâ€™t be itâ€¦",
+        "I donâ€™t think this is working",
+        "There has to be another wayâ€¦",
+        "Maybeâ€¦ something else",
+        "Iâ€™ll try something else",
+        "Need to think of something betterâ€¦",
+        "Iâ€™m sure thereâ€™s a better solution",
+        "This doesnâ€™t make senseâ€¦",
+        "This isnâ€™t it",
+        "Iâ€™mâ€¦ guessing this isnâ€™t right"
     };
     */
 
     private string[] puzzleBeaker =
     {
-        "Colored liquid…",
-	    "The liquid is so vibrant… almost pure…",
-	    "I wonder what will happen if I drink it…",
+        "Colored liquidâ€¦",
+	    "The liquid is so vibrantâ€¦ almost pureâ€¦",
+	    "I wonder what will happen if I drink itâ€¦",
 	    "Another beaker",
 	    "More liquid",
 	    "This one is a different color this time",
 	    "Is this what we were all working on?",
-	    "Why do I feel the need to consume it…",
-	    "Why do I think drinking it is the right idea…"
+	    "Why do I feel the need to consume itâ€¦",
+	    "Why do I think drinking it is the right ideaâ€¦"
     };
 
     private string[] normalBeaker =
@@ -108,14 +108,14 @@ public class TextControl : MonoBehaviour
         "Nothing important in this one",
         "This is a beaker",
         "Beaker.",
-        "I’ve seen my fair share of beakers…",
+        "Iâ€™ve seen my fair share of beakersâ€¦",
         "Another beaker",
     };
 
     private string[] level1Idle =
     {
-        "If I can just get to the other side of this room…",
-        "I think there’s a window on the far right side of the room",
+        "If I can just get to the other side of this roomâ€¦",
+        "I think thereâ€™s a window on the far right side of the room",
         "If I just keep exploring maybe i can find a way out",
         "I should just keep going right"
     };
@@ -128,10 +128,10 @@ public class TextControl : MonoBehaviour
 
     private string[] level3Idle =
     {
-        "Maybe I can get that fire to work somehow…",
-	    "That key can probably open that door… if only I can get it out of that ice",
-	    "There’s beakers filled with unknown liquid over here… maybe that can help me somehow…",
-	    "How do I bring life back into this fire…"
+        "Maybe I can get that fire to work somehowâ€¦",
+	    "That key can probably open that doorâ€¦ if only I can get it out of that ice",
+	    "Thereâ€™s beakers filled with unknown liquid over hereâ€¦ maybe that can help me somehowâ€¦",
+	    "How do I bring life back into this fireâ€¦"
     };
 
     private string[] level4Idle =
