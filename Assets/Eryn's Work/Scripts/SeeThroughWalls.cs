@@ -8,7 +8,6 @@ public class SeeThroughWalls : MonoBehaviour
     public GameObject cam;
     public GameObject target;
     public LayerMask mylayermask;
-    private CinemachineVirtualCamera CVCam;
     private  CinemachineBrain cinemachineBrain;
 
     //Emerson's change
@@ -19,10 +18,6 @@ public class SeeThroughWalls : MonoBehaviour
         if(target == null || target.tag == "Player")
         {
             target = GameObject.FindGameObjectWithTag("Player");
-        }
-        if(CVCam.Follow == null)
-        {
-            CVCam.Follow = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 

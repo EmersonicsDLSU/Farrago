@@ -30,8 +30,7 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
         if (++FindObjectOfType<GS_SaveLoadHandler>().total_tries == 1)
         {
             Debug.LogError($"Save First Try");
-            DataPersistenceManager.instance.SaveGame(
-                DataPersistenceManager.instance.currentSaveFile);
+            DataPersistenceManager.instance.SaveGame(DataPersistenceManager.instance.currentSaveFile);
         }
     }
 
