@@ -12,11 +12,12 @@ public class Footsteps : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponentInParent<AudioSource>();
+        audioSource.spatialBlend = 0.95f;
     }
 
     private void OnStep()
     {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clip, 2f);
     }
     
 }
