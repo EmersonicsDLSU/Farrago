@@ -12,7 +12,6 @@ public class R2_Journal : PuzzleItemInteraction
     
     public Image journalFirstPage;
     public Image journalSecondPage;
-    private string key;
     private Object_ID object_ID;
 
     public override void OAwake()
@@ -58,12 +57,6 @@ public class R2_Journal : PuzzleItemInteraction
             // display UI of journal
             journalHUDText.SetActive(true);
             
-            //add here the first 2 pages of the journal
-            key = "J" + Journal.Instance.journalEntries.Count.ToString();
-            Journal.Instance.journalEntries.Add(key, journalFirstPage);
-            key = "J" + Journal.Instance.journalEntries.Count.ToString();
-            Journal.Instance.journalEntries.Add(key, journalSecondPage);
-
             this.gameObject.SetActive(false);
         };
     }
@@ -78,12 +71,6 @@ public class R2_Journal : PuzzleItemInteraction
     public override bool OInput()
     {
         return Input.GetKeyDown(KeyCode.E);
-    }
-
-    public void resetJournalStatusOnQuit()
-    {
-        Journal.Instance.isJournalObtained = false;
-        Journal.Instance.journalEntries.Clear();
     }
     
 }

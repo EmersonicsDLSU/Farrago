@@ -6,7 +6,7 @@ public class CR3_Fire : ClueInteraction
 {
     public override void OAwake()
     {
-        Clue_Identification = E_ClueInteraction.R2_FIRE;
+        Clue_Identification = E_ClueInteraction.R3_FIRE;
     }
 
     // once interacted, the clue will be acquired instantly

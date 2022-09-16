@@ -21,19 +21,16 @@ public class HUD_Controller : MonoBehaviour
     
 
     private bool isEscPressed = false;
-    private bool isJPressed = false;
+    [HideInInspector] public bool isJPressed = false;
     private bool canPress = true;
     private bool isNextPagePressed = false;
     private bool isPrevPagePressed = false;
    
 
     private bool objectivesEnabled;
-
-    [HideInInspector] public int curr_JournalIndex = 0;
-
+    
     PlayerSFX_Manager playerSFX;
-
-    private Journal playerJournal;
+    
     private GameObject journalNextKey;
     private GameObject journalPrevKey;
 
@@ -42,7 +39,6 @@ public class HUD_Controller : MonoBehaviour
     private void Awake()
     {
         questGiver = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
-        playerJournal = Journal.Instance;
         playerSFX = PlayerSFX_Manager.Instance;
         //tooltipHolder = GameObject.Find("TooltipHolder").GetComponent<TooltipHolder>();
     }
@@ -72,17 +68,17 @@ public class HUD_Controller : MonoBehaviour
             On_ClickObjectives();
         }
         //JOURNAL MENU
-        else if (Input.GetKeyDown(KeyCode.J) && canPress && playerJournal.isJournalObtained == true)
+        else if (Input.GetKeyDown(KeyCode.J) && canPress && Journal.Instance.isJournalObtained == true)
         {
             canPress = false;
             if (isJPressed == false)
             {
-                On_OpenJournal();
+                FindObjectOfType<JournalBook>().On_OpenJournal();
                 isJPressed = true;
             }
             else
             {
-                On_CloseJournal();
+                FindObjectOfType<JournalBook>().On_CloseJournal();
                 isJPressed = false;
             }
         }
@@ -94,6 +90,7 @@ public class HUD_Controller : MonoBehaviour
         pausePanel.SetActive(false); 
         confirmationPanel.SetActive(false);
         journalPanel.SetActive(false);
+        FindObjectOfType<JournalBook>().displayClueImage.enabled = false;
         //objectivesPanel.SetActive(false);
     }
     public void enable_HUD()
@@ -197,80 +194,11 @@ public class HUD_Controller : MonoBehaviour
 
     public void On_OpenJournal()
     {
-        //turning off the journal flash anim
-        GameObject.Find("JournalHelp").GetComponent<Animator>().SetBool("isClueObtained", false);
-
-        playerSFX.findSFXSourceByLabel("Journal").PlayOneShot(playerSFX.findSFXSourceByLabel("Journal").clip);
-
-        disable_All();
-        journalPanel.SetActive(true);
-        if (journalPanel.activeSelf != false)
-        {
-            Animator animator = journalPanel.GetComponent<Animator>();
-
-            if (animator != null)
-            {
-                bool isOpen = animator.GetBool("Open");
-
-                animator.SetBool("Open", !isOpen);
-            }
-        }
-
         Invoke("time_Pause", 1.0f);
-
         Invoke("displayJournalPics", 1.0f);
-
     }
-
-    public void displayJournalPics()
-    {
-
-        string key1 = "J" + curr_JournalIndex.ToString();
-        string key2 = "J" + (curr_JournalIndex + 1).ToString();
-        //displaying first items
-        if (playerJournal.journalEntries.ContainsKey(key1))
-        {
-            playerJournal.journalEntries[key1].enabled = true;
-        }
-
-        if (playerJournal.journalEntries.ContainsKey(key2))
-        {
-            playerJournal.journalEntries[key2].enabled = true;
-        }
-
-        /*
-        if (playerJournal.journalEntries.Count > 0)
-        {
-           
-        }
-        */
-    }
-
     public void On_CloseJournal()
     {
-        isJPressed = false;
-
-        Time.timeScale = 1;
-        if (journalPanel.activeSelf != false)
-        {
-            Animator animator = journalPanel.GetComponent<Animator>();
-
-            if (animator != null)
-            {
-                bool isOpen = animator.GetBool("Open");
-
-                animator.SetBool("Open", !isOpen);
-            }
-
-            foreach (var image in playerJournal.journalEntries)
-            {
-                image.Value.enabled = false;
-            }
-
-        }
-
-        playerSFX.findSFXSourceByLabel("Journal").PlayOneShot(playerSFX.findSFXSourceByLabel("Journal").clip);
-
         Invoke("disable_All", 1.0f);
         Invoke("enable_HUD", 1.01f);
     }
@@ -289,85 +217,5 @@ public class HUD_Controller : MonoBehaviour
         confirmationPanelLose.SetActive(true);
     }
 
-    public void On_TriggerNextPageJournal()
-    {
-        string key1 = "J" + curr_JournalIndex.ToString();
-        string key2 = "J" + (curr_JournalIndex + 1).ToString();
 
-        Debug.LogWarning("Initial:" + curr_JournalIndex);
-
-        playerSFX.findSFXSourceByLabel("Journal").PlayOneShot(playerSFX.findSFXSourceByLabel("Journal").clip);
-
-        //disable current pics
-        if (playerJournal.journalEntries.ContainsKey(key1))
-            playerJournal.journalEntries[key1].enabled = false;
-        //check if next pic exists
-        if (playerJournal.journalEntries.ContainsKey(key2))
-        {
-            //if next pic exists, disable
-            playerJournal.journalEntries[key2].enabled = false;
-        }
-
-        //checks if the next page returns back to the first page
-        if ((this.curr_JournalIndex+=2) >= playerJournal.journalEntries.Count)
-        {
-            Debug.LogWarning("entered");
-            this.curr_JournalIndex = 0;
-        }
-
-
-        string nextkey1 = "J" + (curr_JournalIndex).ToString();
-        string nextkey2 = "J" + (curr_JournalIndex + 1).ToString();
-
-        Debug.LogWarning("After condition:" + curr_JournalIndex);
-
-        //enable next pic
-        if (playerJournal.journalEntries.ContainsKey(nextkey1))
-            playerJournal.journalEntries[nextkey1].enabled = true;
-        //if next pic exists
-        if (playerJournal.journalEntries.ContainsKey(nextkey2))
-        {
-            playerJournal.journalEntries[nextkey2].enabled = true;
-        }
-        
-       
-    }
-
-    public void On_TriggerPrevPageJournal()
-    {
-        string key1 = "J" + curr_JournalIndex.ToString();
-        string key2 = "J" + (curr_JournalIndex + 1).ToString();
-
-        playerSFX.findSFXSourceByLabel("Journal").PlayOneShot(playerSFX.findSFXSourceByLabel("Journal").clip);
-
-        //disable current pics
-        if (playerJournal.journalEntries.ContainsKey(key1))
-            playerJournal.journalEntries[key1].enabled = false;
-        if (playerJournal.journalEntries.ContainsKey(key2))
-        {
-            playerJournal.journalEntries[key2].enabled = false;
-        }
-        
-
-        //NEED TO FIX
-        if ((this.curr_JournalIndex -= 2) < 0)
-        {
-            this.curr_JournalIndex = playerJournal.journalEntries.Count - 2; //1, 2
-        }
-
-        string nextkey1 = "J" + (curr_JournalIndex).ToString(); //1 default
-        string nextkey2 = "J" + (curr_JournalIndex + 1).ToString(); //1+1 = 2 bunsen
-
-        //enable next pic
-        if (playerJournal.journalEntries.ContainsKey(nextkey1))
-        {
-            playerJournal.journalEntries[nextkey1].enabled = true;
-        }
-        if (playerJournal.journalEntries.ContainsKey(nextkey2))
-        {
-            playerJournal.journalEntries[nextkey2].enabled = true;
-        }
-        
-
-    }
 }

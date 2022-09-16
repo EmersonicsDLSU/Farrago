@@ -31,18 +31,17 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
 
     [HideInInspector] public MainPlayerSc mainPlayer;
     
-    [SerializeField] private Image clueImage;
+    public Sprite clueImage;
+
     public GameObject clueUIText;
     public GameObject interactText;
     public GameObject journalHelpButton;
-
-    private string key;
+    
     private Vector2 imageInitPos;
     private Object_ID object_ID;
 
     private void Awake()
     {
-        imageInitPos = clueImage.rectTransform.anchoredPosition;
         object_ID = GetComponent<Object_ID>();
 
         ODelegates();
@@ -116,16 +115,21 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
     protected void CallItemEvents(E_ClueInteraction item)
     {
         // adds the journal to the journalEntries(List)
-        key = "J" + Journal.Instance.journalEntries.Count.ToString();
-        Journal.Instance.journalEntries.Add(key, clueImage);
-        Journal.Instance.journalEntries[key].enabled = true;
+        //Journal.Instance.journalEntries.Add(Clue_Identification, clueImage);
+        //Journal.Instance.journalEntries[Clue_Identification].enabled = true;
+        Journal.Instance.journalImages.Add(new JournalImage(Clue_Identification, clueImage));
 
         // Deactivate this interactable clue
         isActive = false;
         GetComponent<MeshRenderer>().enabled = false;
         
-        // position the Image UI at the center
-        clueImage.rectTransform.anchoredPosition = new Vector2(0,0);
+        // swap the recently taken image to the center
+        FindObjectOfType<JournalBook>().displayClueImage.sprite = clueImage;
+        // display the recently taken image
+        if (Clue_Identification != E_ClueInteraction.R2_INSTRUCTION1 && Clue_Identification != E_ClueInteraction.R2_INSTRUCTION2)
+        {
+            FindObjectOfType<JournalBook>().displayClueImage.enabled = true;
+        }
 
         // edit some text
         interactText.GetComponent<Text>().text = "Close";
@@ -150,9 +154,8 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
     {
         if (other.CompareTag("Player"))
         {
-            clueImage.rectTransform.anchoredPosition = imageInitPos;
-            if(Journal.Instance.journalEntries.ContainsKey(key))
-                Journal.Instance.journalEntries[key].enabled = false;
+            // disabled the image display
+            FindObjectOfType<JournalBook>().displayClueImage.enabled = false;
         }
         OOnTriggerExit(other);
     }
@@ -165,7 +168,6 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
             data.journalImagesTaken.TryGetValue((int)Clue_Identification, out isActive);
             if (!isActive)
             {
-                Debug.LogError($"Load: {Clue_Identification}");
                 OLoadData(data);
             }
         }
@@ -245,8 +247,11 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
     public virtual void OLoadData(GameData data)
     {
         // adds the journal to the journalEntries(List)
-        key = "J" + Journal.Instance.journalEntries.Count.ToString();
-        Journal.Instance.journalEntries.Add(key, clueImage);
+        if (Clue_Identification != E_ClueInteraction.R2_INSTRUCTION1 && Clue_Identification != E_ClueInteraction.R2_INSTRUCTION2)
+        {
+            Debug.LogError($"Load: {Clue_Identification}");
+            Journal.Instance.journalImages.Add(new JournalImage(Clue_Identification, clueImage));
+        }
 
         // Deactivate this interactable clue
         isActive = false;

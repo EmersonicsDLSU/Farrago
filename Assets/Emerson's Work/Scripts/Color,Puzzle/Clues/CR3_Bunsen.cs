@@ -7,7 +7,7 @@ public class CR3_Bunsen : ClueInteraction
 {
     public override void OAwake()
     {
-        Clue_Identification = E_ClueInteraction.R2_BUNSEN;
+        Clue_Identification = E_ClueInteraction.R3_BUNSEN;
     }
 
     // once interacted, the clue will be acquired instantly

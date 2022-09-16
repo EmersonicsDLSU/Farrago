@@ -99,8 +99,10 @@ public enum PuzzleItem
 public enum E_ClueInteraction
 {
     NONE = -1,
-    R2_BUNSEN,
-    R2_FIRE,
+    R2_INSTRUCTION1,
+    R2_INSTRUCTION2,
+    R3_BUNSEN,
+    R3_FIRE,
     R5_POTPLANT,
     R5_LIGHTPLANT
 }
