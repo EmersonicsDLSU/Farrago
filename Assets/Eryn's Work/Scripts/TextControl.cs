@@ -212,7 +212,7 @@ public class TextControl : MonoBehaviour
         {
             textFireDelay += Time.deltaTime;
 
-            //Debug.LogWarning(textFireDelay);
+            Debug.Log(textFireDelay);
 
             if (textFireDelay >= 4.0)
             {
@@ -278,6 +278,7 @@ public class TextControl : MonoBehaviour
     public void setText(string text)
     {
         textHolder.text = text;
+        Debug.Log(text);
 
         fireText();
     }
@@ -301,10 +302,13 @@ public class TextControl : MonoBehaviour
 
     public void displayQueue()
     {
+        /*
         for (int i = 0; i < levelMonologue.Count; i++)
         {
             setText(levelMonologue.Dequeue());
         }
+        */
+        setText(levelMonologue.Dequeue());
 
         textFireDelay = 0;
     }
