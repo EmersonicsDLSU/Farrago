@@ -195,7 +195,6 @@ public class HUD_Controller : MonoBehaviour
     public void On_OpenJournal()
     {
         Invoke("time_Pause", 1.0f);
-        Invoke("displayJournalPics", 1.0f);
     }
     public void On_CloseJournal()
     {
