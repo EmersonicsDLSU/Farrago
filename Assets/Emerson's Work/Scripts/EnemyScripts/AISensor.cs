@@ -21,8 +21,7 @@ public class AISensor : MonoBehaviour
     int count;
     float scanInterval;
     float scanTimer;
-
-    //
+    
     private List<GameObject> objects = new List<GameObject>();
     public List<GameObject> Objects
     {
@@ -39,7 +38,7 @@ public class AISensor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void update(AIAgent agent)
     {
         scanTimer -= Time.deltaTime;
         if(scanTimer < 0)

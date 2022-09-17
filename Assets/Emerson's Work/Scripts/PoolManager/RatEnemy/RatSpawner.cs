@@ -7,43 +7,44 @@ public class RatSpawner : MonoBehaviour , IPoolFunctions
 {
     //the type of pool and the originalObj; both are required, set you're preferred values for the constructors(maxSize, isFixAllocation?)
     [HideInInspector] public ObjPools enemyPool;
-    [SerializeField] private List <GameObject> originalObjs = new List<GameObject>();
+    [SerializeField] protected List <GameObject> originalObjs = new List<GameObject>();
 
     //transform locations of the poolStorage and spawn locations
-    private Transform poolableLocation;
-    private List <Transform> spawnLocations = new List<Transform>();
+    [HideInInspector] protected Transform poolableLocation;
+    [HideInInspector] protected List <Transform> spawnLocations = new List<Transform>();
 
     //max size of the pool and if its size isDynamic
-    [SerializeField] private int maxPoolSizePerObj = 20; //default
-    [SerializeField] private int existingSpawnSize = 2; //default
-    [SerializeField] private bool fixedAllocation = true; //default
+    [SerializeField] protected int maxPoolSizePerObj = 20; //default
+    [SerializeField] protected int existingSpawnSize = 2; //default
+    [SerializeField] protected bool fixedAllocation = true; //default
 
     //time count and time interval for the spawning
-    private float ticks = 0.0f;
-    private float spawn_interval = 0.01f;
+    protected float ticks = 0.0f;
+    protected float spawn_interval = 0.01f;
+
+    [SerializeField] protected GameObject spawnsSet;
 
     void Start()
     {
         assignSpawnLocations();
-        enemyPool = new ObjPools(this.maxPoolSizePerObj, this.fixedAllocation,
-            this.spawnLocations, Pool_Type.ENEMY, this.GetComponent<IPoolFunctions>());
-        poolableLocation = this.transform;
-        this.enemyPool.Initialize(ref originalObjs, poolableLocation, this);
+        enemyPool = new ObjPools(maxPoolSizePerObj, fixedAllocation,
+            spawnLocations, Pool_Type.ENEMY, GetComponent<IPoolFunctions>());
+        poolableLocation = transform;
+        OStart();
     }
-
-    [SerializeField]private GameObject spawnsSet;
-    private void assignSpawnLocations()
+    
+    public virtual void OStart()
     {
-        //Get the spawnSet Obj and get all of its child objs which are the spawn transform points
-        for (int i = 0; i < spawnsSet.transform.childCount; i++)
-        {
-            spawnLocations.Add(spawnsSet.transform.GetChild(i).transform);
-            //Debug.LogError($"SpawnLocations count: {spawnLocations[i].transform.position.x}:{spawnLocations[i].transform.position.y}:{spawnLocations[i].transform.position.z}");
-        }
+        enemyPool.Initialize(ref originalObjs, poolableLocation, this);
     }
 
     // Update is called once per frame
     void Update()
+    {
+        OUpdate();
+    }
+
+    public virtual void OUpdate()
     {
         if (this.ticks < spawn_interval)
         {
@@ -60,9 +61,30 @@ public class RatSpawner : MonoBehaviour , IPoolFunctions
         }
     }
 
+    private void assignSpawnLocations()
+    {
+        //Get the spawnSet Obj and get all of its child objs which are the spawn transform points
+        for (int i = 0; i < spawnsSet.transform.childCount; i++)
+        {
+            spawnLocations.Add(spawnsSet.transform.GetChild(i).transform);
+            //Debug.LogError($"SpawnLocations count: {spawnLocations[i].transform.position.x}:{spawnLocations[i].transform.position.y}:{spawnLocations[i].transform.position.z}");
+        }
+    }
+
     //start of "IPoolFunctions" functions 
     //**
     public void onRequestGo(List<Transform> spawnLocations)
+    {
+        OOnRequestGo(spawnLocations);
+    }
+    public void onReleaseGo()
+    {
+        OOnReleaseGo();
+    }
+    //**
+    //end of "IPoolFunctions" functions 
+
+    public virtual void OOnRequestGo(List<Transform> spawnLocations)
     {
         //Debug.LogError($"spawnLocations count: {spawnLocations.Count}");
         int randIndex = Random.Range(0, spawnLocations.Count);
@@ -74,10 +96,8 @@ public class RatSpawner : MonoBehaviour , IPoolFunctions
             GetComponentInChildren<EnemyPatrolling>().assignDestinations(
                 spawnLocations[randIndex].GetComponent<SpawnerDestinationSet>().DestinationSet);
     }
-    public void onReleaseGo()
+    public virtual void OOnReleaseGo()
     {
 
     }
-    //**
-    //end of "IPoolFunctions" functions 
 }

@@ -45,9 +45,11 @@ public class AIAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(this.enemyPatrol != null)
+        if(enemyPatrol != null)
             enemyPatrol.update(this);
-        if(this.enemyChaseSc != null)
+        if(enemyChaseSc != null)
             enemyChaseSc.update(this);
+        if(aiSensor != null)
+            aiSensor.update(this);
     }
 }

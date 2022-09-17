@@ -42,6 +42,11 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        // add delegate
+        Gameplay_DelegateHandler.D_OnDeath += (c_onDeath) =>
+        {
+            Cleanse(FindObjectOfType<MainPlayerSc>());
+        };
         if(inventoryPoolSc == null)
         {
             inventoryPoolSc = FindObjectOfType<InventoryPool>();
@@ -61,8 +66,10 @@ public class Inventory : MonoBehaviour
             {
                 // Destroy(inventorySlots[i].colorItem);
                 this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);
-                inventorySlots[0].isFull = false;
-                inventorySlots[0].colorItem = null;
+                inventorySlots[i].isFull = false;
+                inventorySlots[i].colorItem = null;
+                inventorySlots[i].colorMixer.color = Color.white;
+                inventorySlots[i].colorMixer.color_code = ColorCode.BLACK;
             }
         }
         // Reset Color Slots properties
