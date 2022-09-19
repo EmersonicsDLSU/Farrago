@@ -11,9 +11,24 @@ public class Settings_Controller : MonoBehaviour
 
     [SerializeField] private RenderPipelineAsset[] renderPipelines;
 
+    public static Settings_Controller Instance;
+
     void Awake()
     {
-        if(!PlayerPrefs.HasKey("ScreenSize"))
+        //FOR SINGLETON
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+
+        DontDestroyOnLoad(this);
+
+
+        //VALUES INDICATED ARE DEFAULT VALUES FOR PLAYERPREFS
+
+        if (!PlayerPrefs.HasKey("ScreenSize"))
             SetScreenSize(2);
         else
             SetScreenSize(PlayerPrefs.GetInt("ScreenSize"));
