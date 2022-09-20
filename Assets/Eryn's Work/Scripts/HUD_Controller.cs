@@ -15,11 +15,7 @@ public class HUD_Controller : MonoBehaviour
     public GameObject confirmationPanelLose;
     public GameObject journalPanel;
     private TooltipHolder tooltipHolder;
-
-    public Button nextJournalButton;
-    public Button prevJournalButton;
     
-
     private bool isEscPressed = false;
     [HideInInspector] public bool isJPressed = false;
     private bool canPress = true;

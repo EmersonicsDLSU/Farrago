@@ -61,6 +61,8 @@ public class Audio_Transmitter : MonoBehaviour
 
         Instance = this;
         //DontDestroyOnLoad(this);
+        
+        Initialize();
     }
 
     public void Initialize()
@@ -83,8 +85,6 @@ public class Audio_Transmitter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Initialize();
-
         StartCoroutine(BGMInstance.SwapTrack(BGMInstance.BGMClips[0].clip));
 
         /*Just for testing will be removed
