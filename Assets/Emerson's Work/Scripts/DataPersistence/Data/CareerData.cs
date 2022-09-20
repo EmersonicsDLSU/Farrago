@@ -26,10 +26,11 @@ public class CareerData
         total_visit = 0;
         total_time_played = 0;
 
-        screen_size = 0;
-        quality = 0;
-        is_fullscreen = 0;
-        bgm_volume = 0;
-        sfx_volume = 0;
+        // Settings default values
+        screen_size = 2;
+        quality = 5;
+        is_fullscreen = 1;
+        bgm_volume = 1;
+        sfx_volume = 1;
     }
 }

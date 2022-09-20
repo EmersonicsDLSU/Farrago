@@ -10,9 +10,6 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     
     void Awake()
     {
-        // We saved career file again because we want to add the minutes played on the 
-        // main menu portion
-        DataPersistenceManager.instance.SaveCareerGame();
         DataPersistenceManager.instance.LoadCareerData();
     }
     

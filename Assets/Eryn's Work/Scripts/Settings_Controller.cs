@@ -15,32 +15,12 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
     void Awake()
     {
-        if(!PlayerPrefs.HasKey("ScreenSize"))
-            SetScreenSize(2);
-        else
-            SetScreenSize(PlayerPrefs.GetInt("ScreenSize"));
 
-        if(!PlayerPrefs.HasKey("Quality"))
-            SetQuality(5);
-        else
-            SetQuality(PlayerPrefs.GetInt("Quality"));
-
-        SetFullScreen(true);
-
-        if (!PlayerPrefs.HasKey("BGMVolume"))
-            SetBGMVolume(1);
-        else
-            SetBGMVolume(PlayerPrefs.GetFloat("BGMVolume"));
-
-        if (!PlayerPrefs.HasKey("SFXVolume"))
-            SetSFXVolume(1);
-        else
-            SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume"));
     }
 
     void OnApplicationQuit()
     {
-        PlayerPrefs.Save();
+        //PlayerPrefs.Save();
     }
 
     public void SetScreenSize(int index)
@@ -49,7 +29,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
         int width = widths[index];
         int height = heights[index];
         Screen.SetResolution(width, height, fullscreen);
-        PlayerPrefs.SetInt("ScreenSize", index);
+        //PlayerPrefs.SetInt("ScreenSize", index);
 
         screen_size = index;
     }
@@ -64,7 +44,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
     {
         QualitySettings.SetQualityLevel(index);
         QualitySettings.renderPipeline = renderPipelines[index];
-        PlayerPrefs.SetInt("Quality", index);
+        //PlayerPrefs.SetInt("Quality", index);
 
         quality = index;
     }
@@ -72,7 +52,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
     public void SetBGMVolume(float value)
     {
         Audio_Transmitter.Instance.BGMVolume(value);
-        PlayerPrefs.SetFloat("BGMVolume", value);
+        //PlayerPrefs.SetFloat("BGMVolume", value);
 
         bgm_volume = value;
     }
@@ -80,11 +60,16 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
     public void SetSFXVolume(float value)
     {
         Audio_Transmitter.Instance.SFXVolume(value);
-        PlayerPrefs.SetFloat("SFXVolume", value);
+        //PlayerPrefs.SetFloat("SFXVolume", value);
 
         sfx_volume = value;
     }
-    
+
+    public void SaveSettingsData()
+    {
+        DataPersistenceManager.instance.SaveCareerGame();
+    }
+
     // Settings value
     private int screen_size;
     private int quality;
@@ -101,9 +86,6 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
     public void LoadData(CareerData data)
     {
-        if (data.total_visit <= 0)
-            return;
-
         SetScreenSize(data.screen_size);
         resolution_dropdown.value = data.screen_size;
 

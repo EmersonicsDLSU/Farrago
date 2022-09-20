@@ -260,9 +260,9 @@ public class DataPersistenceManager : MonoBehaviour
     public void LoadCareerData()
     {
         // load any saved data from a file using the data handler
-        this.careerData = careerDataHandler.LoadCareerData();
+        careerData = careerDataHandler.LoadCareerData();
         // if no CAREER data can be loaded, initialize to a new game
-        if (this.careerData == null) 
+        if (careerData == null) 
         {
             Debug.Log("No data was found. Initializing data to defaults.");
             NewCareer();
