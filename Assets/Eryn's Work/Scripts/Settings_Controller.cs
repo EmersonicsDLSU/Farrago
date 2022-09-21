@@ -46,6 +46,8 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
         QualitySettings.renderPipeline = renderPipelines[index];
         //PlayerPrefs.SetInt("Quality", index);
 
+        Debug.LogError("GRAPHICS IS CHANGED");
+
         quality = index;
     }
 
@@ -68,6 +70,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
     public void SaveSettingsData()
     {
         DataPersistenceManager.instance.SaveCareerGame();
+        Debug.LogError("SETTINGS SAVED FROM RETURN");
     }
 
     // Settings value
@@ -99,6 +102,8 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
         SetBGMVolume(data.bgm_volume);
         bgm_slider.value = data.bgm_volume;
+        Debug.LogError($"Audio: {bgm_slider.value}");
+
 
         SetSFXVolume(data.sfx_volume);
         sfx_slider.value = data.sfx_volume;

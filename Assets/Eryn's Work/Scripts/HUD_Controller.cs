@@ -104,7 +104,7 @@ public class HUD_Controller : MonoBehaviour
 
     public void On_Pause()
     {
-        
+        FindObjectOfType<Settings_Controller>().GetComponent<ICareerDataPersistence>().LoadData(DataPersistenceManager.instance.currentLoadedCareerData);
 
         disable_All();
         pausePanel.SetActive(true);

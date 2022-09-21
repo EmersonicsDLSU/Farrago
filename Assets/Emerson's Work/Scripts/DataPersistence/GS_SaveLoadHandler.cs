@@ -10,13 +10,13 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     
     void Awake()
     {
-        DataPersistenceManager.instance.LoadCareerData();
+        
     }
     
     // Start is called before the first frame update
     void Start()
     {
-
+        DataPersistenceManager.instance.LoadCareerData();
     }
     
     public void LoadGameFromIntroDelay()
