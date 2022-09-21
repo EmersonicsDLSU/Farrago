@@ -69,7 +69,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
     public void SaveSettingsData()
     {
-        DataPersistenceManager.instance.SaveCareerGame();
+        DataPersistenceManager.Instance.SaveCareerGame();
         Debug.LogError("SETTINGS SAVED FROM RETURN");
     }
 
@@ -116,5 +116,6 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
         data.is_fullscreen = is_fullscreen ? 1 : 0;;
         data.bgm_volume = bgm_volume;
         data.sfx_volume = sfx_volume;
+        Debug.LogError("SETTINGS SAVED!");
     }
 }

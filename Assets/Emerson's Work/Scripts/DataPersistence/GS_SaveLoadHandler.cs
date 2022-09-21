@@ -16,18 +16,18 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        DataPersistenceManager.instance.LoadCareerData();
+        DataPersistenceManager.Instance.LoadCareerData();
     }
     
     public void LoadGameFromIntroDelay()
     {
         // Loads the saved game file
-        DataPersistenceManager.instance.LoadGame(DataPersistenceManager.instance.currentSaveFile);
+        DataPersistenceManager.Instance.LoadGame(DataPersistenceManager.Instance.currentSaveFile);
         Debug.LogError($"Load from GameScene {FindObjectOfType<GS_SaveLoadHandler>().total_tries}");
         if (++FindObjectOfType<GS_SaveLoadHandler>().total_tries == 1)
         {
             Debug.LogError($"Save First Try");
-            DataPersistenceManager.instance.SaveGame(DataPersistenceManager.instance.currentSaveFile);
+            DataPersistenceManager.Instance.SaveGame(DataPersistenceManager.Instance.currentSaveFile);
         }
     }
 

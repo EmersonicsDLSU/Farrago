@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError($"Dead");
             // re-position the player transform to its latest re-spawn point
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position =
-                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
+                DataPersistenceManager.Instance.currentLoadedData.respawnPoint;
 
             /* // replays the cutscene **Don't Delete**
             int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);

@@ -66,7 +66,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     {
         //Debug.LogError($"Total Tries :{DataPersistenceManager.instance.currentLoadedData.total_tries}");
         // if first try, then we do not translate the player 
-        if (DataPersistenceManager.instance.currentLoadedData.total_tries != 0)
+        if (DataPersistenceManager.Instance.currentLoadedData.total_tries != 0)
         {
             Debug.LogError($"Translate to :{data.respawnPoint}");
             this.transform.position = data.respawnPoint;

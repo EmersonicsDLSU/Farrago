@@ -36,7 +36,7 @@ public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
     void OnApplicationQuit()
     {
         visit_count++;
-        DataPersistenceManager.instance.SaveCareerGame();
+        DataPersistenceManager.Instance.SaveCareerGame();
     }
     
     public void LoadData(CareerData data)

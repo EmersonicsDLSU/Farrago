@@ -157,7 +157,7 @@ public class TimelineLevel : MonoBehaviour
             this.resetCutscene(CutSceneTypes.Level2JournalChecker);
         }
         // save the last position
-        DataPersistenceManager.instance.SaveGame(DataPersistenceManager.instance.currentSaveFile);
+        DataPersistenceManager.Instance.SaveGame(DataPersistenceManager.Instance.currentSaveFile);
     }
 
     private void TimelineActiveChecker()
@@ -214,7 +214,7 @@ public class TimelineLevel : MonoBehaviour
             // re-position the player transform to its latest re-spawn point
             Debug.LogError($"Dead: {mainPlayer.timelineLevelSc.lastPlayedSceneType}");
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                DataPersistenceManager.instance.currentLoadedData.respawnPoint;
+                DataPersistenceManager.Instance.currentLoadedData.respawnPoint;
         }
     }
     

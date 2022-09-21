@@ -16,7 +16,7 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<MainPlayerSc>() != null) player_mainSc = FindObjectOfType<MainPlayerSc>();
             else Debug.LogError($"Missing \"MainPlayerSc script\" in {this.gameObject.name}");
         }
-        DataPersistenceManager.instance.SearchForPersistenceObjInScene();
+        DataPersistenceManager.Instance.SearchForPersistenceObjInScene();
     }
     
     private void OnTriggerEnter(Collider other)
@@ -26,7 +26,7 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         {
             MainCharacterStructs.Instance.playerSavedAttrib.respawnPointEnum = respawnPointEnum;
             is_entered = true;
-            DataPersistenceManager.instance.SaveGame(DataPersistenceManager.instance.currentSaveFile);
+            DataPersistenceManager.Instance.SaveGame(DataPersistenceManager.Instance.currentSaveFile);
         }
         // add the current respawnPoint
         RespawnPointsHandler.CurrentRespawnPoint = respawnPointEnum;

@@ -65,7 +65,7 @@ public class MainMenu_Controller : MonoBehaviour
     
     private void Start()
     {
-        DPM = DataPersistenceManager.instance;
+        DPM = DataPersistenceManager.Instance;
 
         Time.timeScale = 1;
 

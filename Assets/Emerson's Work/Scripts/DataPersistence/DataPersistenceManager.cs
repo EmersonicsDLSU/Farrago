@@ -40,16 +40,29 @@ public class DataPersistenceManager : MonoBehaviour
 
     [HideInInspector] public SaveFile currentSaveFile = SaveFile.NONE;
 
-    public static DataPersistenceManager instance { get; private set; }
+    private static DataPersistenceManager _instance;
     
+    public static DataPersistenceManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<DataPersistenceManager>();
+                
+                if (_instance == null)
+                {
+                    _instance = new GameObject().AddComponent<DataPersistenceManager>();
+                }
+            }
+            
+            return _instance;
+        }
+    }
 
     private void Awake() 
     {
-        if (instance != null) 
-        {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
-        }
-        instance = this;
+
         DontDestroyOnLoad(this);
     }
 
