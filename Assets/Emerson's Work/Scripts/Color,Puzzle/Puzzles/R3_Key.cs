@@ -22,19 +22,26 @@ public class R3_Key : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void ODelegates()
     {
-        D_Item += (e) =>
-        {
-            // set the key objective as completed
-            QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
-                .descriptiveObjectives[DescriptiveQuest.R3_OBTAINKEY] = true;
-            isActive = false;
-            // Update the objectiveList as well; double update 
-            FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
-            questGiver.UpdateObjectiveList();
-            FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
-        };
+        D_Item += Event1;
+    }
+
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
     }
     
+    private void Event1(C_Item e)
+    {
+        // set the key objective as completed
+        QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
+            .descriptiveObjectives[DescriptiveQuest.R3_OBTAINKEY] = true;
+        isActive = false;
+        // Update the objectiveList as well; double update 
+        FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
+        questGiver.UpdateObjectiveList();
+        FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
+    }
+
     public override void OOnTriggerEnter(Collider other)
     {
         Debug.LogError($"Key Acquired!!!");

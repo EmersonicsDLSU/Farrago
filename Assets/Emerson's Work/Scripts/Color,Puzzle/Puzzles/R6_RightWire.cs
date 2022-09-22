@@ -64,47 +64,50 @@ public class R6_RightWire : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void ODelegates()
     {
-        D_Item += (e) =>
-        {
-            // Check if color is correct and if the left wire is turned on
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
-            {
-                // disables the interactable UI
-                interactableParent.SetActive(false);
-                isActive = false;
-                canInteract = false;
-
-                // open the light component from the wire
-                lightToOpen.SetActive(true);
-                
-                //CHANGE ELECTRICITY COLOR
-                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
-                tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
-                ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
-                subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
-                subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
-
-                // If left wire is open / or the objective is not active anymore; then vine will bridge the rat
-                if (!FindObjectOfType<R6_LeftWire>().isActive)
-                {
-                    // enable the death timeline trigger
-                    timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
-                        GetComponent<BoxCollider>().enabled = true;
-                    //enable anim of correct vine length
-                    assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
-                    assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
-                }
-
-                //TRIGGER CORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextCorrect();
-            }
-            else
-            {
-                //TRIGGER INCORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextIncorrect();
-            }
-        };
+        D_Item += Event1;
     }
+
+    private void Event1(C_Item e)
+    {
+        // Check if color is correct and if the left wire is turned on
+        if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
+        {
+            // disables the interactable UI
+            interactableParent.SetActive(false);
+            isActive = false;
+            canInteract = false;
+
+            // open the light component from the wire
+            lightToOpen.SetActive(true);
+                
+            //CHANGE ELECTRICITY COLOR
+            ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+            tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+            ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+            subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+            subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
+
+            // If left wire is open / or the objective is not active anymore; then vine will bridge the rat
+            if (!FindObjectOfType<R6_LeftWire>().isActive)
+            {
+                // enable the death timeline trigger
+                timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
+                    GetComponent<BoxCollider>().enabled = true;
+                //enable anim of correct vine length
+                assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
+                assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
+            }
+
+            //TRIGGER CORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextCorrect();
+        }
+        else
+        {
+            //TRIGGER INCORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextIncorrect();
+        }
+    }
+
     public override void OLoadData(GameData data)
     {
         // disables the interactable UI

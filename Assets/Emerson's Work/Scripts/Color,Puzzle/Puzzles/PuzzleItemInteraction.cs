@@ -47,7 +47,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
         canInteract = false;
         isActive = true;
     }
-    
+
     public void Update()
     {
         InheritorsUpdate();

@@ -38,27 +38,34 @@ public class R2_Journal : PuzzleItemInteraction
     
     public override void ODelegates()
     {
-        D_Item += (e) =>
-        {
-            Debug.LogError($"Journal Is Obtained");
+        D_Item += Event1;
+    }
 
-            // disables the interactable UI
-            interactableParent.SetActive(false);
-            isActive = false;
-            canInteract = false;
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
 
-            // journal is obtained
-            Journal.Instance.isJournalObtained = true;
+    private void Event1(C_Item e)
+    {
+        Debug.LogError($"Journal Is Obtained");
 
-            // texts are now added after acquiring the journal
-            TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
-            TextControl.Instance.delayReset();
+        // disables the interactable UI
+        interactableParent.SetActive(false);
+        isActive = false;
+        canInteract = false;
+
+        // journal is obtained
+        Journal.Instance.isJournalObtained = true;
+
+        // texts are now added after acquiring the journal
+        TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
+        TextControl.Instance.delayReset();
             
-            // display UI of journal
-            journalHUDText.SetActive(true);
+        // display UI of journal
+        journalHUDText.SetActive(true);
             
-            this.gameObject.SetActive(false);
-        };
+        this.gameObject.SetActive(false);
     }
 
     // once interacted, the journal will be acquired instantly

@@ -65,45 +65,52 @@ public class R6_DeskLamp : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void ODelegates()
     {
-        D_Item += (e) =>
-        {
-            // Check if color is correct
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
-            {
-                // disables the interactable UI
-                interactableParent.SetActive(false);
-                isActive = false;
-                canInteract = false;
-
-                // open the light component from the wire
-                lightToOpen.SetActive(true);
-
-                //CHANGE ELECTRICITY COLOR
-                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
-                tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
-                ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
-                subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
-                subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
-                
-                // play the vine animation
-                assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
-                // enable the death timeline trigger
-                timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Transition].
-                    GetComponent<BoxCollider>().enabled = true;
-                // disable the death timeline trigger
-                //Level6DeadTrigger.GetComponent<BoxCollider>().enabled = false;
-
-                //TRIGGER CORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextCorrect();
-            }
-            else
-            {
-                //TRIGGER INCORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextIncorrect();
-            }
-        };
+        D_Item += Event1;
     }
-    
+
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
+
+    private void Event1(C_Item e)
+    {
+        // Check if color is correct
+        if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
+        {
+            // disables the interactable UI
+            interactableParent.SetActive(false);
+            isActive = false;
+            canInteract = false;
+
+            // open the light component from the wire
+            lightToOpen.SetActive(true);
+
+            //CHANGE ELECTRICITY COLOR
+            ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+            tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+            ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+            subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+            subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
+                
+            // play the vine animation
+            assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
+            // enable the death timeline trigger
+            timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Transition].
+                GetComponent<BoxCollider>().enabled = true;
+            // disable the death timeline trigger
+            //Level6DeadTrigger.GetComponent<BoxCollider>().enabled = false;
+
+            //TRIGGER CORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextCorrect();
+        }
+        else
+        {
+            //TRIGGER INCORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextIncorrect();
+        }
+    }
+
     public override void OLoadData(GameData data)
     {
         // disables the interactable UI

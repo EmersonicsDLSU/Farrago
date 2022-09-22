@@ -53,57 +53,64 @@ public class R3_BunsenBurner : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void ODelegates()
     {
-        D_Item += (e) =>
+        D_Item += Event1;
+    }
+
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
+    
+    private void Event1(C_Item e)
+    {
+        // Check if color is correct
+        if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.ORANGE)
         {
-            // Check if color is correct
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.ORANGE)
+            // disables the interactable UI
+            interactableParent.SetActive(false);
+            isActive = false;
+
+            /* Start of Objective Completion / Setting strikethrough to the text's fontStyle*/
+            // set the fire objective as completed
+            QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
+                .descriptiveObjectives[DescriptiveQuest.R3_COMPLETED_FIRE] = true;
+
+            // Update the objectiveList as well; double update 
+            objectivePool.itemPool.ReleaseAllPoolable();
+            questGiver.UpdateObjectiveList();
+            objectivePool.EnabledAnimation(true);
+
+            // Check if all objectives are completed
+            if (questGiver.currentQuest != null && QuestCollection.Instance.questDict[questGiver.currentQuest.questID].
+                    descriptiveObjectives.Values.All(e => e == true))
             {
-                // disables the interactable UI
-                interactableParent.SetActive(false);
-                isActive = false;
+                questGiver.currentQuest.neededGameObjects.Clear();
+            }
+            /* End of Objective Completion */
 
-                /* Start of Objective Completion / Setting strikethrough to the text's fontStyle*/
-                // set the fire objective as completed
-                QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3]
-                    .descriptiveObjectives[DescriptiveQuest.R3_COMPLETED_FIRE] = true;
-
-                // Update the objectiveList as well; double update 
-                objectivePool.itemPool.ReleaseAllPoolable();
-                questGiver.UpdateObjectiveList();
-                objectivePool.EnabledAnimation(true);
-
-                // Check if all objectives are completed
-                if (questGiver.currentQuest != null && QuestCollection.Instance.questDict[questGiver.currentQuest.questID].
-                        descriptiveObjectives.Values.All(e => e == true))
-                {
-                    questGiver.currentQuest.neededGameObjects.Clear();
-                }
-                /* End of Objective Completion */
-
-                //TRIGGER CORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextCorrect();
+            //TRIGGER CORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextCorrect();
                 
-                //CHANGE FIRE COLOR
-                ParticleSystem.Play();
-                ParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+            //CHANGE FIRE COLOR
+            ParticleSystem.Play();
+            ParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            ma.startColor = inventory.inventorySlots[0].colorMixer.color;
 
-                //FOR ICE ANIM
-                if (anim != null)
-                {
-                    anim.SetBool("will fade", true);
-                    anim.gameObject.GetComponent<BoxCollider>().enabled = false;
-                    if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
-                        anim.gameObject.GetComponent<AudioSource>().Play();
-                }
-                               
-            }
-            else
+            //FOR ICE ANIM
+            if (anim != null)
             {
-                //TRIGGER INCORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextIncorrect();
+                anim.SetBool("will fade", true);
+                anim.gameObject.GetComponent<BoxCollider>().enabled = false;
+                if (!anim.gameObject.GetComponent<AudioSource>().isPlaying)
+                    anim.gameObject.GetComponent<AudioSource>().Play();
             }
-        };
+                               
+        }
+        else
+        {
+            //TRIGGER INCORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextIncorrect();
+        }
     }
 
     public override void OLoadData(GameData data)

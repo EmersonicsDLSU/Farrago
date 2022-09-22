@@ -23,24 +23,31 @@ public class R3_Door : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void ODelegates()
     {
-        D_Item += (e) =>
+        D_Item += Event1;
+    }
+
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
+    
+    private void Event1(C_Item e)
+    {
+        // disables the interactable UI
+        interactableParent.SetActive(false);
+        isActive = false;
+        canInteract = false;
+
+        GetComponent<AudioSource>().Play();
+        if (gameObject.activeSelf != false)
         {
-            // disables the interactable UI
-            interactableParent.SetActive(false);
-            isActive = false;
-            canInteract = false;
+            Animator animator = GetComponent<Animator>();
 
-            GetComponent<AudioSource>().Play();
-            if (gameObject.activeSelf != false)
+            if (animator != null)
             {
-                Animator animator = GetComponent<Animator>();
-
-                if (animator != null)
-                {
-                    animator.SetTrigger("Interact");
-                }
+                animator.SetTrigger("Interact");
             }
-        };
+        }
     }
 
     public override void OLoadData(GameData data)

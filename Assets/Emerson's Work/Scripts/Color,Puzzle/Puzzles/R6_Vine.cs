@@ -25,9 +25,17 @@ public class R6_Vine : PuzzleItemInteraction
     
     public override void ODelegates()
     {
-        D_Item += (e) =>
-        {
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.GREEN)
+        D_Item += Event1;
+    }
+
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
+
+    private void Event1(C_Item e)
+    {
+        if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.GREEN)
             {
                 // disables the interactable UI
                 interactableParent.SetActive(false);
@@ -49,9 +57,7 @@ public class R6_Vine : PuzzleItemInteraction
                 //TRIGGER INCORRECT MONOLOGUE
                 Monologues.Instance.triggerPuzzleUITextIncorrect();
             }
-        };
     }
-
     public override void OLoadData(GameData data)
     {
         // disables the interactable UI

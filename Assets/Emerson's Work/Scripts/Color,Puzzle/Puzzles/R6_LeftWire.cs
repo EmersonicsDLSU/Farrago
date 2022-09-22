@@ -65,51 +65,58 @@ public class R6_LeftWire : PuzzleItemInteraction
     // Subscribe event should only be called once to avoid duplication
     public override void ODelegates()
     {
-        D_Item += (e) =>
+        D_Item += Event1;
+    }
+
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
+
+    private void Event1(C_Item e)
+    {
+        // Check if color is correct
+        if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
         {
-            // Check if color is correct
-            if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
-            {
-                // disables the interactable UI
-                interactableParent.SetActive(false);
-                isActive = false;
-                canInteract = false;
+            // disables the interactable UI
+            interactableParent.SetActive(false);
+            isActive = false;
+            canInteract = false;
 
-                // open the light component from the wire
-                lightToOpen.SetActive(true);
+            // open the light component from the wire
+            lightToOpen.SetActive(true); 
+            
+            //CHANGE ELECTRICITY COLOR
+            ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+            tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
+            ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
+            subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+            subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
 
-                //CHANGE ELECTRICITY COLOR
-                ma.startColor = inventory.inventorySlots[0].colorMixer.color;
-                tr.colorOverLifetime = inventory.inventorySlots[0].colorMixer.color;
-                ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
-                subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
-                subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
-
-                // if left wire is the only one activated
-                if (FindObjectOfType<R6_RightWire>().isActive)
-                {
-                    assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
-                    assignedVine.GetComponent<Animator>().SetBool("isRightOn", false);
-                }
-                // if the right wire has already been activated
-                else
-                {
-                    // enable the death timeline trigger
-                    timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
-                        GetComponent<BoxCollider>().enabled = true;
-                    assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
-                    assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
-                }
-
-                //TRIGGER CORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextCorrect();
+            // if left wire is the only one activated
+            if (FindObjectOfType<R6_RightWire>().isActive)
+            { 
+                assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
+                assignedVine.GetComponent<Animator>().SetBool("isRightOn", false);
             }
+            // if the right wire has already been activated
             else
             {
-                //TRIGGER INCORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextIncorrect();
+                // enable the death timeline trigger
+                timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
+                    GetComponent<BoxCollider>().enabled = true;
+                assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
+                assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
             }
-        };
+
+            //TRIGGER CORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextCorrect();
+        }
+        else
+        {
+            //TRIGGER INCORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextIncorrect();
+        }
     }
 
     public override void OLoadData(GameData data)
