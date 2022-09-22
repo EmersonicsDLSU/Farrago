@@ -67,6 +67,11 @@ public class R6_RightWire : PuzzleItemInteraction
         D_Item += Event1;
     }
 
+    public void OnDestroy()
+    {
+        D_Item -= Event1;
+    }
+
     private void Event1(C_Item e)
     {
         // Check if color is correct and if the left wire is turned on
