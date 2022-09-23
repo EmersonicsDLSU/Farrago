@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -23,11 +24,9 @@ public class DataPersistenceManager : MonoBehaviour
     private CareerData careerData;
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ICareerDataPersistence> careerDataPersistenceObjects;
-    private FileDataHandler dataHandler_0;
-    private FileDataHandler dataHandler_1;
-    private FileDataHandler dataHandler_2;
+    private FileDataHandler dataHandler;
 
-    [HideInInspector] public SaveFile currentSaveFile = SaveFile.NONE;
+    private string selectedProfileId = "";
     private string selectedCareerId = "CareerData";
 
     private Coroutine autoSaveCoroutine;
