@@ -52,7 +52,6 @@ public class DataPersistenceManager : MonoBehaviour
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
 
         InitializeSelectedProfileId();
-        //InitializeSelectedCareerId();
     }
 
     private void OnEnable() 
@@ -69,7 +68,6 @@ public class DataPersistenceManager : MonoBehaviour
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         this.careerDataPersistenceObjects = FindAllCareerDataPersistenceObjects();
-        LoadGame();
         LoadCareer();
 
         if (isAutoSave)
@@ -107,15 +105,6 @@ public class DataPersistenceManager : MonoBehaviour
         if (overrideSelectedProfileId) 
         {
             this.selectedProfileId = testSelectedProfileId;
-            Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
-        }
-    }
-    private void InitializeSelectedCareerId() 
-    {
-        this.selectedCareerId = dataHandler.GetMostRecentlyUpdatedCareerId();
-        if (overrideSelectedProfileId) 
-        {
-            this.selectedCareerId = testSelectedProfileId;
             Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
         }
     }

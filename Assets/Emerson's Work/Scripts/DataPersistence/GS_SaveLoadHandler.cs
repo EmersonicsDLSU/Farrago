@@ -17,7 +17,6 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
     void Start()
     {
         DataPersistenceManager.instance.LoadCareer();
-        DataPersistenceManager.instance.LoadGame();
     }
     public void LoadGameFromIntroDelay()
     {

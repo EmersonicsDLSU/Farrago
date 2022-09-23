@@ -130,7 +130,7 @@ public class MainMenu_Controller : MonoBehaviour
         btnLoadSave.onClick.AddListener(() => goLoadConfirmation.SetActive(true));
         btnLoadSave.onClick.AddListener(() => goLoadConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmEntry"));
 
-        btnLoadConfirmYes.onClick.AddListener(() => Loader.loadinstance.LoadLevel(1));
+        btnLoadConfirmYes.onClick.AddListener(() => FindObjectOfType<SaveSlotsMenu>().OnSaveSlotClicked(selectedSaveFile));
         btnLoadConfirmNo.onClick.AddListener(() => goLoadConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmExit"));
 
         btnLoad_Back.onClick.AddListener(on_Return);

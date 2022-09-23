@@ -311,42 +311,6 @@ public class FileDataHandler
         return profileDictionary;
     }
     
-    public Dictionary<string, CareerData> LoadAllCareer() 
-    {
-        Dictionary<string, CareerData> profileDictionary = new Dictionary<string, CareerData>();
-
-        // loop over all directory names in the data directory path
-        IEnumerable<DirectoryInfo> dirInfos = new DirectoryInfo(dataDirPath).EnumerateDirectories();
-        foreach (DirectoryInfo dirInfo in dirInfos) 
-        {
-            string profileId = dirInfo.Name;
-
-            // defensive programming - check if the data file exists
-            // if it doesn't, then this folder isn't a profile and should be skipped
-            string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
-            if (!File.Exists(fullPath))
-            {
-                Debug.LogWarning("Skipping directory when loading all profiles because it does not contain data: "
-                                 + profileId);
-                continue;
-            }
-
-            // load the game data for this profile and put it in the dictionary
-            CareerData profileData = LoadCareer(profileId);
-            // defensive programming - ensure the profile data isn't null,
-            // because if it is then something went wrong and we should let ourselves know
-            if (profileData != null) 
-            {
-                profileDictionary.Add(profileId, profileData);
-            }
-            else 
-            {
-                Debug.LogError("Tried to load profile but something went wrong. ProfileId: " + profileId);
-            }
-        }
-
-        return profileDictionary;
-    }
 
     public string GetMostRecentlyUpdatedProfileId() 
     {
@@ -384,42 +348,6 @@ public class FileDataHandler
         return mostRecentProfileId;
     }
     
-    public string GetMostRecentlyUpdatedCareerId() 
-    {
-        string mostRecentProfileId = null;
-
-        Dictionary<string, CareerData> profilesGameData = LoadAllCareer();
-        foreach (KeyValuePair<string, CareerData> pair in profilesGameData) 
-        {
-            string profileId = pair.Key;
-            CareerData gameData = pair.Value;
-
-            // skip this entry if the gamedata is null
-            if (gameData == null) 
-            {
-                continue;
-            }
-
-            // if this is the first data we've come across that exists, it's the most recent so far
-            if (mostRecentProfileId == null) 
-            {
-                mostRecentProfileId = profileId;
-            }
-            // otherwise, compare to see which date is the most recent
-            else 
-            {
-                DateTime mostRecentDateTime = DateTime.FromBinary(profilesGameData[mostRecentProfileId].lastUpdated);
-                DateTime newDateTime = DateTime.FromBinary(gameData.lastUpdated);
-                // the greatest DateTime value is the most recent
-                if (newDateTime > mostRecentDateTime) 
-                {
-                    mostRecentProfileId = profileId;
-                }
-            }
-        }
-        return mostRecentProfileId;
-    }
-
     // the below is a simple implementation of XOR encryption
     private string EncryptDecrypt(string data) 
     {
