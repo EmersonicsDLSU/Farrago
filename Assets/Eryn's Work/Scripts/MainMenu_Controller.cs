@@ -31,13 +31,11 @@ public class MainMenu_Controller : MonoBehaviour
     [SerializeField] private Button[] btnsSaveFile; 
     [SerializeField] private Button btnSave; 
     [SerializeField] private Button btnSave_Back;
-    [SerializeField] private Text txtSaveFile_0; 
-    [SerializeField] private Text txtSaveFile_1; 
-    [SerializeField] private Text txtSaveFile_2; 
     [SerializeField] private GameObject goSaveConfirmation; 
     [SerializeField] private Button btnSaveConfirmYes; 
     [SerializeField] private Button btnSaveConfirmNo; 
-    private SaveFile selectedSaveFile;
+    
+    private SaveSlot selectedSaveFile;
     #endregion
     
     [Header("Load Panel Buttons")]
@@ -46,13 +44,11 @@ public class MainMenu_Controller : MonoBehaviour
     [SerializeField] private Button[] btnsLoadFile; 
     [SerializeField] private Button btnLoadSave; 
     [SerializeField] private Button btnLoad_Back;
-    [SerializeField] private Text txtLoadFile_0;
-    [SerializeField] private Text txtLoadFile_1; 
-    [SerializeField] private Text txtLoadFile_2; 
     [SerializeField] private GameObject goLoadConfirmation; 
     [SerializeField] private Button btnLoadConfirmYes; 
     [SerializeField] private Button btnLoadConfirmNo;
-    private SaveFile selectedLoadFile;
+    
+    private SaveSlot selectedLoadFile;
     #endregion
     
     [Header("Settings Panel Buttons")]
@@ -65,9 +61,10 @@ public class MainMenu_Controller : MonoBehaviour
     
     private void Start()
     {
-        DPM = DataPersistenceManager.Instance;
+        DPM = DataPersistenceManager.instance;
 
         Time.timeScale = 1;
+        
 
         // Main Menu Buttons
         #region MM_Buttons
@@ -88,11 +85,9 @@ public class MainMenu_Controller : MonoBehaviour
                 }
             }
         );
-        btnNewGame.onClick.AddListener(CheckSaveFiles);
         
         btnLoadGame.onClick.AddListener(disableAll);
         btnLoadGame.onClick.AddListener(on_Load);
-        btnLoadGame.onClick.AddListener(CheckLoadFiles);
         
         btnSettings.onClick.AddListener(disableAll);
         btnSettings.onClick.AddListener(on_Settings);
@@ -102,26 +97,20 @@ public class MainMenu_Controller : MonoBehaviour
         
         // Save Panel Buttons
         #region LP_Buttons
-        btnsSaveFile[0].onClick.AddListener(() => selectedSaveFile = SaveFile.FILE_0);
-        btnsSaveFile[0].onClick.AddListener(() => btnSave.interactable = true);
-        btnsSaveFile[1].onClick.AddListener(() => selectedSaveFile = SaveFile.FILE_1);
-        btnsSaveFile[1].onClick.AddListener(() => btnSave.interactable = true);
-        btnsSaveFile[2].onClick.AddListener(() => selectedSaveFile = SaveFile.FILE_2);
-        btnsSaveFile[2].onClick.AddListener(() => btnSave.interactable = true);
         
+        btnsSaveFile[0].onClick.AddListener(() => selectedSaveFile = btnsSaveFile[0].transform.gameObject.GetComponent<SaveSlot>());
+        btnsSaveFile[0].onClick.AddListener(() => btnSave.interactable = true);
+        btnsSaveFile[1].onClick.AddListener(() => selectedSaveFile = btnsSaveFile[1].transform.gameObject.GetComponent<SaveSlot>());
+        btnsSaveFile[1].onClick.AddListener(() => btnSave.interactable = true);
+        btnsSaveFile[2].onClick.AddListener(() => selectedSaveFile = btnsSaveFile[2].transform.gameObject.GetComponent<SaveSlot>());
+        btnsSaveFile[2].onClick.AddListener(() => btnSave.interactable = true);
+
+
         btnSave.onClick.AddListener(() => goSaveConfirmation.SetActive(true));
         btnSave.onClick.AddListener(() => goSaveConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmEntry"));
-        
-        btnSaveConfirmYes.onClick.AddListener(delegate()
-            {
-                if (selectedSaveFile != SaveFile.NONE)
-                {
-                    DPM.DeleteFile(selectedSaveFile);
-                    DPM.NewGame(selectedSaveFile);
-                }
-            }
-        );
-        btnSaveConfirmYes.onClick.AddListener(() => Loader.loadinstance.LoadLevel(1));
+
+        btnSaveConfirmYes.onClick.AddListener(() => FindObjectOfType<SaveSlotsMenu>().OnClearClicked(selectedSaveFile));
+        btnSaveConfirmYes.onClick.AddListener(() => FindObjectOfType<SaveSlotsMenu>().OnSaveSlotClicked(selectedSaveFile));
         btnSaveConfirmNo.onClick.AddListener(() => goSaveConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmExit"));
 
         btnSave_Back.onClick.AddListener(on_Return);
@@ -130,17 +119,17 @@ public class MainMenu_Controller : MonoBehaviour
 
         // Load Panel Buttons
         #region LP_Buttons
-        btnsLoadFile[0].onClick.AddListener(() => selectedLoadFile = SaveFile.FILE_0);
+
+        btnsLoadFile[0].onClick.AddListener(() => selectedSaveFile = btnsLoadFile[0].transform.gameObject.GetComponent<SaveSlot>());
         btnsLoadFile[0].onClick.AddListener(() => btnLoadSave.interactable = true);
-        btnsLoadFile[1].onClick.AddListener(() => selectedLoadFile = SaveFile.FILE_1);
+        btnsLoadFile[1].onClick.AddListener(() => selectedSaveFile = btnsLoadFile[1].transform.gameObject.GetComponent<SaveSlot>());
         btnsLoadFile[1].onClick.AddListener(() => btnLoadSave.interactable = true);
-        btnsLoadFile[2].onClick.AddListener(() => selectedLoadFile = SaveFile.FILE_2);
+        btnsLoadFile[2].onClick.AddListener(() => selectedSaveFile = btnsLoadFile[2].transform.gameObject.GetComponent<SaveSlot>());
         btnsLoadFile[2].onClick.AddListener(() => btnLoadSave.interactable = true);
         
         btnLoadSave.onClick.AddListener(() => goLoadConfirmation.SetActive(true));
         btnLoadSave.onClick.AddListener(() => goLoadConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmEntry"));
 
-        btnLoadConfirmYes.onClick.AddListener(() => DPM.currentSaveFile = selectedLoadFile);
         btnLoadConfirmYes.onClick.AddListener(() => Loader.loadinstance.LoadLevel(1));
         btnLoadConfirmNo.onClick.AddListener(() => goLoadConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmExit"));
 
@@ -151,67 +140,13 @@ public class MainMenu_Controller : MonoBehaviour
         #region SP_Buttons
         btnSetting_Back.onClick.AddListener(on_Return);
         #endregion
-    }
-
-    void ResetSettings()
-    {
-        selectedLoadFile = SaveFile.NONE;
-        selectedSaveFile = SaveFile.NONE;
+        
     }
     
-    void CheckSaveFiles()
+    void ResetSettings()
     {
-        var isAFileSelected = (selectedSaveFile != SaveFile.NONE) ? true : false;
-        btnSave.interactable = false;
-
-        if (DPM.CheckIfSaveFileExist(SaveFile.FILE_0))
-        {
-            txtSaveFile_0.text = $"Save File 1\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_0).dateCreated}\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_0).timeCreated}";
-        }
-        if (DPM.CheckIfSaveFileExist(SaveFile.FILE_1))
-        {
-            txtSaveFile_1.text = $"Save File 2\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_1).dateCreated}\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_1).timeCreated}";
-        }
-        if (DPM.CheckIfSaveFileExist(SaveFile.FILE_2))
-        {
-            txtSaveFile_2.text = $"Save File 3\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_2).dateCreated}\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_2).timeCreated}";
-        }
-    }
-
-    void CheckLoadFiles()
-    {
-        var isAFileSelected = (selectedLoadFile != SaveFile.NONE) ? true : false;
-            btnLoadSave.interactable = false;
-        // Set the interactable status of the Load SaveFiles Buttons
-        btnsLoadFile[0].interactable = DPM.CheckIfSaveFileExist(SaveFile.FILE_0);
-        btnsLoadFile[1].interactable = DPM.CheckIfSaveFileExist(SaveFile.FILE_1);
-        btnsLoadFile[2].interactable = DPM.CheckIfSaveFileExist(SaveFile.FILE_2);
-
-        
-        if (DPM.CheckIfSaveFileExist(SaveFile.FILE_0))
-        {
-            txtLoadFile_0.text = $"Save File 1\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_0).dateCreated}\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_0).timeCreated}";
-        }
-        if (DPM.CheckIfSaveFileExist(SaveFile.FILE_1))
-        {
-            txtLoadFile_1.text = $"Save File 2\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_1).dateCreated}\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_1).timeCreated}";
-        }
-        if (DPM.CheckIfSaveFileExist(SaveFile.FILE_2))
-        {
-            txtLoadFile_2.text = $"Save File 3\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_2).dateCreated}\n" +
-                                 $"{DPM.GetGameData(SaveFile.FILE_2).timeCreated}";
-        }
+        selectedLoadFile = null;
+        selectedSaveFile = null;
     }
 
     void disableAll()

@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class CareerData
 {
+    public long lastUpdated;
     public int total_deaths;
     public int total_visit;
     public float total_time_played;

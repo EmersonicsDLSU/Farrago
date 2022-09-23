@@ -29,7 +29,6 @@ public class TimelineTriggerIdentification : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<MainPlayerSc>() != null) player_mainSc = FindObjectOfType<MainPlayerSc>();
             else Debug.LogError($"Missing \"MainPlayerSc script\" in {this.gameObject.name}");
         }
-        DataPersistenceManager.Instance.SearchForPersistenceObjInScene();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -3,358 +3,302 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
-public enum SaveFile
-{
-    NONE = -1,
-    FILE_0,
-    FILE_1,
-    FILE_2
-}
-
 public class DataPersistenceManager : MonoBehaviour
 {
-    [Header("Player File Storage Config")]
-    [SerializeField] private string playerFileName_0;
-    [SerializeField] private bool useEncryption_0;
-    [SerializeField] private string playerFileName_1;
-    [SerializeField] private bool useEncryption_1;
-    [SerializeField] private string playerFileName_2;
-    [SerializeField] private bool useEncryption_2;
-    [Header("Career File Storage Config")]
-    [SerializeField] private string careerFileName_3;
-    [SerializeField] private bool useEncryption_3;
+    [Header("Debugging")]
+    [SerializeField] private bool disableDataPersistence = false;
+    [SerializeField] private bool initializeDataIfNull = false;
+    [SerializeField] private bool overrideSelectedProfileId = false;
+    [SerializeField] private string testSelectedProfileId = "test";
 
-    public GameData currentLoadedData;
-    public CareerData currentLoadedCareerData;
-    private GameData gameData_0;
-    private GameData gameData_1;
-    private GameData gameData_2;
+    [Header("File Storage Config")]
+    [SerializeField] private string fileName;
+    [SerializeField] private bool useEncryption;
+
+    [Header("Auto Saving Configuration")]
+    [SerializeField] private bool isAutoSave = false;
+    [SerializeField] private float autoSaveTimeSeconds = 60f;
+
+    private GameData gameData;
     private CareerData careerData;
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ICareerDataPersistence> careerDataPersistenceObjects;
     private FileDataHandler dataHandler_0;
     private FileDataHandler dataHandler_1;
     private FileDataHandler dataHandler_2;
-    private FileDataHandler careerDataHandler;
 
     [HideInInspector] public SaveFile currentSaveFile = SaveFile.NONE;
+    private string selectedCareerId = "CareerData";
 
-    private static DataPersistenceManager _instance;
-    
-    public static DataPersistenceManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<DataPersistenceManager>();
-                
-                if (_instance == null)
-                {
-                    _instance = new GameObject().AddComponent<DataPersistenceManager>();
-                }
-            }
-            
-            return _instance;
-        }
-    }
+    private Coroutine autoSaveCoroutine;
+
+    public static DataPersistenceManager instance { get; private set; }
 
     private void Awake() 
     {
-
-        DontDestroyOnLoad(this);
-    }
-
-    private void Start() 
-    {
-        this.dataHandler_0 = new FileDataHandler(Application.persistentDataPath, playerFileName_0, useEncryption_0);
-        this.dataHandler_1 = new FileDataHandler(Application.persistentDataPath, playerFileName_1, useEncryption_1);
-        this.dataHandler_2 = new FileDataHandler(Application.persistentDataPath, playerFileName_2, useEncryption_2);
-        this.careerDataHandler = new FileDataHandler(Application.persistentDataPath, careerFileName_3, useEncryption_3);
-        // Load Career File
-        SearchForPersistenceCareerObjInScene();
-        LoadCareerData();
-    }
-    
-    public GameData GetGameData(SaveFile saveFile)
-    {
-        GameData gameData = null;
-        switch (saveFile)
+        if (instance != null) 
         {
-            case SaveFile.FILE_0:
-            {
-                if (dataHandler_0.LoadPlayerData() != null)
-                    gameData = dataHandler_0.LoadPlayerData();
-            }
-                break;
-            case SaveFile.FILE_1:
-            {
-                if (dataHandler_1.LoadPlayerData() != null)
-                    gameData = dataHandler_1.LoadPlayerData();
-            }
-                break;
-            case SaveFile.FILE_2:
-            {
-                if (dataHandler_2.LoadPlayerData() != null)
-                    gameData = dataHandler_2.LoadPlayerData();
-            }
-                break;
+            Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        if (disableDataPersistence) 
+        {
+            Debug.LogWarning("Data Persistence is currently disabled!");
         }
 
-        return gameData;
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+
+        InitializeSelectedProfileId();
+        //InitializeSelectedCareerId();
     }
 
-    public bool CheckIfSaveFileExist(SaveFile saveFile)
+    private void OnEnable() 
     {
-        bool isExist = false;
-        switch (saveFile)
-        {
-            case SaveFile.FILE_0:
-            {
-                isExist = (dataHandler_0.LoadPlayerData() != null) ? 
-                    true : false;
-            }
-                break;
-            case SaveFile.FILE_1:
-            {
-                isExist = (dataHandler_1.LoadPlayerData() != null) ? 
-                    true : false;
-            }
-                break;
-            case SaveFile.FILE_2:
-            {
-                isExist = (dataHandler_2.LoadPlayerData() != null) ? 
-                    true : false;
-            }
-                break;
-        }
-
-        return isExist;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void SearchForPersistenceObjInScene()
+    private void OnDisable() 
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-    }
-    public void SearchForPersistenceCareerObjInScene()
-    {
         this.careerDataPersistenceObjects = FindAllCareerDataPersistenceObjects();
+        LoadGame();
+        LoadCareer();
+
+        if (isAutoSave)
+        {
+            // start up the auto saving coroutine
+            if (autoSaveCoroutine != null)
+            {
+                StopCoroutine(autoSaveCoroutine);
+            }
+
+            autoSaveCoroutine = StartCoroutine(AutoSave());
+        }
+
     }
 
-    public void DeleteFile(SaveFile saveFile)
+    public void ChangeSelectedProfileId(string newProfileId) 
     {
-        switch (saveFile)
+        // update the profile to use for saving and loading
+        this.selectedProfileId = newProfileId;
+    }
+
+    public void DeleteProfileData(string profileId) 
+    {
+        // delete the data for this profile id
+        dataHandler.Delete(profileId);
+        // initialize the selected profile id
+        InitializeSelectedProfileId();
+        // reload the game so that our data matches the newly selected profile id
+        LoadGame();
+    }
+
+    private void InitializeSelectedProfileId() 
+    {
+        this.selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
+        if (overrideSelectedProfileId) 
         {
-            case SaveFile.FILE_0:
-            {
-                dataHandler_0.DeleteFile();
-            }
-                break;
-            case SaveFile.FILE_1:
-            {
-                
-                dataHandler_1.DeleteFile();
-            }
-                break;
-            case SaveFile.FILE_2:
-            {
-                
-                dataHandler_2.DeleteFile();
-            }
-                break;
+            this.selectedProfileId = testSelectedProfileId;
+            Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
+        }
+    }
+    private void InitializeSelectedCareerId() 
+    {
+        this.selectedCareerId = dataHandler.GetMostRecentlyUpdatedCareerId();
+        if (overrideSelectedProfileId) 
+        {
+            this.selectedCareerId = testSelectedProfileId;
+            Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
         }
     }
 
-    public void NewGame(SaveFile saveFile) 
+    public void NewGame() 
     {
-        Debug.LogError($"Create new Game in: {saveFile}");
-        switch (saveFile)
-        {
-            case SaveFile.FILE_0:
-            {
-                this.gameData_0 = new GameData();
-                currentSaveFile = SaveFile.FILE_0;
-            }
-                break;
-            case SaveFile.FILE_1:
-            {
-                this.gameData_1 = new GameData();
-                currentSaveFile = SaveFile.FILE_1;
-            }
-                break;
-            case SaveFile.FILE_2:
-            {
-                this.gameData_2 = new GameData();
-                currentSaveFile = SaveFile.FILE_2;
-            }
-                break;
-        }
+        this.gameData = new GameData();
+        Debug.LogError("Create New Game");
     }
     public void NewCareer() 
     {
         this.careerData = new CareerData();
+        Debug.LogError("Create New Career");
     }
 
-    public void LoadGame(SaveFile saveFile)
+    public void LoadGame()
     {
-        
-        switch (saveFile)
+        // return right away if data persistence is disabled
+        if (disableDataPersistence) 
         {
-            case SaveFile.FILE_0:
-            {
-                // load any saved data from a file using the data handler
-                if (dataHandler_0.LoadPlayerData() != null)
-                    this.gameData_0 = dataHandler_0.LoadPlayerData();
-                // if no PLAYER data can be loaded, initialize to a new game
-                if (this.gameData_0 == null) 
-                {
-                    Debug.Log("No player data was found.");
-                }
-                SearchForPersistenceObjInScene();
-                currentLoadedData = gameData_0;
-                if (dataPersistenceObjects != null)
-                {
-                    // push the loaded data to all other scripts that need it
-                    foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
-                    {
-                        dataPersistenceObj.LoadData(gameData_0);
-                    }
-                }
-            }
-                break;
-            case SaveFile.FILE_1:
-            {
-                // load any saved data from a file using the data handler
-                if (dataHandler_1.LoadPlayerData() != null)
-                    this.gameData_1 = dataHandler_1.LoadPlayerData();
-                // if no PLAYER data can be loaded, initialize to a new game
-                if (this.gameData_1 == null) 
-                {
-                    Debug.Log("No player data was found.");
-                }
-                SearchForPersistenceObjInScene();
-                currentLoadedData = gameData_1;
-                if (dataPersistenceObjects != null)
-                {
-                    // push the loaded data to all other scripts that need it
-                    foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
-                    {
-                        dataPersistenceObj.LoadData(gameData_1);
-                    }
-                }
-            }
-                break;
-            case SaveFile.FILE_2:
-            {
-                // load any saved data from a file using the data handler
-                if (dataHandler_2.LoadPlayerData() != null)
-                    this.gameData_2 = dataHandler_2.LoadPlayerData();
-                // if no PLAYER data can be loaded, initialize to a new game
-                if (this.gameData_2 == null) 
-                {
-                    Debug.Log("No player data was found.");
-                }
-                SearchForPersistenceObjInScene();
-                currentLoadedData = gameData_2;
-                if (dataPersistenceObjects != null)
-                {
-                    // push the loaded data to all other scripts that need it
-                    foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
-                    {
-                        dataPersistenceObj.LoadData(gameData_2);
-                    }
-                }
-            }
-                break;
+            return;
         }
-    }
 
-    public void LoadCareerData()
-    {
         // load any saved data from a file using the data handler
-        careerData = careerDataHandler.LoadCareerData();
-        // if no CAREER data can be loaded, initialize to a new game
-        if (careerData == null) 
+        this.gameData = dataHandler.Load(selectedProfileId);
+
+        // start a new game if the data is null and we're configured to initialize data for debugging purposes
+        if (this.gameData == null && initializeDataIfNull) 
         {
-            Debug.Log("No data was found. Initializing data to defaults.");
+            NewGame();
+        }
+
+        // if no data can be loaded, don't continue
+        if (this.gameData == null) 
+        {
+            Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
+            return;
+        }
+
+        // push the loaded data to all other scripts that need it
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
+        {
+            dataPersistenceObj.LoadData(gameData);
+        }
+        
+        Debug.LogError("Load Game");
+    }
+    
+    public void LoadCareer()
+    {
+        // return right away if data persistence is disabled
+        if (disableDataPersistence) 
+        {
+            return;
+        }
+
+        // load any saved data from a file using the data handler
+        this.careerData = dataHandler.LoadCareer(selectedCareerId);
+
+        // start a new game if the data is null and we're configured to initialize data for debugging purposes
+        if (this.careerData == null) 
+        {
+            Debug.LogError("Creating Career");
             NewCareer();
         }
-        currentLoadedCareerData = careerData;
-        if (careerDataPersistenceObjects != null)
+
+        // if no data can be loaded, don't continue
+        if (this.careerData == null) 
         {
-            // push the loaded data to all other scripts that need it
-            foreach (ICareerDataPersistence dataPersistenceObj in careerDataPersistenceObjects)
-            {
-                dataPersistenceObj.LoadData(careerData);
-            }
+            Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
+            return;
         }
+
+        // push the loaded data to all other scripts that need it
+        foreach (ICareerDataPersistence dataPersistenceObj in careerDataPersistenceObjects) 
+        {
+            dataPersistenceObj.LoadData(careerData);
+        }
+        
+        Debug.LogError("Load Career");
     }
 
-    public void SaveGame(SaveFile saveFile)
+    public void SaveGame()
     {
-        switch (saveFile)
+        // return right away if data persistence is disabled
+        if (disableDataPersistence) 
         {
-            case SaveFile.FILE_0:
-            {
-                // pass the data to other scripts so they can update it
-                foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
-                {
-                    dataPersistenceObj.SaveData(gameData_0);
-                }
-                // save that data to a file using the data handler
-                dataHandler_0.Save(gameData_0);
-            }
-                break;
-            case SaveFile.FILE_1:
-            {
-                // pass the data to other scripts so they can update it
-                foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
-                {
-                    dataPersistenceObj.SaveData(gameData_1);
-                }
-                // save that data to a file using the data handler
-                dataHandler_1.Save(gameData_1);
-            }
-                break;
-            case SaveFile.FILE_2:
-            {
-                // pass the data to other scripts so they can update it
-                foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
-                {
-                    dataPersistenceObj.SaveData(gameData_2);
-                }
-                // save that data to a file using the data handler
-                dataHandler_2.Save(gameData_2);
-            }
-                break;
+            return;
         }
+
+        // if we don't have any data to save, log a warning here
+        if (this.gameData == null) 
+        {
+            Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
+            return;
+        }
+
+        // pass the data to other scripts so they can update it
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) 
+        {
+            dataPersistenceObj.SaveData(gameData);
+        }
+
+        // timestamp the data so we know when it was last saved
+        gameData.lastUpdated = System.DateTime.Now.ToBinary();
+
+        // save that data to a file using the data handler
+        dataHandler.Save(gameData, selectedProfileId);
     }
-    public void SaveCareerGame()
+    
+    public void SaveCareer()
     {
+        // return right away if data persistence is disabled
+        if (disableDataPersistence) 
+        {
+            Debug.LogError("SAVE CANCEL");
+            return;
+        }
+
+        // if we don't have any data to save, log a warning here
+        if (this.careerData == null) 
+        {
+            Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
+            return;
+        }
+
         // pass the data to other scripts so they can update it
         foreach (ICareerDataPersistence dataPersistenceObj in careerDataPersistenceObjects) 
         {
             dataPersistenceObj.SaveData(careerData);
         }
 
+        // timestamp the data so we know when it was last saved
+        careerData.lastUpdated = System.DateTime.Now.ToBinary();
+
         // save that data to a file using the data handler
-        careerDataHandler.Save(careerData);
+        dataHandler.Save(careerData, selectedCareerId);
+        Debug.LogError("SETTINGS SAVED");
     }
-    
+    private void OnApplicationQuit() 
+    {
+        //SaveGame();
+    }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() 
     {
-        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
+        // FindObjectsofType takes in an optional boolean to include inactive gameobjects
+        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true)
             .OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
     private List<ICareerDataPersistence> FindAllCareerDataPersistenceObjects() 
     {
-        IEnumerable<ICareerDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
+        // FindObjectsofType takes in an optional boolean to include inactive gameobjects
+        IEnumerable<ICareerDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true)
             .OfType<ICareerDataPersistence>();
 
         return new List<ICareerDataPersistence>(dataPersistenceObjects);
+    }
+
+    public bool HasGameData() 
+    {
+        return gameData != null;
+    }
+    public GameData GetGameData() 
+    {
+        return gameData;
+    }
+
+    public Dictionary<string, GameData> GetAllProfilesGameData() 
+    {
+        return dataHandler.LoadAllProfiles();
+    }
+
+    private IEnumerator AutoSave() 
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(autoSaveTimeSeconds);
+            SaveGame();
+            Debug.Log("Auto Saved Game");
+        }
     }
 }

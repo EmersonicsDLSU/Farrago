@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Build.Content;
 using UnityEngine.Playables;
 
 public class PlayerMovement : MonoBehaviour
@@ -80,9 +81,12 @@ public class PlayerMovement : MonoBehaviour
             }
 
             Debug.LogError($"Dead");
+
+            
             // re-position the player transform to its latest re-spawn point
             FindObjectOfType<MainPlayerSc>().gameObject.transform.position =
-                DataPersistenceManager.Instance.currentLoadedData.respawnPoint;
+                DataPersistenceManager.instance.GetGameData().respawnPoint;
+           
 
             /* // replays the cutscene **Don't Delete**
             int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);

@@ -69,8 +69,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
     public void SaveSettingsData()
     {
-        DataPersistenceManager.Instance.SaveCareerGame();
-        Debug.LogError("SETTINGS SAVED FROM RETURN");
+        DataPersistenceManager.instance.SaveCareer();
     }
 
     // Settings value
@@ -94,7 +93,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
         SetQuality(data.quality);
         quality_dropdown.value = data.quality;
-        Debug.LogError($"Load Settings: {quality_dropdown.value}");
+        Debug.LogError($"Quality Settings: {quality_dropdown.value}");
 
         var isFullscreen = (data.is_fullscreen == 1) ? true : false;
         SetFullScreen(isFullscreen);
@@ -102,7 +101,6 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
         SetBGMVolume(data.bgm_volume);
         bgm_slider.value = data.bgm_volume;
-        Debug.LogError($"Audio: {bgm_slider.value}");
 
 
         SetSFXVolume(data.sfx_volume);
@@ -116,6 +114,5 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
         data.is_fullscreen = is_fullscreen ? 1 : 0;;
         data.bgm_volume = bgm_volume;
         data.sfx_volume = sfx_volume;
-        Debug.LogError("SETTINGS SAVED!");
     }
 }

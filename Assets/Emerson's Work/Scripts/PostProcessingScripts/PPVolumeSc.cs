@@ -86,7 +86,6 @@ public class PPVolumeSc : MonoBehaviour
 
     public void closeVignette()
     {
-        Debug.LogError($"Black Screen");
         Vector2 closing = new Vector2(-1.0f, -1.0f);
         this.vignetteProfile.center.value = closing;
         this.vignetteProfile.intensity.value = 1.0f;
@@ -95,7 +94,6 @@ public class PPVolumeSc : MonoBehaviour
 
     public void openVignette()
     {
-        Debug.LogError($"Restart Screen");
         Vector2 closing = new Vector2(-1.0f, -1.0f);
         this.vignetteProfile.center.value = closing;
         this.vignetteProfile.intensity.value = 0.0f;

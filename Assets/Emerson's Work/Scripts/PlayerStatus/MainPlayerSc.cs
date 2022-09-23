@@ -64,14 +64,12 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        //Debug.LogError($"Total Tries :{DataPersistenceManager.instance.currentLoadedData.total_tries}");
         // if first try, then we do not translate the player 
-        if (DataPersistenceManager.Instance.currentLoadedData.total_tries != 0)
+        if (DataPersistenceManager.instance.GetGameData().total_tries != 0)
         {
             Debug.LogError($"Translate to :{data.respawnPoint}");
             this.transform.position = data.respawnPoint;
         }
-        
     }
     
     public void SaveData(GameData data)

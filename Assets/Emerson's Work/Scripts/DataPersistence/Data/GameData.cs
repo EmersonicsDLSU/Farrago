@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    public long lastUpdated;
     public string dateCreated;
     public string timeCreated;
     public Vector3 respawnPoint;
@@ -29,5 +30,25 @@ public class GameData
         cutsceneTriggerPassed = new SerializableDictionary<int, bool>();
         objectivesDone = new SerializableDictionary<int, bool>();
         journalImagesTaken = new SerializableDictionary<int, bool>();
+    }
+    public int GetPercentageComplete() 
+    {
+        // figure out how many coins we've collected
+        int totalCollected = 0;
+        foreach (bool notCompleted in objectivesDone.Values) 
+        {
+            if (!notCompleted) 
+            {
+                totalCollected++;
+            }
+        }
+
+        // ensure we don't divide by 0 when calculating the percentage
+        int percentageCompleted = -1;
+        if (objectivesDone.Count != 0) 
+        {
+            percentageCompleted = (totalCollected * 100 / objectivesDone.Count);
+        }
+        return percentageCompleted;
     }
 }
