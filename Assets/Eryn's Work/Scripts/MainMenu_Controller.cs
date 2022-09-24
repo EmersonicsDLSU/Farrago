@@ -15,47 +15,50 @@ public class MainMenu_Controller : MonoBehaviour
     [SerializeField] private GameObject loadPanel;
     [SerializeField] private GameObject settingsPanel;
     #endregion
-    
+
     [Header("Main Menu Buttons")]
     // Main Menu Buttons
     #region MM_Buttons_Ref
-    [SerializeField] private Button btnNewGame; 
-    [SerializeField] private Button btnLoadGame; 
-    [SerializeField] private Button btnSettings; 
-    [SerializeField] private Button btnQuit; 
+    [SerializeField] private Button btnNewGame;
+    [SerializeField] private Button btnLoadGame;
+    [SerializeField] private Button btnSettings;
+    [SerializeField] private Button btnQuit;
     #endregion
-    
+
     [Header("Save Panel Buttons")]
     // Save Panel Buttons
     #region SP_Buttons_Ref
-    [SerializeField] private Button[] btnsSaveFile; 
-    [SerializeField] private Button btnSave; 
+    [SerializeField] private Button[] btnsSaveFile;
+    [SerializeField] private Button btnSave;
     [SerializeField] private Button btnSave_Back;
-    [SerializeField] private GameObject goSaveConfirmation; 
-    [SerializeField] private Button btnSaveConfirmYes; 
-    [SerializeField] private Button btnSaveConfirmNo; 
-    
+    [SerializeField] private GameObject goSaveConfirmation;
+    [SerializeField] private Button btnSaveConfirmYes;
+    [SerializeField] private Button btnSaveConfirmNo;
+
     private SaveSlot selectedSaveFile;
     #endregion
-    
+
     [Header("Load Panel Buttons")]
     // Load Panel Buttons
     #region LP_Buttons_Ref
-    [SerializeField] private Button[] btnsLoadFile; 
-    [SerializeField] private Button btnLoadSave; 
+    [SerializeField] private Button[] btnsLoadFile;
+    [SerializeField] private Button btnLoadSave;
     [SerializeField] private Button btnLoad_Back;
-    [SerializeField] private GameObject goLoadConfirmation; 
-    [SerializeField] private Button btnLoadConfirmYes; 
+    [SerializeField] private GameObject goLoadConfirmation;
+    [SerializeField] private Button btnLoadConfirmYes;
     [SerializeField] private Button btnLoadConfirmNo;
-    
+
     private SaveSlot selectedLoadFile;
     #endregion
-    
+
     [Header("Settings Panel Buttons")]
     // Settings Panel Buttons
     #region LP_Buttons_Ref
-    [SerializeField] private Button btnSetting_Back; 
+    [SerializeField] private Button btnSetting_Back;
     #endregion
+
+    [Header("Camera Animator")]
+    [SerializeField] private Animator mmCameraAnimator;
 
     private DataPersistenceManager DPM;
     
@@ -74,6 +77,15 @@ public class MainMenu_Controller : MonoBehaviour
                 savePanel.SetActive(true);
                 if (savePanel.activeSelf != false)
                 {
+                    //set trigger for camera animator
+                    if (mmCameraAnimator != null)
+                    {
+                        bool isLeftMenuTriggered = mmCameraAnimator.GetBool("LeftMenuTriggered");
+                        bool isRightMenuTriggered = mmCameraAnimator.GetBool("RightMenuTriggered");
+                        mmCameraAnimator.SetBool("LeftMenuTriggered", !isLeftMenuTriggered);
+                        mmCameraAnimator.SetBool("RightMenuTriggered", isRightMenuTriggered);
+                    }
+
                     Animator animator = savePanel.GetComponent<Animator>();
 
                     if (animator != null)
@@ -140,6 +152,8 @@ public class MainMenu_Controller : MonoBehaviour
         #region SP_Buttons
         btnSetting_Back.onClick.AddListener(on_Return);
         #endregion
+
+   
         
     }
     
@@ -159,6 +173,8 @@ public class MainMenu_Controller : MonoBehaviour
 
     public void on_Load()
     {
+      
+
         loadPanel.SetActive(true);
         if (loadPanel.activeSelf != false)
         {
@@ -166,6 +182,7 @@ public class MainMenu_Controller : MonoBehaviour
 
             if (animator != null)
             {
+             
                 bool isOpen = animator.GetBool("Open");
 
                 animator.SetBool("Open", !isOpen);
@@ -242,7 +259,7 @@ public class MainMenu_Controller : MonoBehaviour
 
     public void to_MainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     void activateMenu()

@@ -36,7 +36,7 @@ public class SaveSlotsMenu : MonoBehaviour
         }
 
         // load the scene - which will in turn save the game because of OnSceneUnloaded() in the DataPersistenceManager
-        Loader.loadinstance.LoadLevel(1);
+        Loader.loadinstance.LoadLevel(2);
     }
     public void OnClearClicked(SaveSlot saveSlot) 
     {
