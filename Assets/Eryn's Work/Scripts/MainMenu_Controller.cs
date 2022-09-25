@@ -14,6 +14,7 @@ public class MainMenu_Controller : MonoBehaviour
     [SerializeField] private GameObject savePanel;
     [SerializeField] private GameObject loadPanel;
     [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject MainMenuGameText;
     #endregion
 
     [Header("Main Menu Buttons")]
@@ -166,6 +167,7 @@ public class MainMenu_Controller : MonoBehaviour
     void disableAll()
     {
         mainMenu.SetActive(false);
+        MainMenuGameText.SetActive(false);
         savePanel.SetActive(false);
         loadPanel.SetActive(false);
         settingsPanel.SetActive(false);
@@ -173,7 +175,15 @@ public class MainMenu_Controller : MonoBehaviour
 
     public void on_Load()
     {
-      
+        bool isLeftMenuTriggered = mmCameraAnimator.GetBool("LeftMenuTriggered");
+        bool isRightMenuTriggered = mmCameraAnimator.GetBool("RightMenuTriggered");
+        mmCameraAnimator.SetBool("LeftMenuTriggered", !isLeftMenuTriggered);
+        mmCameraAnimator.SetBool("RightMenuTriggered", isRightMenuTriggered);
+
+        for(int i = 0; i < btnsLoadFile.Length; i++)
+        {
+            btnsLoadFile[i].interactable = true;
+        }
 
         loadPanel.SetActive(true);
         if (loadPanel.activeSelf != false)
@@ -192,6 +202,11 @@ public class MainMenu_Controller : MonoBehaviour
 
     public void on_Settings()
     {
+        bool isLeftMenuTriggered = mmCameraAnimator.GetBool("LeftMenuTriggered");
+        bool isRightMenuTriggered = mmCameraAnimator.GetBool("RightMenuTriggered");
+        mmCameraAnimator.SetBool("LeftMenuTriggered", isLeftMenuTriggered);
+        mmCameraAnimator.SetBool("RightMenuTriggered", !isRightMenuTriggered);
+
         settingsPanel.SetActive(true);
 
         if (settingsPanel.activeSelf != false)
@@ -218,6 +233,11 @@ public class MainMenu_Controller : MonoBehaviour
 
         if (settingsPanel.activeSelf != false)
         {
+            bool isLeftMenuTriggered = mmCameraAnimator.GetBool("LeftMenuTriggered");
+            bool isRightMenuTriggered = mmCameraAnimator.GetBool("RightMenuTriggered");
+            mmCameraAnimator.SetBool("LeftMenuTriggered", isLeftMenuTriggered);
+            mmCameraAnimator.SetBool("RightMenuTriggered", !isRightMenuTriggered);
+
             Animator animator = settingsPanel.GetComponent<Animator>();
 
             if (animator != null)
@@ -230,6 +250,11 @@ public class MainMenu_Controller : MonoBehaviour
         
         if (savePanel.activeSelf != false)
         {
+            bool isLeftMenuTriggered = mmCameraAnimator.GetBool("LeftMenuTriggered");
+            bool isRightMenuTriggered = mmCameraAnimator.GetBool("RightMenuTriggered");
+            mmCameraAnimator.SetBool("LeftMenuTriggered", !isLeftMenuTriggered);
+            mmCameraAnimator.SetBool("RightMenuTriggered", isRightMenuTriggered);
+
             Animator animator = savePanel.GetComponent<Animator>();
 
             if (animator != null)
@@ -242,6 +267,11 @@ public class MainMenu_Controller : MonoBehaviour
 
         if (loadPanel.activeSelf != false)
         {
+            bool isLeftMenuTriggered = mmCameraAnimator.GetBool("LeftMenuTriggered");
+            bool isRightMenuTriggered = mmCameraAnimator.GetBool("RightMenuTriggered");
+            mmCameraAnimator.SetBool("LeftMenuTriggered", !isLeftMenuTriggered);
+            mmCameraAnimator.SetBool("RightMenuTriggered", isRightMenuTriggered);
+
             Animator animator = loadPanel.GetComponent<Animator>();
 
             if (animator != null)
@@ -254,7 +284,7 @@ public class MainMenu_Controller : MonoBehaviour
 
         Invoke("disableAll", 1);
 
-        Invoke("activateMenu", 1.01f);
+        Invoke("activateMenu", 3.5f);
     }
 
     public void to_MainMenu()
@@ -265,6 +295,7 @@ public class MainMenu_Controller : MonoBehaviour
     void activateMenu()
     {
         mainMenu.SetActive(true);
+        MainMenuGameText.SetActive(true);
     }
     
 
