@@ -33,29 +33,9 @@ public class ObjectivePool : MonoBehaviour, IPoolFunctions
     {
         var go = itemPool.RequestPoolable();
         go.GetComponent<TextMeshProUGUI>().text = text;
+        go.GetComponent<TextMeshProUGUI>().rectTransform.localScale = Vector3.one;
 
         return go;
-    }
-
-    public void EnabledAnimation(bool isEnabled)
-    {
-        if (isEnabled)
-        {
-            foreach (var obj in itemPool.usedObjects)
-            {
-                Debug.LogWarning($"Play Anim");
-                obj.GetComponent<Animator>().ResetTrigger("isEnabled");
-                obj.GetComponent<Animator>().SetTrigger("isEnabled");
-            }
-        }
-        else
-        {
-            foreach (var obj in itemPool.usedObjects)
-            {
-                obj.GetComponent<Animator>().ResetTrigger("isDisabled");
-                obj.GetComponent<Animator>().SetTrigger("isDisabled");
-            }
-        }
     }
 
     //start of "IPoolFunctions" functions 

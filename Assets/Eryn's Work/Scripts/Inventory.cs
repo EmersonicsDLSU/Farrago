@@ -114,7 +114,6 @@ public class Inventory : MonoBehaviour
         this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);
         inventorySlots[0].isFull = true;
         // Request color UI ICON pool
-        Debug.LogError($"Color IS: {color.color_code}");
         this.inventoryPoolSc.itemPool.RequestPoolable(color.color_code, inventorySlots[0].inventorySlot.transform);
         //this.inventoryPoolSc.setCurrentColorPosition(inventorySlots[0].inventorySlot.transform);
         inventorySlots[0].colorItem = 

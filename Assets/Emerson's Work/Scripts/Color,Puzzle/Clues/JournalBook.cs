@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,14 +9,44 @@ public class JournalBook : MonoBehaviour
 {
     private int curr_JournalIndex = 0;
     private HUD_Controller hud;
-    
+
+    public Button clueBookmark;
+    public Button objectivesBookmark;
+    public GameObject[] pageButtons;
+
     public Image leftImage;
     public Image rightImage;
     public Image displayClueImage;
+    public GameObject leftObjectivesPanel;
     // Start is called before the first frame update
     void Awake()
     {
         hud = FindObjectOfType<HUD_Controller>();
+    }
+
+    private bool isRecentPageIsClue = true;
+    public void ActivateClueButtons(bool show)
+    {
+        isRecentPageIsClue = show;
+        PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").
+            PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").clip);
+
+        for (int i = 0; i < pageButtons.Length; i++)
+            pageButtons[i].SetActive(show);
+        if (Journal.Instance.journalImages.Count < 2)
+        {
+            for (int i = 0; i < pageButtons.Length; i++)
+                pageButtons[i].SetActive(false);
+        }
+        leftImage.transform.gameObject.SetActive(show);
+        rightImage.transform.gameObject.SetActive(show);
+
+        leftObjectivesPanel.SetActive(!show);
+    }
+    public void ShowObjectives()
+    {
+        FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
+        FindObjectOfType<QuestGiver>().UpdateObjectiveList();
     }
 
     public void displayJournalPics()
@@ -55,6 +87,11 @@ public class JournalBook : MonoBehaviour
         }
 
         hud.On_OpenJournal();
+        ActivateClueButtons(isRecentPageIsClue);
+        if (!isRecentPageIsClue)
+        {
+            ShowObjectives();
+        }
         Invoke("displayJournalPics", 1.0f);
     }
 
@@ -81,6 +118,7 @@ public class JournalBook : MonoBehaviour
         PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").
             PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").clip);
         
+        leftObjectivesPanel.SetActive(false);
         hud.On_CloseJournal();
     }
     public void On_TriggerNextPageJournal()
@@ -100,7 +138,6 @@ public class JournalBook : MonoBehaviour
         // play page flip sound
         PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").
             PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").clip);
-        Debug.LogError($"Pages: {curr_JournalIndex}:{Journal.Instance.journalImages.Count}");
         // change journalImage on the left side
         if (curr_JournalIndex < Journal.Instance.journalImages.Count)
         {

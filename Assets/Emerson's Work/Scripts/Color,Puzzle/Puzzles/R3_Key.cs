@@ -39,7 +39,6 @@ public class R3_Key : PuzzleItemInteraction
         // Update the objectiveList as well; double update 
         FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
         questGiver.UpdateObjectiveList();
-        FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
     }
 
     public override void OOnTriggerEnter(Collider other)

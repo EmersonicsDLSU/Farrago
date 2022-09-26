@@ -156,7 +156,6 @@ public class PotionAbsorption : MonoBehaviour
     public void AssignColor(ref PAClass PAClass_obj, ColorMixer color)
     {
         PAClass_obj.interactAgain = false;
-        Debug.LogError($"Assigning COLOR!");
         // assigns the new color to the 'player_property'
         PAClass_obj.potionAbsorptionSC._playerProperty.currentColor = color.color;
         // calls the method that checks if there's a combination in the colors

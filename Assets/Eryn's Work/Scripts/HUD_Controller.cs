@@ -10,7 +10,6 @@ public class HUD_Controller : MonoBehaviour
     public GameObject HUD;
     public GameObject pausePanel;
     public GameObject confirmationPanel;
-    public GameObject objectivesPanel;
     public GameObject gameOverPanel;
     public GameObject confirmationPanelLose;
     public GameObject journalPanel;
@@ -56,12 +55,6 @@ public class HUD_Controller : MonoBehaviour
                 On_unPause();
                 isEscPressed = false;
             }
-        }
-        //OBJECTIVES UI
-        else if (Input.GetKeyDown(KeyCode.Tab) && canPress && questGiver.currentQuest != null)
-        {
-            canPress = false;
-            On_ClickObjectives();
         }
         //JOURNAL MENU
         else if (Input.GetKeyDown(KeyCode.J) && canPress && Journal.Instance.isJournalObtained == true)
@@ -158,35 +151,7 @@ public class HUD_Controller : MonoBehaviour
     {
         confirmationPanel.SetActive(false);
     }
-
-    private bool isObjectivePanelEnabled = false;
-    public void On_ClickObjectives()
-    {
-        //objectivesPanel.SetActive(true);
-        canPress = true;
-        
-        /* // old
-        objectivesEnabled = objectivesPanel.GetComponent<Animator>().GetBool("isEnabled");
-        Debug.LogWarning("working1");
-        objectivesPanel.GetComponent<Animator>().SetBool("isEnabled", !objectivesEnabled);
-        */
-        // new
-        isObjectivePanelEnabled = !isObjectivePanelEnabled;
-        if (isObjectivePanelEnabled)
-        {
-            objectivesPanel.GetComponent<Animator>().ResetTrigger("isEnabled");
-            objectivesPanel.GetComponent<Animator>().SetTrigger("isEnabled");
-            FindObjectOfType<QuestGiver>().UpdateObjectiveList();
-            FindObjectOfType<ObjectivePool>().EnabledAnimation(true);
-        }
-        else
-        {
-            objectivesPanel.GetComponent<Animator>().ResetTrigger("isDisabled");
-            objectivesPanel.GetComponent<Animator>().SetTrigger("isDisabled");
-            FindObjectOfType<ObjectivePool>().EnabledAnimation(false);
-            FindObjectOfType<ObjectivePool>().itemPool.ReleaseAllPoolable();
-        }
-    }
+    
 
     public void On_OpenJournal()
     {

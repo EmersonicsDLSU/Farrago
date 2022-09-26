@@ -177,7 +177,6 @@ public class TextControl : MonoBehaviour
                 textHolder.GetComponentInParent<Transform>().rotation = CVCam.transform.rotation;
                 var test1 = CVCam.GetCinemachineComponent<CinemachineFramingTransposer>();
                 var test2 = CVCam.m_Lens;
-                //Debug.LogError($"LIVE VCAM Distance: {test1.m_CameraDistance}");
                 textHolder.characterSize = defaultCharSize * (test1.m_CameraDistance / 5.0f) * (test2.FieldOfView / 60) * 0.75f;
             }
             else if (CVCam.GetCinemachineComponent<CinemachineComposer>() != null)
@@ -206,13 +205,10 @@ public class TextControl : MonoBehaviour
         //Debug.LogError($"LIVE VCAM Distance: {test1.m_CameraDistance}");
         textHolder.characterSize = defaultCharSize * (test1.m_CameraDistance / 5.0f) * (test2.FieldOfView / 60) * 0.75f;
         */
-
-        //Debug.Log(levelMonologue.Count);
+        
         if (levelMonologue.Count != 0 && !TimelineLevel.isTimelinePlayed)
         {
             textFireDelay += Time.deltaTime;
-
-            Debug.Log(textFireDelay);
 
             if (textFireDelay >= 4.0)
             {
@@ -267,8 +263,6 @@ public class TextControl : MonoBehaviour
             setText(level3Idle[Random.Range(0, level3Idle.Length - 1)]);
         else if (currentTextLevel == 4)
             setText(level4Idle[Random.Range(0, level4Idle.Length - 1)]);
-        else
-            Debug.Log("None");
 
         idleTime = 0;
 
@@ -278,7 +272,6 @@ public class TextControl : MonoBehaviour
     public void setText(string text)
     {
         textHolder.text = text;
-        Debug.Log(text);
 
         fireText();
     }

@@ -24,13 +24,11 @@ public class QuestGiver : MonoBehaviour
             if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL3)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
-                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
             //add else ifs here for other missions
             else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL5)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r5];
-                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
             /*
             else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL6)
@@ -39,15 +37,6 @@ public class QuestGiver : MonoBehaviour
                 FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
             */
-            else
-            {
-                //DISABLE OBJECTIVES PANEL IF NOT IN MISSION
-                if (FindObjectOfType<HUD_Controller>().objectivesPanel.activeSelf)
-                {
-                    FindObjectOfType<HUD_Controller>().On_ClickObjectives();
-                    FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(false);
-                }
-            }
             // edit the 'return' statement if you want to debug a particular room/level
             // e.g. return QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
             return temp;
@@ -93,7 +82,7 @@ public class QuestGiver : MonoBehaviour
                 {
                     go.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
                 }
-                // pop the element from the list
+                // pop the element from the list; move to the next objective
                 objectiveList.RemoveAt(0);
             } 
         }

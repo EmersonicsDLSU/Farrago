@@ -53,7 +53,6 @@ public class RatSpawner : MonoBehaviour , IPoolFunctions
         //checks if the pool storage is not empty and the required existing size still complies
         else if (this.enemyPool.HasObjectAvailable(1) && this.enemyPool.usedObjects.Count < this.existingSpawnSize)
         {
-            Debug.Log($"Rat Spawn");
             this.ticks = 0.0f;
             this.enemyPool.RequestPoolable();
 

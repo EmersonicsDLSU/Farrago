@@ -110,7 +110,6 @@ public class R5_Wires : PuzzleItemInteraction
                 // Update the objectiveList as well; double update 
                 objectivePool.itemPool.ReleaseAllPoolable();
                 questGiver.UpdateObjectiveList();
-                objectivePool.EnabledAnimation(true);
 
                 // Check if all objectives are completed
                 if (questGiver.currentQuest != null && QuestCollection.Instance.questDict[questGiver.currentQuest.questID].
@@ -161,7 +160,6 @@ public class R5_Wires : PuzzleItemInteraction
         // Update the objectiveList as well; double update 
         objectivePool.itemPool.ReleaseAllPoolable();
         questGiver.UpdateObjectiveList();
-        objectivePool.EnabledAnimation(true);
 
         // Check if all objectives are completed
         if (questGiver.currentQuest != null && QuestCollection.Instance.questDict[questGiver.currentQuest.questID].

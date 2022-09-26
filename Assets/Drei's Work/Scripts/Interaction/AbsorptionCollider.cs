@@ -71,7 +71,6 @@ public class AbsorptionCollider : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Can Interact");
                 this.potionAbsSc.canAbsorb = true;
             }
         }
