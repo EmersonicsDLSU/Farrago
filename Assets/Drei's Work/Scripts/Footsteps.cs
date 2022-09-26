@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Footsteps : MonoBehaviour
 {
-    [SerializeField] private AudioClip clip;
+    [SerializeField] private AudioClip stepClip;
+    [SerializeField] private AudioClip jumpClip;
 
     private AudioSource audioSource;
 
@@ -17,7 +18,17 @@ public class Footsteps : MonoBehaviour
 
     private void OnStep()
     {
-        audioSource.PlayOneShot(clip, 2f);
+        audioSource.volume = Random.Range(0.8f, 1);
+        audioSource.pitch = Random.Range(0.8f, 1.1f);
+        audioSource.PlayOneShot(stepClip, 2f);
     }
-    
+
+    private void OnJump()
+    {
+        if (Random.Range(0, 10) >= 7)
+        {
+            audioSource.pitch = Random.Range(1.0f, 1.25f);
+            audioSource.PlayOneShot(jumpClip, 2f);
+        }
+    }
 }
