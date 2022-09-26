@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 // SLOTS HOLD PROPERTIES OF AN INVENTORY SLOT
 [System.Serializable]
-public class Slots
+public class Slot
 {
     // ISFULL CHECKS IF INVENTORY SLOT IS OCCUPIED
     public bool isFull;
@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     [Space]
     [Header("Inventory Slots")]
     // A Lis collection of the colors absorbed
-    public List<Slots> inventorySlots = new List<Slots>();
+    public List<Slot> inventorySlots = new List<Slot>();
     // FOR CLEANSE PROGRESS
     private float timeCheck;
     private float cleanseLength = 1.0f;

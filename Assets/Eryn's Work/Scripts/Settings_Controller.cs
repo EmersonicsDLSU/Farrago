@@ -17,11 +17,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
     {
 
     }
-
-    void OnApplicationQuit()
-    {
-        //PlayerPrefs.Save();
-    }
+    
 
     public void SetScreenSize(int index)
     {

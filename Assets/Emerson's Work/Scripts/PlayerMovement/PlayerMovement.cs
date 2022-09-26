@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     //character movement coordinates
     private float movementX = 0.0f;
     private float movementY = 0.0f;
+    // timer attribute for dead ticks 
+    private float dead_ticks = 0.0f;
     public float MovementX
     {
         get { return this.movementX; }
@@ -97,9 +99,7 @@ public class PlayerMovement : MonoBehaviour
             */
         };
     }
-
-    // timer attribute for dead ticks 
-    private float dead_ticks = 0.0f;
+    
     // 'update()' is called once per frame
     // Input getkey downs are only computed accurately in Update or LateUpdate
     public void update(MainPlayerSc mainPlayer)

@@ -19,9 +19,6 @@ public class AQuest
         new Dictionary<DescriptiveQuest, bool> ();
     public List<string> UIObjectives = new List<string>();
 
-    public int wiresToRepairAmount;
-    public int wiresRepairedAmount;
-
     [Space]
     public List<GameObject> neededGameObjects = new List<GameObject>();
     [Space]

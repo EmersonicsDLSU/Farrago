@@ -17,7 +17,6 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public AISensor aiSensor = null;
     [HideInInspector] public SkinnedMeshRenderer agentSkinMesh = null;
     [HideInInspector] public Animator agentAnim = null;
-    [HideInInspector] public EnemyDetectCollision agentDetectCollision = null;
     [HideInInspector] public MainPlayerSc mainPlayerSc = null;
     // Start is called before the first frame update
     void Start()
@@ -35,7 +34,6 @@ public class AIAgent : MonoBehaviour
         aiSensor = this.GetComponentInChildren<AISensor>();
         agentSkinMesh = this.GetComponentInChildren<SkinnedMeshRenderer>();
         agentAnim = this.GetComponentInChildren<Animator>();
-        agentDetectCollision = this.GetComponentInChildren<EnemyDetectCollision>();
         if( FindObjectOfType<MainPlayerSc>() != null)
         {
             mainPlayerSc = FindObjectOfType<MainPlayerSc>();

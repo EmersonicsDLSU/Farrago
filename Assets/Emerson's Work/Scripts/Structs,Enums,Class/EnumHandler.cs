@@ -123,3 +123,10 @@ public enum CutSceneTypes
     Level6Transition,
     Level6Dead
 }
+
+//General Identification of the enemies type
+public enum Enemy_Type
+{
+    RAT = 0, 
+    SPIDER
+};

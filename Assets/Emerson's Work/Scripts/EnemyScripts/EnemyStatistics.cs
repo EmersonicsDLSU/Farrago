@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//General Identification of the enemies type
-public enum Enemy_Type { RAT = 0, SPIDER };
 
 public class EnemyStatistics : MonoBehaviour
 {

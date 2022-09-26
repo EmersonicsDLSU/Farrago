@@ -5,8 +5,6 @@ using UnityEngine;
 public class PoolableObj : APoolable
 {
     [SerializeField] private Pool_Type poolType;
-    private Rigidbody objRb;
-    private const float Y_BOUNDARY = -7.95f;
 
     public Pool_Type PoolType
     {
