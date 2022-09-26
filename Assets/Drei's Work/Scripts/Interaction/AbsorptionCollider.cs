@@ -82,9 +82,11 @@ public class AbsorptionCollider : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // reset PotionAbsorption properties
-            this.potionAbsSc.canAbsorb = false;
+            potionAbsSc.canAbsorb = false;
             interactableIcon.SetActive(false);
-            this.potionAbsSc.interactableFillIcon.fillAmount = 0.0f;
+            potionAbsSc.interactableFillIcon.fillAmount = 0.0f;
+            // TODO: TEMPORARY
+            potionAbsSc.absorbingFillIcon.fillAmount = 0.0f;
         }
     }
 }

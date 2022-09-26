@@ -67,7 +67,7 @@ public class JournalBook : MonoBehaviour
     public void On_OpenJournal()
     {
         //turning off the journal flash anim
-        GameObject.Find("JournalHelp").GetComponent<Animator>().SetBool("isClueObtained", false);
+        //GameObject.Find("JournalHelp").GetComponent<Animator>().SetBool("isClueObtained", false);
         
         PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").
             PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").clip);

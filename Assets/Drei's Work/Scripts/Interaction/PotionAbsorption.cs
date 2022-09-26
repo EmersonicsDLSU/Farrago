@@ -32,6 +32,11 @@ public class PotionAbsorption : MonoBehaviour
     // reference to the PlayerSFX_Manager Static Instance
     PlayerSFX_Manager playerSFX;
     // Potion Absorption Class - contains the script properties
+
+    // Joseph's IDEA
+    public GameObject absorbingGameObject;
+    public Image absorbingFillIcon;
+
     public class PAClass
     {
         public PAClass(PotionAbsorption potionAbsorptionSC)
@@ -84,7 +89,7 @@ public class PotionAbsorption : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.E) && PAClass_obj.interactAgain)
             {
-
+                absorbingGameObject.SetActive(true);
             }
             else if (Input.GetKey(KeyCode.E) && PAClass_obj.interactAgain)
             {
@@ -95,11 +100,16 @@ public class PotionAbsorption : MonoBehaviour
                 mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.ColorInteractableGO);
                 // increment time to 'timePress'
                 timePress += Time.deltaTime * rotSpeed;
+                // TODO: REVERT
                 // increment fill Image bar
-                interactableFillIcon.fillAmount = timePress / 1.0f;
+                //interactableFillIcon.fillAmount = timePress / 1.0f;
+                // TODO: TEMPORARY
+                absorbingFillIcon.fillAmount = timePress / 1.0f;
 
+                // TODO: REVERT
                 // if UI fill is full
-                if (interactableFillIcon.fillAmount == 1.0f)
+                //if (interactableFillIcon.fillAmount == 1.0f)
+                if (absorbingFillIcon.fillAmount == 1.0f)
                 {
                     // Reset some properties
                     ResetProperties(ref mainPlayer, false);
@@ -171,6 +181,10 @@ public class PotionAbsorption : MonoBehaviour
         // Properties Reset
         timePress = 0;
         interactableFillIcon.fillAmount = 0.0f;
+        // TODO: TEMPORARY
+        absorbingFillIcon.fillAmount = 0.0f;
+        absorbingGameObject.SetActive(false);
+
         PAClass_obj.interactAgain = isInteractAgain;
         // Stops the animation of 'absorbing' if the player release the absorb key early(not fill up)
         isAbsorbing = false;
