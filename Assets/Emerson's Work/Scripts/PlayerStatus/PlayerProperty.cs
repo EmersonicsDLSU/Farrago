@@ -20,6 +20,7 @@ public class PlayerProperty
     [Tooltip("Timer for delay jump")]
     public float onGroundTimer = 0.25f;
     public float jumpTimer = 0.0f;
+    public float rotationToMove = 30.0f;
 
     //player's condition
     [HideInInspector] public bool isRun = false;

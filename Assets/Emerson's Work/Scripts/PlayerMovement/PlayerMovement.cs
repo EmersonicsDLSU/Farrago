@@ -370,6 +370,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * movementX + transform.forward * movementY;
         FlipCharacter(ref mainPlayer);
         mainPlayer.playerCharController.Move(move * _playerProperty.speed * Time.deltaTime);
+        /*
+        Debug.LogError($"Angle: {modelTransform.eulerAngles.y} : {-angle}");
+        // required rotation to move
+        if (Math.Abs(modelTransform.eulerAngles.y - (-angle)) <= _playerProperty.rotationToMove)
+        {
+            mainPlayer.playerCharController.Move(move * _playerProperty.speed * Time.deltaTime);
+        }
+        */
         // check if the total value for x and y movement is not equal to 0; means its moving
         mainPlayer.playerAngelaAnim.IH_MoveAnim(ref mainPlayer);
     }
@@ -418,10 +426,11 @@ public class PlayerMovement : MonoBehaviour
         // change orientation based on the direction
         if(movementX != 0.0f || movementY != 0.0f)
         {
-            angle = Mathf.Atan2(movementY, movementX) * Mathf.Rad2Deg - 180F;
+            angle = -(Mathf.Atan2(movementY, movementX) * Mathf.Rad2Deg) + 180;
+            Debug.LogError($"Percentage: {modelTransform.eulerAngles.y / angle}");
             // Add smooth rotation 
             modelTransform.rotation = Quaternion.Slerp
-                (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval);
+                (modelTransform.rotation, Quaternion.Euler(0.0f, angle, 0.0f), rotate_interval * Time.deltaTime);
         }
     }
 
