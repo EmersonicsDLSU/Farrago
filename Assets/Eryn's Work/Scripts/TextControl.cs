@@ -210,7 +210,7 @@ public class TextControl : MonoBehaviour
         {
             textFireDelay += Time.deltaTime;
 
-            if (textFireDelay >= 4.0)
+            if (textFireDelay >= 6.0)
             {
                 displayQueue();
             }
@@ -280,7 +280,7 @@ public class TextControl : MonoBehaviour
     {
         triggerTextAnimation();
 
-        Invoke("unTriggerTextAnimation", 2.0f);
+        Invoke("unTriggerTextAnimation", 4.0f);
     }
 
     public void queueLevelText(string[] levelText, int level)
