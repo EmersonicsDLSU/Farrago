@@ -31,12 +31,12 @@ public class JournalBook : MonoBehaviour
         PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").
             PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("Journal").clip);
 
-        for (int i = 0; i < pageButtons.Length; i++)
-            pageButtons[i].SetActive(show);
-        if (Journal.Instance.journalImages.Count < 2)
+        foreach (var t in pageButtons)
+            t.SetActive(show);
+        if (Journal.Instance.journalImages.Count <= 2)
         {
-            for (int i = 0; i < pageButtons.Length; i++)
-                pageButtons[i].SetActive(false);
+            foreach (var t in pageButtons)
+                t.SetActive(false);
         }
         leftImage.transform.gameObject.SetActive(show);
         rightImage.transform.gameObject.SetActive(show);

@@ -4,9 +4,27 @@ using UnityEngine;
 
 public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
 {
-    public static CareerStatsHandler instance { get; private set; }
+    private static CareerStatsHandler Instance;
     //Player properties:
     public CareerStats _careerProperty = new CareerStats();
+    
+    public static CareerStatsHandler instance
+    {
+        get
+        {
+            if (Instance == null)
+            {
+                Instance = FindObjectOfType<CareerStatsHandler>();
+                
+                if (Instance == null)
+                {
+                    Instance = new GameObject().AddComponent<CareerStatsHandler>();
+                }
+            }
+            
+            return Instance;
+        }
+    }
 
     private void Awake() 
     {
@@ -14,7 +32,6 @@ public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
         {
             Debug.LogError("Found more than one Career Stats Handler in the scene.");
         }
-        instance = this;
         DontDestroyOnLoad(this);
     }
 

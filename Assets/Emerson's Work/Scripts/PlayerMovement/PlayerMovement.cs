@@ -413,7 +413,7 @@ public class PlayerMovement : MonoBehaviour
         float angle = Mathf.Atan2(normalize.z, normalize.x) * Mathf.Rad2Deg;
         // Add smooth rotation 
         modelTransform.rotation = Quaternion.Slerp
-        (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval);
+        (modelTransform.rotation, Quaternion.Euler(0.0f, -angle, 0.0f), rotate_interval * Time.deltaTime);
         //modelTransform.rotation = Quaternion.Euler(0.0f, -angle, 0.0f);
     }
 
