@@ -18,17 +18,9 @@ public class HUD_Controller : MonoBehaviour
     private bool isEscPressed = false;
     [HideInInspector] public bool isJPressed = false;
     private bool canPress = true;
-    private bool isNextPagePressed = false;
-    private bool isPrevPagePressed = false;
-   
-
-    private bool objectivesEnabled;
     
     PlayerSFX_Manager playerSFX;
     
-    private GameObject journalNextKey;
-    private GameObject journalPrevKey;
-
     public QuestGiver questGiver; 
 
     private void Awake()
