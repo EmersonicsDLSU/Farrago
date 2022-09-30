@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class AbsorptionCollider : MonoBehaviour
 {
     // MainPlayerSc script component
-    [SerializeField] private MainPlayerSc MainPlayerScript;
+    private MainPlayerSc MainPlayerScript;
     private PotionAbsorption potionAbsSc;
     // Interactable UI(Icon); Heads Up Display
     [HideInInspector]public GameObject interactableIcon;
@@ -87,6 +87,7 @@ public class AbsorptionCollider : MonoBehaviour
             potionAbsSc.interactableFillIcon.fillAmount = 0.0f;
             // TODO: TEMPORARY
             potionAbsSc.absorbingFillIcon.fillAmount = 0.0f;
+            potionAbsSc.ResetProperties(ref MainPlayerScript, true);
         }
     }
 }

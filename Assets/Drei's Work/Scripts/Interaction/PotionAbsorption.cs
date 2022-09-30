@@ -82,16 +82,16 @@ public class PotionAbsorption : MonoBehaviour
     {
         if (canAbsorb == true)
         {
-            if (Input.GetKeyUp(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.E) && !mainPlayer.playerInventory.isCleansing)
             {
                 // Reset some properties
                 ResetProperties(ref mainPlayer, true);
             }
-            else if (Input.GetKeyDown(KeyCode.E) && PAClass_obj.interactAgain)
+            else if (Input.GetKeyDown(KeyCode.E) && PAClass_obj.interactAgain && !mainPlayer.playerInventory.isCleansing)
             {
                 absorbingGameObject.SetActive(true);
             }
-            else if (Input.GetKey(KeyCode.E) && PAClass_obj.interactAgain)
+            else if (Input.GetKey(KeyCode.E) && PAClass_obj.interactAgain && !mainPlayer.playerInventory.isCleansing)
             {
                 // play the animation for absorbing color
                 isAbsorbing = true;
@@ -176,7 +176,7 @@ public class PotionAbsorption : MonoBehaviour
         PAClass_obj.playerInventory.CheckColorCombination(ref script, color);
     }
     // Method that reset properties for ColorAbsorption mechanic
-    private void ResetProperties(ref MainPlayerSc mainPlayer, bool isInteractAgain)
+    public void ResetProperties(ref MainPlayerSc mainPlayer, bool isInteractAgain)
     {
         // Properties Reset
         timePress = 0;

@@ -427,7 +427,6 @@ public class PlayerMovement : MonoBehaviour
         if(movementX != 0.0f || movementY != 0.0f)
         {
             angle = -(Mathf.Atan2(movementY, movementX) * Mathf.Rad2Deg) + 180;
-            Debug.LogError($"Percentage: {modelTransform.eulerAngles.y / angle}");
             // Add smooth rotation 
             modelTransform.rotation = Quaternion.Slerp
                 (modelTransform.rotation, Quaternion.Euler(0.0f, angle, 0.0f), rotate_interval * Time.deltaTime);

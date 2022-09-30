@@ -80,6 +80,7 @@ public class Inventory : MonoBehaviour
         timeCheck = 0.0f;
         cleanseFill.fillAmount = 0.0f;
         canCleanse = false;
+        isCleansing = false;
         // Fire the Cleanse SFX clip
         playerSFX.findSFXSourceByLabel("Cleanse").PlayOneShot(playerSFX.findSFXSourceByLabel("Cleanse").clip);
 
@@ -132,19 +133,23 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    [HideInInspector] public bool isCleansing = false;
+
     public void update(MainPlayerSc mainPlayer)
     {
         // If Cleanse Key is Released
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R) && !mainPlayer.PotionAbsorptionSC.isAbsorbing)
         {
             timeCheck = 0.0f;
             cleanseFill.fillAmount = 0.0f;
+            isCleansing = false;
             canCleanse = true;
             cleanseUI.SetActive(false);
         }
         // Cleanse Key is still on press
-        else if (Input.GetKey(KeyCode.R) && canCleanse)
+        else if (Input.GetKey(KeyCode.R) && canCleanse && !mainPlayer.PotionAbsorptionSC.isAbsorbing)
         {
+            isCleansing = true;
             timeCheck += Time.deltaTime;
             cleanseUI.SetActive(true);
             cleanseFill.fillAmount = timeCheck / cleanseLength;
