@@ -7,70 +7,90 @@ using UnityEngine.UI;
 public class SaveSlotsMenu : MonoBehaviour
 {
     [SerializeField] private SaveSlot[] saveSlots;
-
-    private bool isLoadingGame = false;
+    [SerializeField] private SavePanelSc savePanelSc;
 
     private void Awake() 
     {
 
     }
-
-    public void OnSaveSlotClicked(SaveSlot saveSlot) 
+    
+    public void OnSaveSlot(SaveSlot saveSlot) 
     {
         // disable all buttons
         DisableMenuButtons();
 
         // update the selected profile id to be used for data persistence
         DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
-
-        if (!isLoadingGame) 
-        {
-            // create a new game - which will initialize our data to a clean slate
-            DataPersistenceManager.instance.NewGame();
-            DataPersistenceManager.instance.SaveGame();
-        }
-        else
-        {
-            // load the game, which will use that profile, updating our game data accordingly
-            DataPersistenceManager.instance.LoadGame();
-        }
+        
+        // create a new game - which will initialize our data to a clean slate
+        DataPersistenceManager.instance.NewGame();
+        DataPersistenceManager.instance.SaveGame();
 
         // load the scene - which will in turn save the game because of OnSceneUnloaded() in the DataPersistenceManager
         Loader.loadinstance.LoadLevel(2);
     }
-    public void OnClearClicked(SaveSlot saveSlot) 
+    public void OnLoadSlot(SaveSlot saveSlot) 
     {
+        // disable all buttons
         DisableMenuButtons();
 
-        DataPersistenceManager.instance.DeleteProfileData(saveSlot.GetProfileId());
-        ActivateMenu(isLoadingGame);
+        // update the selected profile id to be used for data persistence
+        DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+        
+        // load the game, which will use that profile, updating our game data accordingly
+        DataPersistenceManager.instance.LoadGame();
+
+        // load the scene - which will in turn save the game because of OnSceneUnloaded() in the DataPersistenceManager
+        Loader.loadinstance.LoadLevel(2);
     }
 
-    public void ActivateMenu(bool isLoadingGame) 
+    public void OnDeleteFileSlot(SaveSlot saveSlot) 
     {
-        // set mode
-        this.isLoadingGame = isLoadingGame;
+        //DisableMenuButtons();
 
+        DataPersistenceManager.instance.DeleteProfileData(saveSlot.GetProfileId());
+        ActivateMenu();
+    }
+
+    public void ActivateMenu() 
+    {
         // load all of the profiles that exist
         Dictionary<string, GameData> profilesGameData = DataPersistenceManager.instance.GetAllProfilesGameData();
 
+        int index = 0;
         // loop through each save slot in the UI and set the content appropriately
         foreach (SaveSlot saveSlot in saveSlots) 
         {
             GameData profileData = null;
             profilesGameData.TryGetValue(saveSlot.GetProfileId(), out profileData);
             saveSlot.SetData(profileData);
-            if (profileData == null && isLoadingGame) 
+            if (profileData == null)
             {
-                saveSlot.SetInteractable(false);
+                savePanelSc.btnsDeleteFile[index++].interactable = false;
             }
-            else 
+            else
             {
-                saveSlot.SetInteractable(true);
+                savePanelSc.btnsDeleteFile[index++].interactable = true;
             }
         }
     }
-    
+
+    public bool HasAFile(SaveSlot saveSlot)
+    {
+        // load all of the profiles that exist
+        Dictionary<string, GameData> profilesGameData = DataPersistenceManager.instance.GetAllProfilesGameData();
+
+        GameData profileData = null;
+        profilesGameData.TryGetValue(saveSlot.GetProfileId(), out profileData);
+
+        if (profileData != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private void DisableMenuButtons() 
     {
         foreach (SaveSlot saveSlot in saveSlots) 
