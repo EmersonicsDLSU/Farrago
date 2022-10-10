@@ -284,7 +284,7 @@ public class MainMenu_Controller : MonoBehaviour
 
         Invoke("disableAll", 1);
 
-        Invoke("activateMenu", 3.5f);
+        Invoke("activateMenu", 1.5f);
     }
 
     public void to_MainMenu()
@@ -295,6 +295,12 @@ public class MainMenu_Controller : MonoBehaviour
     void activateMenu()
     {
         mainMenu.SetActive(true);
+
+        btnNewGame.GetComponent<Animator>().SetTrigger("Normal");
+        btnLoadGame.GetComponent<Animator>().SetTrigger("Normal");
+        btnSettings.GetComponent<Animator>().SetTrigger("Normal");
+        btnQuit.GetComponent<Animator>().SetTrigger("Normal");
+
         MainMenuGameText.SetActive(true);
     }
     

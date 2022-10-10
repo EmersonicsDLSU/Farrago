@@ -42,7 +42,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MMLeftMenu
-  m_Speed: 1.5
+  m_Speed: 2.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2649659503214807302}
@@ -153,7 +153,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MMRightMenu
-  m_Speed: 1.5
+  m_Speed: 2.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6870254237640265010}
@@ -326,7 +326,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MMLeftMenu -r
-  m_Speed: -1.5
+  m_Speed: -2.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6549675443278383873}
@@ -410,7 +410,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MMRightMenu -r
-  m_Speed: -1.5
+  m_Speed: -2.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2059847271315850083}
