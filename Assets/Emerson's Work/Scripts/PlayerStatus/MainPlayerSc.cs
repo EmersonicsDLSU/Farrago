@@ -11,7 +11,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public CharacterController playerCharController;
     [HideInInspector] public SkinnedMeshRenderer playerSkinMesh;
-    [HideInInspector] public Animator playerAnim;
+    public Animator playerAnim;
     [HideInInspector] public PlayerAngelaAnimations playerAngelaAnim;
 
     // other player scripts

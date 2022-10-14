@@ -44,13 +44,13 @@ public class PlayerMovement : MonoBehaviour
 
     }
     // Checking Foot Checker Radius
-    /*
+    
     void OnDrawGizmos()
     {
         Handles.DrawWireDisc(groundCheckLeft.position, Vector3.forward, groundCheckRad);
         Handles.DrawWireDisc(groundCheckRight.position, Vector3.forward, groundCheckRad);
     }
-    */
+    
 
     private void Start()
     {

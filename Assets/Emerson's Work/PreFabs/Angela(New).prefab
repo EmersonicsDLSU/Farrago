@@ -395,7 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6955638231764622802}
   m_Layer: 0
-  m_Name: r_hand_jnt2
+  m_Name: r_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -798,7 +798,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8559339078970213593}
   m_Layer: 0
-  m_Name: r_elbow_jnt
+  m_Name: r_elbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2177633800400666965}
   m_Layer: 0
-  m_Name: r_foot_jnt
+  m_Name: r_foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -860,7 +860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 654567296711068426}
   m_Layer: 0
-  m_Name: r_hand_jnt1
+  m_Name: r_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -891,7 +891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8583807350231934894}
   m_Layer: 0
-  m_Name: l_foot_jnt
+  m_Name: l_foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -922,7 +922,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5723651839450241262}
   m_Layer: 0
-  m_Name: r_knee_jnt
+  m_Name: r_knee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1390,7 +1390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4305473061095626125}
   m_Layer: 0
-  m_Name: spine2_jnt
+  m_Name: spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1941,6 +1941,7 @@ MonoBehaviour:
     earlyJumpTime: 0.25
     onGroundTimer: 0.25
     jumpTimer: 0
+    rotationToMove: 30
     isRun: 0
     isSneak: 0
     canWalk: 0
@@ -1988,6 +1989,7 @@ MonoBehaviour:
     colorMixer:
       color: {r: 0, g: 0, b: 0, a: 0}
       color_code: 0
+  isCleansing: 0
 --- !u!114 &3753846155850082220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2050,6 +2052,7 @@ MonoBehaviour:
     earlyJumpTime: 0.25
     onGroundTimer: 0.25
     jumpTimer: 0
+    rotationToMove: 30
     isRun: 0
     isSneak: 0
     canWalk: 0
@@ -2074,6 +2077,8 @@ MonoBehaviour:
   canAbsorb: 0
   isAbsorbing: 0
   rotSpeed: 0.6
+  absorbingGameObject: {fileID: 0}
+  absorbingFillIcon: {fileID: 0}
 --- !u!1 &3753846155963957140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2432,7 +2437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1cc95763ed07c499c9ec87f36f7a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 773f628aed1986547bb9eb34e7c49e88, type: 3}
+  stepClip: {fileID: 0}
+  jumpClip: {fileID: 0}
 --- !u!1 &3976312131539739511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,7 +2449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 519122560814474384}
   m_Layer: 0
-  m_Name: l_hand_jnt1
+  m_Name: l_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2474,7 +2480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6232816142812906804}
   m_Layer: 0
-  m_Name: l_knee_jnt
+  m_Name: l_knee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2505,7 +2511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3313085483695173792}
   m_Layer: 0
-  m_Name: r_balr_jnt
+  m_Name: r_ankle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2536,7 +2542,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8442652179778076369}
   m_Layer: 0
-  m_Name: l_hand_jnt2
+  m_Name: l_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2566,7 +2572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2864203397951905066}
   m_Layer: 0
-  m_Name: head_jnt
+  m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2598,7 +2604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5402240203362300685}
   m_Layer: 0
-  m_Name: l_armLjnt
+  m_Name: l_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2629,7 +2635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1349935664514047275}
   m_Layer: 0
-  m_Name: headtip_jnt
+  m_Name: tophead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2659,7 +2665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4501781290492086149}
   m_Layer: 0
-  m_Name: l_leg_jnt
+  m_Name: l_leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3163,9 +3169,9 @@ MonoBehaviour:
       undoOperations: []
       redoOperations: []
     objectMeshPairs:
-      _Buckets: 0200000004000000ffffffffffffffffffffffffffffffff05000000ffffffffffffffffffffffff070000000600000000000000ffffffff01000000ffffffffffffffff
-      _HashCodes: e8bc000094bd0000febc00005ebd0000ccbc00006abd000080bd0000c4bc0000000000000000000000000000000000000000000000000000000000000000000000000000
-      _Next: ffffffffffffffffffffffffffffffffffffffffffffffff03000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+      _Buckets: ffffffffffffffff05000000ffffffff07000000ffffffff0000000006000000ffffffffffffffffffffffffffffffff0400000002000000ffffffffffffffffffffffff
+      _HashCodes: cad202007ad30200e2d2020042d30200aed202004ed3020064d30200a6d20200000000000000000000000000000000000000000000000000000000000000000000000000
+      _Next: ffffffffffffffffffffffffffffffff01000000ffffffff03000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000
       _Count: 8
       _Version: 8
       _FreeList: -1
@@ -3410,7 +3416,7 @@ MonoBehaviour:
     reInitializeTempMatProps: 0
     choiceTextureMap: 0
     choiceDiffuseColorSpace: 0
-    batchFewSavePath: 
+    batchFewSavePath: Assets/SimplifiedMesh
     existingTextureArrays: []
     existingTextureArraysFoldout: 0
     existingTextureArraysSize: 0
@@ -3450,10 +3456,10 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: 0, y: -0.03, z: 0}
+    objPositionPrevFrame: {x: -250.8, y: 12.13, z: -3.4}
     objScalePrevFrame: {x: 28, y: 28, z: 28}
     considerChildrenBatchFew: 1
-    autoLODSavePath: 
+    autoLODSavePath: Assets/SimplifiedMesh
     foldoutAdditionalOpts: 0
     generateUV2LODs: 0
     copyParentStaticFlags: 0
@@ -3945,7 +3951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1287410188252166483}
   m_Layer: 0
-  m_Name: l_hand_jnt
+  m_Name: l_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3976,7 +3982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3136049433641829852}
   m_Layer: 0
-  m_Name: r_armLjnt
+  m_Name: r_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4007,7 +4013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3454245069474881703}
   m_Layer: 0
-  m_Name: jaw_jnt
+  m_Name: jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4037,7 +4043,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5523139017761361520}
   m_Layer: 0
-  m_Name: r_leg_jnt
+  m_Name: r_leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4068,7 +4074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1741719275818369325}
   m_Layer: 0
-  m_Name: l_toeLjnt
+  m_Name: l_toe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4473,7 +4479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7541838596846803756}
   m_Layer: 0
-  m_Name: r_toeLjnt
+  m_Name: r_toe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4503,7 +4509,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046601916777998852}
   m_Layer: 0
-  m_Name: spine1_jnt
+  m_Name: spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4534,7 +4540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 48168699392859958}
   m_Layer: 0
-  m_Name: r_hand_jnt
+  m_Name: r_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4565,7 +4571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5176227302947708998}
   m_Layer: 0
-  m_Name: l_elbow_jnt
+  m_Name: l_elbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4985,7 +4991,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8866646341166211751}
   m_Layer: 0
-  m_Name: l_ball_jnt
+  m_Name: l_ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5016,7 +5022,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196736100269849208}
   m_Layer: 0
-  m_Name: root_jnt
+  m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5049,7 +5055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8737665062900670478}
   m_Layer: 0
-  m_Name: spine3_jnt
+  m_Name: spine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
