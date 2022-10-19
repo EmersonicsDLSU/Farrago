@@ -86,6 +86,7 @@ public class PPVolumeSc : MonoBehaviour
 
     public void closeVignette()
     {
+        Debug.LogError($"Closing Vignette");
         Vector2 closing = new Vector2(-1.0f, -1.0f);
         this.vignetteProfile.center.value = closing;
         this.vignetteProfile.intensity.value = 1.0f;
