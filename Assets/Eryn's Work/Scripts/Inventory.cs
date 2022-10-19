@@ -108,8 +108,7 @@ public class Inventory : MonoBehaviour
     {
         // assigns the new color for the mainPlayer's skinMeshRenderer
         var coatColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>();
-        coatColor.material.color = color.color;
-
+        coatColor.materials[6].color = color.color;
 
         // Release color UI ICON pool
         this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);
