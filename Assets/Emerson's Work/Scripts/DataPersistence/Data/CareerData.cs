@@ -29,7 +29,7 @@ public class CareerData
 
         // Settings default values
         screen_size = 2;
-        quality = 5;
+        quality = 0;
         is_fullscreen = 1;
         bgm_volume = 1;
         sfx_volume = 1;
