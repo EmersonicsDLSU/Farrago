@@ -67,7 +67,7 @@ public class R2_Journal : PuzzleItemInteraction
             
         this.gameObject.SetActive(false);
 
-        DataPersistenceManager.instance.SaveGame();
+        //DataPersistenceManager.instance.SaveGame();
     }
 
     // once interacted, the journal will be acquired instantly

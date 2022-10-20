@@ -52,6 +52,7 @@ public class SavePanelSc : MonoBehaviour
         
         // delete file confirmation options
         btnDeleteConfirmYes.onClick.AddListener(() => FindObjectOfType<SaveSlotsMenu>().OnDeleteFileSlot(selectedFile));
+        btnDeleteConfirmYes.onClick.AddListener(() => goDeleteConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmExit"));
         btnDeleteConfirmNo.onClick.AddListener(() => goDeleteConfirmation.GetComponent<Animator>().SetTrigger("SaveConfirmExit"));
 
         // return option

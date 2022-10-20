@@ -24,7 +24,7 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData()
     {
-        respawnPoint = Vector3.zero;
+        respawnPoint = new Vector3(-249.49f, 14.79f, -2.98f);
         this.total_tries = 0;
         respawnTriggerPassed = new SerializableDictionary<int, bool>();
         cutsceneTriggerPassed = new SerializableDictionary<int, bool>();
