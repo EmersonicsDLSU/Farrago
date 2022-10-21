@@ -122,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
                 _playerProperty.isDead = false;
                 this.dead_ticks = 0.0f;
             }
+            return;
         }
         // NOTE: Currently, this is called in the frame. This should be placed on the collider trigger
         // so it's memory call will not be wasted
