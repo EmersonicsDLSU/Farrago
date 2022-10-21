@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class PlayerLight : MonoBehaviour
 {
-    [SerializeField] private GameObject PointLight;
+    [SerializeField] private GameObject[] PointLights;
 
     public void ConfigurePlayerLight(bool isOn)
     {
-        PointLight.GetComponent<Light>().enabled = isOn;
+        foreach(var light in PointLights)
+        {
+            light.GetComponent<Light>().enabled = isOn;
+        }
     }
     public void ConfigurePlayerLight(Color color)
     {
-        PointLight.GetComponent<Light>().color = color;
+        foreach(var light in PointLights)
+        {
+            light.GetComponent<Light>().color = color;
+        }
+        
     }
 }
