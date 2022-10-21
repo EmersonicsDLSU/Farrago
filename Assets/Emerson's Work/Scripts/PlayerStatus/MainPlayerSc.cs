@@ -20,6 +20,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     [HideInInspector] public PuzzleInventory player_puzzleInventory;
     [HideInInspector] public CharacterControllerDetection characterControllerDetection = null;
     [HideInInspector] public PotionAbsorption PotionAbsorptionSC = null;
+    [HideInInspector] public PlayerLight playerLightSc = null;
 
     // external scripts
     [HideInInspector] public TimelineLevel timelineLevelSc = null;
@@ -46,6 +47,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         }
         characterControllerDetection = this.GetComponentInChildren<CharacterControllerDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
+        playerLightSc = this.GetComponentInChildren<PlayerLight>();
 
     }
 

@@ -74,9 +74,9 @@ public class Inventory : MonoBehaviour
         }
         // Reset Color Slots properties
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
-        coat.GetComponent<SkinnedMeshRenderer>().material.color = coatBaseColor;
+        coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = Color.white;
+        mainPlayer.playerLightSc.ConfigurePlayerLight(Color.white);
         
-
         timeCheck = 0.0f;
         cleanseFill.fillAmount = 0.0f;
         canCleanse = false;
@@ -109,6 +109,7 @@ public class Inventory : MonoBehaviour
         // assigns the new color for the mainPlayer's skinMeshRenderer
         var coatColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>();
         coatColor.materials[6].color = color.color;
+        FindObjectOfType<MainPlayerSc>().playerLightSc.ConfigurePlayerLight(color.color);
 
         // Release color UI ICON pool
         this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);

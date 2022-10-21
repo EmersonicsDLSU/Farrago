@@ -31,9 +31,27 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         }
         // add the current respawnPoint
         RespawnPointsHandler.CurrentRespawnPoint = respawnPointEnum;
+        OnEntered(respawnPointEnum);
         // purpose: call the properties function only
         var temp = FindObjectOfType<QuestGiver>().currentQuest;
         //this.gameObject.SetActive(false);
+    }
+
+    private void OnEntered(RespawnPoints point)
+    {
+        switch (point)
+        {
+            case RespawnPoints.LEVEL5:
+            {
+                player_mainSc.playerLightSc.ConfigurePlayerLight(true);
+            } 
+                break;
+            case RespawnPoints.LEVEL6:
+            {
+                player_mainSc.playerLightSc.ConfigurePlayerLight(false);
+            } 
+                break;
+        }
     }
     
     public void LoadData(GameData data)
