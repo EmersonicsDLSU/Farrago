@@ -30,6 +30,7 @@ public class PlayerProperty
     [HideInInspector] public bool canJump = true;
     [HideInInspector] public bool isGround;
     [HideInInspector] public bool isInteract = false;
+    [HideInInspector] public bool isDead = false;
     
     //input axes
     [HideInInspector]public readonly float SPEED_MULTIPLIER = 5.0f;

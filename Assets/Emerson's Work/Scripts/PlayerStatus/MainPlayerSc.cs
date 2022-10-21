@@ -70,7 +70,9 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         if (DataPersistenceManager.instance.GetGameData().total_tries != 0)
         {
             Debug.LogError($"Translate to :{data.respawnPoint}");
+            playerCharController.enabled = false;
             this.transform.position = data.respawnPoint;
+            playerCharController.enabled = true;
         }
     }
     

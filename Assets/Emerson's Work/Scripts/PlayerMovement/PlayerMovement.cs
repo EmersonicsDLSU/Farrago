@@ -73,6 +73,9 @@ public class PlayerMovement : MonoBehaviour
             MPsc.characterControllerDetection.isPlayerCaptured = c_onDeath.isPlayerCaptured;
             // spawns back the player to the last saved point
             MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
+            _playerProperty.isDead = true;
+            MainPlayerSc temp = FindObjectOfType<MainPlayerSc>();
+            FindObjectOfType<MainPlayerSc>().playerAngelaAnim.IH_DeathAnim(ref temp);
             // increment death count
             CareerStatsHandler.instance._careerProperty.total_deaths += 1;
 
@@ -84,11 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
             Debug.LogError($"Dead");
 
-            
-            // re-position the player transform to its latest re-spawn point
-            FindObjectOfType<MainPlayerSc>().gameObject.transform.position =
-                DataPersistenceManager.instance.GetGameData().respawnPoint;
-           
+            Invoke("BackToRespawnPoint", 5.0f);
 
             /* // replays the cutscene **Don't Delete**
             int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);
@@ -99,6 +98,15 @@ public class PlayerMovement : MonoBehaviour
             */
         };
     }
+
+    void BackToRespawnPoint()
+    {
+        MainPlayerSc temp = FindObjectOfType<MainPlayerSc>();
+        temp.playerCharController.enabled = false;
+        // re-position the player transform to its latest re-spawn point
+        FindObjectOfType<MainPlayerSc>().transform.position = DataPersistenceManager.instance.GetGameData().respawnPoint;
+        temp.playerCharController.enabled = true;
+    }
     
     // 'update()' is called once per frame
     // Input getkey downs are only computed accurately in Update or LateUpdate
@@ -108,9 +116,10 @@ public class PlayerMovement : MonoBehaviour
         if(MainCharacterStructs.Instance.playerSavedAttrib.IsDead)
         {
             this.dead_ticks += Time.deltaTime;
-            if(this.dead_ticks > 0.1f)
+            if(this.dead_ticks > 5.0f)
             {
                 MainCharacterStructs.Instance.playerSavedAttrib.IsDead = false;
+                _playerProperty.isDead = false;
                 this.dead_ticks = 0.0f;
             }
         }
@@ -142,12 +151,13 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        // calls the method that handles the 'fall' behavior
-        CheckFalling(ref mainPlayer);
-        // gets the delta x and y movmeent and check the orientation of the player
+        // gets the delta x and y movement and check the orientation of the player
         if(!MainCharacterStructs.Instance.playerSavedAttrib.IsDead)
         {
+            // calls the method that handles the 'fall' behavior
+            CheckFalling(ref mainPlayer);
             CalculateHorizontalMovement(ref mainPlayer);
+            FindObjectOfType<MainPlayerSc>().playerAngelaAnim.IH_DeathAnim(ref mainPlayer);
         }
         // the conditions below are for movements that shouldn't be combine
         if (!_playerProperty.isSneak)
