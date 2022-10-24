@@ -51,6 +51,7 @@ public class PPVolumeSc : MonoBehaviour
             {
                 if (this.timelineLevelSc.currentTimeline.time < 0.5f)
                 {
+                    vignetteProfile.color.Override(Color.black);
                     Vector2 closing = new Vector2(-1.0f, -1.0f);
                     this.vignetteProfile.center.value = closing;
                     this.vignetteProfile.intensity.value = 1.0f;
@@ -75,6 +76,7 @@ public class PPVolumeSc : MonoBehaviour
             }
             else
             {
+                vignetteProfile.color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
                 Vector2 closing = new Vector2(-1.0f, -1.0f);
                 this.vignetteProfile.center.value = closing;
                 this.vignetteProfile.intensity.value = 0.0f;

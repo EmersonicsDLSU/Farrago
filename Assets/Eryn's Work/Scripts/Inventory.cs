@@ -54,7 +54,7 @@ public class Inventory : MonoBehaviour
         playerSFX = PlayerSFX_Manager.Instance;
 
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
-        coatBaseColor = coat.GetComponent<SkinnedMeshRenderer>().material.color;
+        coatBaseColor = coat.GetComponent<SkinnedMeshRenderer>().materials[6].color;
     }
     // FUNCTION CLEANSES WHOLE INVENTORY
     void Cleanse(MainPlayerSc mainPlayer)
@@ -74,7 +74,7 @@ public class Inventory : MonoBehaviour
         }
         // Reset Color Slots properties
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
-        coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = Color.white;
+        coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = coatBaseColor;
         mainPlayer.playerLightSc.ConfigurePlayerLight(Color.white);
         
         timeCheck = 0.0f;
