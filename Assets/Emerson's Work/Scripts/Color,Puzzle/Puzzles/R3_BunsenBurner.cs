@@ -47,7 +47,11 @@ public class R3_BunsenBurner : PuzzleItemInteraction
 
         //DISABLE FIRE PARTICLE SYSTEM
         if(ParticleSystem.gameObject.transform.parent.tag == "Interactable Fire")
+        {
             ParticleSystem.Stop();
+            ParticleSystem.gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        }
+            
     }
 
     // Subscribe event should only be called once to avoid duplication
@@ -93,7 +97,24 @@ public class R3_BunsenBurner : PuzzleItemInteraction
             //CHANGE FIRE COLOR
             ParticleSystem.Play();
             ParticleSystem.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            ma.startColor = inventory.inventorySlots[0].colorMixer.color;
+            ParticleSystem.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+            ParticleSystem.gameObject.transform.GetChild(2).gameObject.SetActive(true);
+            ParticleSystem.gameObject.transform.GetChild(3).gameObject.SetActive(true);
+            ParticleSystem.gameObject.transform.GetChild(4).gameObject.SetActive(true);
+
+            ParticleSystem.ColorOverLifetimeModule colMod0;
+            ParticleSystem.ColorOverLifetimeModule colMod1;
+            ParticleSystem.ColorOverLifetimeModule colMod2;
+            ParticleSystem.ColorOverLifetimeModule colMod3;
+            colMod0 = ParticleSystem.gameObject.transform.GetChild(0).GetComponent<ParticleSystem>().colorOverLifetime;
+            colMod1 = ParticleSystem.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().colorOverLifetime;
+            colMod2 = ParticleSystem.gameObject.transform.GetChild(2).GetComponent<ParticleSystem>().colorOverLifetime;
+            colMod3 = ParticleSystem.gameObject.transform.GetChild(3).GetComponent<ParticleSystem>().colorOverLifetime;
+            colMod0.color = inventory.inventorySlots[0].colorMixer.color;
+            colMod1.color = inventory.inventorySlots[0].colorMixer.color;
+            colMod2.color = inventory.inventorySlots[0].colorMixer.color;
+            colMod3.color = inventory.inventorySlots[0].colorMixer.color;
+
 
             //FOR ICE ANIM
             if (anim != null)
