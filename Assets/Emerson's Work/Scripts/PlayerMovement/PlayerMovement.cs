@@ -87,6 +87,9 @@ public class PlayerMovement : MonoBehaviour
 
             Debug.LogError($"Dead");
 
+            // play death vignette effect
+            FindObjectOfType<PPVolumeSc>().IsDeathEffect = true;
+
             Invoke("BackToRespawnPoint", 5.0f);
 
             /* // replays the cutscene **Don't Delete**
@@ -259,14 +262,18 @@ public class PlayerMovement : MonoBehaviour
         // This is for the CUSTOMIZED/BIND KEY FOR 'SNEAK'
         //KeyCode sneakCode = KeybindManager.Instance.getKeyByAction("SNEAK");
         // Sneak Mechanic KeyEvents
-        if (Input.GetKey(local_keybind.sneak))
+        if (Input.GetKey(local_keybind.sneak) && !_playerProperty.isJump)
         {
+            mainPlayer.playerCharController.height = 3.0f;
+            mainPlayer.playerCharController.center = new Vector3(0, -1.5f, 0);
             _playerProperty.isSneak = true;
             _playerProperty.speed = _playerProperty.maxSpeed * 0.75f;
             mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
         }
-        else if (!Input.GetKey(local_keybind.sneak))
+        else if (!Input.GetKey(local_keybind.sneak) || _playerProperty.isJump)
         {
+            mainPlayer.playerCharController.height = 4.0f;
+            mainPlayer.playerCharController.center = new Vector3(0, -1, 0);
             _playerProperty.isSneak = false;
             mainPlayer.playerAngelaAnim.IH_SneakAnim(ref mainPlayer);
         }
