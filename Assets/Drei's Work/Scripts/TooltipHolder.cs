@@ -100,25 +100,10 @@ public class TooltipHolder : MonoBehaviour
             unTriggerTooltipHelp();
         }
 
-        //ROOM 3 BEGINNING ENABLE JOURNAL
-        if (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro &&
-            !TimelineLevel.isTimelinePlayed && isObjectiveTutDone == false)
-        {
-            isObjectivesAvailable = true;
-            isObjectiveTutDone = false;
-            tooltipHelp.GetComponent<Text>().text = "press TAB to open Objectives";
-            triggerTooltipHelp();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Tab) && isObjectiveTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro)
-        {
-            isObjectiveTutDone = true;
-            unTriggerTooltipHelp();
-        }
 
         //ROOM 3 CLEANSE TUTORIAL
         if (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level3Intro &&
-            !TimelineLevel.isTimelinePlayed && isObjectiveTutDone == true && isCleanseTutDone == false)
+            !TimelineLevel.isTimelinePlayed && isCleanseTutDone == false)
         {
             tooltipHelp.GetComponent<Text>().text = "hold R to Cleanse colors";
             triggerTooltipHelp();
@@ -132,13 +117,9 @@ public class TooltipHolder : MonoBehaviour
 
             if (cleanseTicks >= 1.0f)
             {
-                playerCurrentColor = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SkinnedMeshRenderer>().material.color;
-                if (playerCurrentColor == Color.white)
-                {
-                    cleanseTicks = 0.0f;
-                    isCleanseTutDone = true;
-                    unTriggerTooltipHelp();
-                }
+                cleanseTicks = 0.0f;
+                isCleanseTutDone = true;
+                unTriggerTooltipHelp();
             }
         }
 
