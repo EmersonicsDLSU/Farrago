@@ -60,36 +60,47 @@ public class PPVolumeSc : MonoBehaviour
         if (death_effect_ticks >= 8.0f)
         {
             TurnOffDeathVignetteEffect();
+            return;
         }
         else if (death_effect_ticks < 2.5f)
         {
             death_effect_ticks += Time.deltaTime;
             vignetteProfile[index].color.Override(Color.black);
             Vector2 closing = new Vector2(0.5f, 0.5f);
-            this.vignetteProfile[index].center.value = closing;
-            this.vignetteProfile[index].intensity.value += VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
-            this.vignetteProfile[index].smoothness.value = 
-                Mathf.Clamp(this.vignetteProfile[index].intensity.value, 0.0f, 1.0f);
+            vignetteProfile[index].center.value = closing;
+            vignetteProfile[index].intensity.value += VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
+            vignetteProfile[index].smoothness.value = 
+                Mathf.Clamp(vignetteProfile[index].intensity.value, 0.3f, 1.0f);
         }
-        else if (death_effect_ticks > 2.5f && death_effect_ticks < 5.1f)
+        else if (death_effect_ticks > 2.5f && death_effect_ticks < 6.0f)
         {
             death_effect_ticks += Time.deltaTime;
             vignetteProfile[index].color.Override(Color.black);
             Vector2 closing = new Vector2(-1.0f, -1.0f);
-            this.vignetteProfile[index].center.value = closing;
-            this.vignetteProfile[index].intensity.value -= VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
-            this.vignetteProfile[index].intensity.value =
-                Mathf.Clamp(this.vignetteProfile[index].intensity.value, 0.0f, 1.0f);
+            vignetteProfile[index].center.value = closing;
+            vignetteProfile[index].intensity.value += VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
+            vignetteProfile[index].intensity.value =
+                Mathf.Clamp(vignetteProfile[index].intensity.value, 0.3f, 1.0f);
+        }
+        else if (death_effect_ticks > 6.0f && death_effect_ticks < 7.9f)
+        {
+            death_effect_ticks += Time.deltaTime;
+            vignetteProfile[index].color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
+            Vector2 closing = new Vector2(0.5f, 0.5f);
+            vignetteProfile[index].center.value = closing;
+            vignetteProfile[index].intensity.value -= VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
+            vignetteProfile[index].intensity.value =
+                Mathf.Clamp(vignetteProfile[index].intensity.value, 0.3f, 1.0f);
         }
         else
         {
             death_effect_ticks += Time.deltaTime;
             vignetteProfile[index].color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
-            Vector2 closing = new Vector2(0.5f, 0.5f);
-            this.vignetteProfile[index].center.value = closing;
-            this.vignetteProfile[index].intensity.value -= VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
-            this.vignetteProfile[index].intensity.value =
-                Mathf.Clamp(this.vignetteProfile[index].intensity.value, 0.0f, 1.0f);
+            Vector2 closing = new Vector2(-1.0f, -1.0f);
+            vignetteProfile[index].center.value = closing;
+            vignetteProfile[index].intensity.value -= VigIntensityTickInterval * Time.deltaTime * Vig_Death_Trans_Speed;
+            vignetteProfile[index].intensity.value =
+                Mathf.Clamp(vignetteProfile[index].intensity.value, 0.0f, 1.0f);
         }
     }
 
@@ -99,41 +110,41 @@ public class PPVolumeSc : MonoBehaviour
         if (timelineLevelSc.currentSceneType == CutSceneTypes.Level1Intro && 
             !timelineLevelSc.timelinePlayIsFinished)
         {
-            if (this.timelineLevelSc.currentTimeline.time < 4.0f)
+            if (timelineLevelSc.currentTimeline.time < 4.0f)
             {
-                if (this.timelineLevelSc.currentTimeline.time < 0.5f)
+                if (timelineLevelSc.currentTimeline.time < 0.5f)
                 {
                     vignetteProfile[0].color.Override(Color.black);
                     Vector2 closing = new Vector2(-1.0f, -1.0f);
                     vignetteProfile[0].center.value = closing;
                     vignetteProfile[0].intensity.value = 1.0f;
-                    this.vignetteProfile[0].smoothness.value = 1.0f;
+                    vignetteProfile[0].smoothness.value = 1.0f;
                 }
-                else if (this.timelineLevelSc.currentTimeline.time > 1.5f && this.timelineLevelSc.currentTimeline.time < 2.5f)
+                else if (timelineLevelSc.currentTimeline.time > 1.5f && timelineLevelSc.currentTimeline.time < 2.5f)
                 {
                     Vector2 closing = new Vector2(0.5f, 0.5f);
-                    this.vignetteProfile[0].center.value = closing;
-                    this.vignetteProfile[0].intensity.value += VigIntensityTickInterval * Time.deltaTime;
-                    this.vignetteProfile[0].smoothness.value = 
-                        Mathf.Clamp(this.vignetteProfile[0].intensity.value, 0.0f, 1.0f);
+                    vignetteProfile[0].center.value = closing;
+                    vignetteProfile[0].intensity.value += VigIntensityTickInterval * Time.deltaTime;
+                    vignetteProfile[0].smoothness.value = 
+                        Mathf.Clamp(vignetteProfile[0].intensity.value, 0.0f, 1.0f);
                 }
                 else
                 {
                     Vector2 closing = new Vector2(0.5f, 0.5f);
-                    this.vignetteProfile[0].center.value = closing;
-                    this.vignetteProfile[0].intensity.value -= VigIntensityTickInterval * Time.deltaTime;
-                    this.vignetteProfile[0].intensity.value =
-                        Mathf.Clamp(this.vignetteProfile[0].intensity.value, 0.0f, 1.0f);
+                    vignetteProfile[0].center.value = closing;
+                    vignetteProfile[0].intensity.value -= VigIntensityTickInterval * Time.deltaTime;
+                    vignetteProfile[0].intensity.value =
+                        Mathf.Clamp(vignetteProfile[0].intensity.value, 0.0f, 1.0f);
                 }
             }
             else
             {
                 vignetteProfile[0].color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
                 Vector2 closing = new Vector2(-1.0f, -1.0f);
-                this.vignetteProfile[0].center.value = closing;
-                this.vignetteProfile[0].intensity.value = 0.0f;
-                this.vignetteProfile[0].smoothness.value = 0.0f;
-                this.IsDoneLevel1Intro = true;
+                vignetteProfile[0].center.value = closing;
+                vignetteProfile[0].intensity.value = 0.0f;
+                vignetteProfile[0].smoothness.value = 0.0f;
+                IsDoneLevel1Intro = true;
             }
         }
     }
@@ -143,9 +154,9 @@ public class PPVolumeSc : MonoBehaviour
         Debug.LogError($"Closing Vignette");
         vignetteProfile[0].color.Override(Color.black);
         Vector2 closing = new Vector2(-1.0f, -1.0f);
-        this.vignetteProfile[0].center.value = closing;
-        this.vignetteProfile[0].intensity.value = 1.0f;
-        this.vignetteProfile[0].smoothness.value = 1.0f;
+        vignetteProfile[0].center.value = closing;
+        vignetteProfile[0].intensity.value = 1.0f;
+        vignetteProfile[0].smoothness.value = 1.0f;
     }
 
     public void openVignette()
@@ -153,9 +164,9 @@ public class PPVolumeSc : MonoBehaviour
         Debug.LogError($"Opening Vignette");
         vignetteProfile[0].color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
         Vector2 closing = new Vector2(-1.0f, -1.0f);
-        this.vignetteProfile[0].center.value = closing;
-        this.vignetteProfile[0].intensity.value = 0.0f;
-        this.vignetteProfile[0].smoothness.value = 0.0f;
-        this.IsDoneLevel1Intro = true;
+        vignetteProfile[0].center.value = closing;
+        vignetteProfile[0].intensity.value = 0.3f;
+        vignetteProfile[0].smoothness.value = 0.0f;
+        IsDoneLevel1Intro = true;
     }
 }
