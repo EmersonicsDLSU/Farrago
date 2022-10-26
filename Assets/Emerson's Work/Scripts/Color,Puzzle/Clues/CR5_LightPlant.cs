@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CR5_LightPlant : ClueInteraction
 {
+    [SerializeField] ParticleSystem clueParticles;
+
     public override void OAwake()
     {
         Clue_Identification = E_ClueInteraction.R5_LIGHTPLANT;
@@ -12,6 +14,7 @@ public class CR5_LightPlant : ClueInteraction
     // once interacted, the clue will be acquired instantly
     public override bool OFillCompletion()
     {
+        clueParticles.Stop();
         return true;
     }
 
