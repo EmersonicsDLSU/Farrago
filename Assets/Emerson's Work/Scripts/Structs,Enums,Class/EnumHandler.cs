@@ -92,7 +92,10 @@ public enum PuzzleItem
     R6_VINE,
     R6_LEFT_WIRE,
     R6_RIGHT_WIRE,
-    R6_DESK_LAMP
+    R6_DESK_LAMP,
+    R8_WIRES_1,
+    R8_WIRES_2,
+    R8_BUNSEN_BURNER,
 }
 
 //
