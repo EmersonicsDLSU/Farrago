@@ -96,6 +96,7 @@ public enum PuzzleItem
     R8_WIRES_1,
     R8_WIRES_2,
     R8_BUNSEN_BURNER,
+    R8_PLANT,
 }
 
 //
