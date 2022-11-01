@@ -108,7 +108,8 @@ public enum E_ClueInteraction
     R3_BUNSEN,
     R3_FIRE,
     R5_POTPLANT,
-    R5_LIGHTPLANT
+    R5_LIGHTPLANT,
+    R6_PLANT,
 }
 
 //

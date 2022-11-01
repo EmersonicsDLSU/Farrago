@@ -80,6 +80,8 @@ public class R8_Plant : PuzzleItemInteraction
         //CHANGE VINE COLOR
         this.gameObject.GetComponent<Renderer>().material.color =
             inventory.inventorySlots[0].colorMixer.color;
+
+        isPlantActivated = true;
     }
 
     private void StopGrowAnim()

@@ -6,6 +6,8 @@ using UnityEngine;
 public class R6_Vine : PuzzleItemInteraction
 {
     private Inventory inventory;
+    private bool isPLantActivated = false;
+
     public override void OAwake()
     {
         // set the item identification
@@ -36,27 +38,31 @@ public class R6_Vine : PuzzleItemInteraction
     private void Event1(C_Item e)
     {
         if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.GREEN)
-            {
-                // disables the interactable UI
-                interactableParent.SetActive(false);
-                isActive = false;
-                canInteract = false;
+        {
+            //CHANGE VINE COLOR
+            this.gameObject.GetComponent<Renderer>().material.color =
+                inventory.inventorySlots[0].colorMixer.color;
 
-                // play the stem growing animation
-                this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
-                
-                //CHANGE VINE COLOR
-                this.gameObject.GetComponent<Renderer>().material.color = 
-                    inventory.inventorySlots[0].colorMixer.color;
+            isPLantActivated = true;
+        }
+        else if(inventory.inventorySlots[0].colorMixer.color_code == ColorCode.BLUE && isPLantActivated)
+        {
+            // disables the interactable UI
+            interactableParent.SetActive(false);
+            isActive = false;
+            canInteract = false;
 
-                //TRIGGER CORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextCorrect();
-            }
-            else
-            {
-                //TRIGGER INCORRECT MONOLOGUE
-                Monologues.Instance.triggerPuzzleUITextIncorrect();
-            }
+            // play the stem growing animation
+            this.gameObject.GetComponent<Animator>().SetBool("willGrow", true);
+
+            //TRIGGER CORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextCorrect();
+        }
+        else
+        {
+            //TRIGGER INCORRECT MONOLOGUE
+            Monologues.Instance.triggerPuzzleUITextIncorrect();
+        }
     }
     public override void OLoadData(GameData data)
     {
@@ -71,6 +77,8 @@ public class R6_Vine : PuzzleItemInteraction
         //CHANGE VINE COLOR
         this.gameObject.GetComponent<Renderer>().material.color = 
             inventory.inventorySlots[0].colorMixer.color;
+
+        isPLantActivated = true;
     }
 
 }
