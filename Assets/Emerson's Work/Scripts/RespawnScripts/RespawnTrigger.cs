@@ -51,6 +51,16 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
                 player_mainSc.playerLightSc.ConfigurePlayerLight(false);
             } 
                 break;
+            case RespawnPoints.LEVEL7:
+            {
+                player_mainSc.playerLightSc.ConfigurePlayerLight(true);
+            } 
+                break;
+            case RespawnPoints.LEVEL8:
+            {
+                player_mainSc.playerLightSc.ConfigurePlayerLight(false);
+            } 
+                break;
         }
     }
     
