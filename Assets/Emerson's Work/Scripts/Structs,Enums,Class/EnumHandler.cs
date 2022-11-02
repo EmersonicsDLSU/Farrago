@@ -128,7 +128,8 @@ public enum CutSceneTypes
     MeltIceScene,
     Level5PlantGrow,
     Level6Transition,
-    Level6Dead
+    Level6Dead,
+    Level7RatSwarm
 }
 
 //General Identification of the enemies type

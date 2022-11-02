@@ -56,11 +56,7 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
                 player_mainSc.playerLightSc.ConfigurePlayerLight(true);
             } 
                 break;
-            case RespawnPoints.LEVEL8:
-            {
-                player_mainSc.playerLightSc.ConfigurePlayerLight(false);
-            } 
-                break;
+
         }
     }
     
@@ -68,6 +64,10 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
     {
         data.respawnTriggerPassed.TryGetValue((int)respawnPointEnum, out is_entered);
         GetComponent<BoxCollider>().enabled = !is_entered;
+        if (data.currentRespawnPoint == (int) RespawnPoints.LEVEL7 || data.currentRespawnPoint == (int) RespawnPoints.LEVEL8)
+        {
+            player_mainSc.playerLightSc.ConfigurePlayerLight(true);
+        }
     }
 
     public void SaveData(GameData data)
