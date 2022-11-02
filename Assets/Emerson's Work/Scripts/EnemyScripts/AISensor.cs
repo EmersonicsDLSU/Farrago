@@ -185,7 +185,7 @@ public class AISensor : MonoBehaviour
 
     private void OnValidate()
     {
-        //mesh = CreatWedgeMesh();
+        mesh = CreatWedgeMesh();
     }
 
     private void OnEnable()

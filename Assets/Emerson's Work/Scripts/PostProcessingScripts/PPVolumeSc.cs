@@ -140,7 +140,7 @@ public class PPVolumeSc : MonoBehaviour
             else
             {
                 vignetteProfile[0].color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
-                Vector2 closing = new Vector2(0.5f, 0.5f);
+                Vector2 closing = new Vector2(-1.0f, -1.0f);
                 vignetteProfile[0].center.value = closing;
                 vignetteProfile[0].intensity.value = 0.3f;
                 vignetteProfile[0].smoothness.value = 0.0f;
@@ -163,7 +163,7 @@ public class PPVolumeSc : MonoBehaviour
     {
         Debug.LogError($"Opening Vignette");
         vignetteProfile[0].color.Override(new Color(28.0f / 255.0f, 33.0f / 255.0f, 46.0f / 255.0f));
-        Vector2 closing = new Vector2(0.5f, 0.5f);
+        Vector2 closing = new Vector2(-1.0f, -1.0f);
         vignetteProfile[0].center.value = closing;
         vignetteProfile[0].intensity.value = 0.3f;
         vignetteProfile[0].smoothness.value = 0.0f;
