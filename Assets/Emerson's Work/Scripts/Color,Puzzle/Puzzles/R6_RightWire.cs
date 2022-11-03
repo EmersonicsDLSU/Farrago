@@ -95,6 +95,7 @@ public class R6_RightWire : PuzzleItemInteraction
             // If left wire is open / or the objective is not active anymore; then vine will bridge the rat
             if (!FindObjectOfType<R6_LeftWire>().isActive)
             {
+                Debug.LogError($"Bridged Vine!!!");
                 // enable the death timeline trigger
                 timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
                     GetComponent<BoxCollider>().enabled = true;
@@ -130,6 +131,9 @@ public class R6_RightWire : PuzzleItemInteraction
         ParticleSystem.GetComponent<Renderer>().materials[1].color = Color.white;
         subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
         subEmitter.startColor = Color.white;
+        // disable anim of correct vine length
+        assignedVine.GetComponent<Animator>().SetBool("isLeftOn", true);
+        assignedVine.GetComponent<Animator>().SetBool("isRightOn", false);
     }
 
     public override void OLoadData(GameData data)

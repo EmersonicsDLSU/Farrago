@@ -26,8 +26,8 @@ public class T_R6_Dead : TimelineTrigger
 
     private void Event1(C_Event e)
     {
-
-
+        // close rat spawner
+        ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R6].SetActive(false);
     }
 
     public override void CallEndTimelineEvents()
@@ -41,10 +41,14 @@ public class T_R6_Dead : TimelineTrigger
         {
             D_End(new C_Event());
         }
+        // open rat spawner
+        ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R6].SetActive(true);
         // transform back to the respawn point
         player_mainSc.gameObject.transform.position = respawnPointsHandler.CurrentRespawnPosition;
         // Reset the right wire in room 6
         FindObjectOfType<R6_RightWire>().ResetWire();
+        // resets the 'isPlayerCaptured' boolean
+        Gameplay_DelegateHandler.D_OnDeath(new Gameplay_DelegateHandler.C_OnDeath(isPlayerCaptured:false));
     }
     
     public override void OOnTriggerEnter(Collider other)
