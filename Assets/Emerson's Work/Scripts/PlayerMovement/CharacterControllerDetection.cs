@@ -21,7 +21,7 @@ public class CharacterControllerDetection : MonoBehaviour
         {
             //checks the distance once hit
             float distance = Vector3.Distance(this.transform.position, hit.transform.position);
-            Debug.Log($"Distance between: {distance}!");
+            Debug.LogError($"Distance between: {distance}!");
             //checks the condition of the touch distance
             if (distance <= this.distance_captured)
             {
@@ -30,7 +30,7 @@ public class CharacterControllerDetection : MonoBehaviour
                 if(hit.transform.parent.GetComponent<AIAgent>().ratSpawnerSc != null)
                 {
                     hit.transform.parent.GetComponent<AIAgent>().ratSpawnerSc.enemyPool.ReleasePoolable(hit.transform.parent.gameObject);
-                    Debug.Log($"Obj: {hit.transform.name} is touched!");
+                    Debug.LogError($"Obj: {hit.transform.name} is touched!");
                 }
                 else if(hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc != null)
                     hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc.enemyPool.ReleasePoolable(hit.transform.parent.gameObject);

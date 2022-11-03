@@ -64,31 +64,7 @@ public class TimelineLevel : MonoBehaviour
                 Debug.LogError($"Missing TooltipHolder script in {this.gameObject.name}");
             }
         }
-    }
-
-    //can be called when you want to reactive again a specific scene
-    public void resetCutscene(CutSceneTypes sceneType)
-    {
-        //write here your condition for the specific scene
-        switch (sceneType)
-        {
-            case CutSceneTypes.Level2JournalChecker:
-            {
-                this.timelineTriggerCollection[sceneType].GetComponent<TimelineTriggerIdentification>().onceUsed = false;
-                break;
-            }
-            case CutSceneTypes.Level4RatCage:
-                {
-                    //can be called again
-                    this.timelineTriggerCollection[sceneType].GetComponent<TimelineTriggerIdentification>().onceChase = false;
-                    this.timelineTriggerCollection[sceneType].GetComponent<TimelineTriggerIdentification>().onceUsed = false;
-                    break;
-                }
-
-        }
-
-        this.timelineCollection[sceneType].SetActive(true);
-    }
+    } 
 
     //adds each playableDirector's GO from the level to this list; also adds the list of timeline triggers
     private void AssignTimelineCollection()
@@ -101,7 +77,7 @@ public class TimelineLevel : MonoBehaviour
         //adds to the dictionary
         foreach (var obj in triggerObjectList)
         {
-            this.timelineTriggerCollection.Add(obj.GetComponent<TimelineTriggerIdentification>().sceneType, obj);
+            this.timelineTriggerCollection.Add(obj.GetComponent<TimelineTrigger>().sceneType, obj);
         }
     }
 
@@ -117,8 +93,6 @@ public class TimelineLevel : MonoBehaviour
         isTimelinePlayed = true;
         this.timelinePlayIsFinished = false;
 
-        this.unfreezeOnce = false;
-
         //removes the all the HUD
         if (this.hudControllerSc != null)
         {
@@ -133,92 +107,47 @@ public class TimelineLevel : MonoBehaviour
             this.tooltipHolderSc.untriggerJournalObtainHelp();
         }
         */
-        this.currentTrigger = triggerGO;
+        currentTrigger = triggerGO;
 
         //starts a coroutine for the currentTimeline
         StartCoroutine(PlayTimelineRoutine((float)this.currentTimeline.duration));
     }
-
-    private bool unfreezeOnce = false;
+    
     [HideInInspector]public bool timelinePlayIsFinished = false;
 
     //coroutine to check when the Timeline completed its scene
     private IEnumerator PlayTimelineRoutine(float timelineDuration)
     {
         yield return new WaitForSeconds(timelineDuration);
-        // timeline was finished
-        this.currentTrigger.GetComponent<TimelineTriggerIdentification>().isCompleted = true;
         //calls the timeline deactivator
-        this.timelinePlayIsFinished = true;
+        timelinePlayIsFinished = true;
         TimelineActiveChecker();
-        //resetting journalchecker cutscene
-        if(this.lastPlayedSceneType == CutSceneTypes.Level2JournalChecker)
-        {
-            this.resetCutscene(CutSceneTypes.Level2JournalChecker);
-        }
-        // save the last position
-        DataPersistenceManager.instance.SaveGame();
-        
     }
 
     private void TimelineActiveChecker()
     {
-        //checks if the timeline stops playing
-        if (!this.currentTrigger.GetComponent<TimelineTriggerIdentification>().isRepeated)
+        // timeline was finished; call its end events
+        currentTrigger.GetComponent<TimelineTrigger>().CallEndTimelineEvents();
+        currentTrigger = null;
+
+        lastPlayedSceneType = currentSceneType;
+        currentSceneType = CutSceneTypes.None;
+        //this.currentTimeline.Stop();
+        currentTimeline = null;
+        //Unfreezes the player; let the player move again
+        isTimelinePlayed = false;
+
+        if (hudControllerSc != null)
         {
-            //enables the HUD after the cutscene DOESNT WORK
-            //inGameHUD.SetActive(true);
-
-            this.currentTrigger.SetActive(false);
-            this.currentTrigger = null;
-
-            lastPlayedSceneType = currentSceneType;
-            currentSceneType = CutSceneTypes.None;
-            //this.currentTimeline.Stop();
-            this.currentTimeline = null;
-            //Unfreezes the player; let the player move again
-            isTimelinePlayed = false;
-
-            if (this.hudControllerSc != null)
-            {
-                this.hudControllerSc.On_unPause();
-            }
-        }
-
-        //For the repeated timeline; unfreezes the player
-        if (this.currentTimeline != null && this.currentTrigger.GetComponent<TimelineTriggerIdentification>().isRepeated &&
-            !this.unfreezeOnce)
-        {
-            //enables the HUD after the cutscene DOESNT WORK
-            //inGameHUD.SetActive(true);
-            
-            lastPlayedSceneType = currentSceneType;
-            //Unfreezes the player; let the player move again
-            isTimelinePlayed = false;
-            if (this.hudControllerSc != null)
-            {
-                this.hudControllerSc.On_unPause();
-            }
-
-            this.unfreezeOnce = true;
+            hudControllerSc.On_unPause();
         }
     }
 
-    
-    // Update is called once per frame
-    void Update()
+    //can be called when you want to reactive again a specific scene
+    public void ResetCutscene(CutSceneTypes sceneType)
     {
-        //reset a specific scene: chase rat scene
-        if(lastPlayedSceneType == CutSceneTypes.Level6Dead)
-        {
-            resetCutscene(CutSceneTypes.Level6Dead);
-            // re-position the player transform to its latest re-spawn point
-            Debug.LogError($"Dead: {mainPlayer.timelineLevelSc.lastPlayedSceneType}");
-            
-            FindObjectOfType<MainPlayerSc>().gameObject.transform.position = 
-                DataPersistenceManager.instance.GetGameData().respawnPoint;
-            
-        }
+        timelineTriggerCollection[sceneType].GetComponent<TimelineTrigger>().OOnResetScene();
     }
+    
     
 }

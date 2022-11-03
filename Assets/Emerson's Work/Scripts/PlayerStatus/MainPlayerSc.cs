@@ -78,7 +78,6 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     
     public void SaveData(GameData data)
     {
-        data.respawnPoint = this.transform.position;
         var temp = DateTime.Now;
         data.dateCreated = $"{temp.Day}/{temp.Month}/{temp.Year}";
         data.timeCreated = $"{temp.Hour}:{temp.Minute}";

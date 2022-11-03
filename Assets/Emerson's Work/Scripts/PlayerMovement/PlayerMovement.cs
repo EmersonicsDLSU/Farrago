@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             // reset a specific scene: chase rat scene
             if (MPsc.timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage)
             {
-                MPsc.timelineLevelSc.resetCutscene(CutSceneTypes.Level4RatCage);
+                MPsc.timelineLevelSc.ResetCutscene(CutSceneTypes.Level4RatCage);
             }
 
             Debug.LogError($"Dead");

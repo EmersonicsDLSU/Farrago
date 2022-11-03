@@ -67,7 +67,8 @@ public class R2_Journal : PuzzleItemInteraction
             
         this.gameObject.SetActive(false);
 
-        //DataPersistenceManager.instance.SaveGame();
+        // CALL THE END EVENTS FOR JournalChecker cutscene 
+        FindObjectOfType<T_R2_JournalCheck>().CallEndTimelineEvents();
     }
 
     // once interacted, the journal will be acquired instantly
