@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class T_R4_RatCage : TimelineTrigger
 {
+    private RatChaseSpawner ratChaseSpawnerSc;
     public override void OAwake()
     {
-
+        if (ratChaseSpawnerSc == null)
+        {
+            if (FindObjectOfType<RatChaseSpawner>() != null) ratChaseSpawnerSc = FindObjectOfType<RatChaseSpawner>();
+            else Debug.LogError($"Missing \"RatChaseSpawner script\" in {this.gameObject.name}");
+        }
     }
 
     public override void OStart()
@@ -17,18 +22,41 @@ public class T_R4_RatCage : TimelineTrigger
     public override void ODelegates()
     {
         D_Start += Event1;
+        D_End += E_Event1;
     }
 
     public void OnDestroy()
     {
         D_Start -= Event1;
+        D_End -= E_Event1;
     }
 
     private void Event1(C_Event e)
     {
         StartCoroutine(BGM_Manager.Instance.SwapTrack(BGM_Manager.Instance.getClipByLabel("Chase")));
+        ratChaseSpawnerSc.enemyPool.ReleaseAllPoolable();
     }
-    
+    private void E_Event1(C_Event e)
+    {
+        while (ratChaseSpawnerSc.enemyPool.HasObjectAvailable(1))
+        {
+            ratChaseSpawnerSc.enemyPool.RequestPoolable();
+        }
+    }
+
+    public override void CallEndTimelineEvents()
+    {
+        // add the current respawnPoint
+        respawnPointsHandler.CurrentRespawnPosition = transform.position;
+
+        GetComponent<BoxCollider>().enabled = false;
+        isCompleted = true;
+        // call the delegate of this clue
+        if (D_End != null)
+        {
+            D_End(new C_Event());
+        }
+    }
     public override void OOnTriggerEnter(Collider other)
     {
         base.OOnTriggerEnter(other);

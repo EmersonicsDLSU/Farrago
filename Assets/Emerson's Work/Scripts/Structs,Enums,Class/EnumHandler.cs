@@ -128,6 +128,17 @@ public enum CutSceneTypes
     Level6Dead,
     Level7RatSwarm
 }
+//
+public enum RatSpawnerArea
+{
+    None = 0,
+    R3,
+    R4_0,
+    R4_1,
+    R4_Chase,
+    R6,
+    R7_Swarm
+}
 
 //General Identification of the enemies type
 public enum Enemy_Type

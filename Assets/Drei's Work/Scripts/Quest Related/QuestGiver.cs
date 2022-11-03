@@ -14,6 +14,7 @@ public class QuestGiver : MonoBehaviour
     PuzzleInventory playerPuzzleInv;
     private TimelineLevel TimelineLevel;
     private ObjectivePool objectivePool;
+    [HideInInspector] public RespawnPointsHandler respawnPointsHandler = null;
 
     // TODO: Find a better way to place the objectivesPanel activation
     public AQuest currentQuest
@@ -21,12 +22,12 @@ public class QuestGiver : MonoBehaviour
         get
         {
             AQuest temp = null;
-            if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL3)
+            if (respawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL3)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
             }
             //add else ifs here for other missions
-            else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL5)
+            else if (respawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL5)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r5];
             }
@@ -49,6 +50,12 @@ public class QuestGiver : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (respawnPointsHandler == null)
+        {
+            if (FindObjectOfType<RespawnPointsHandler>() != null) respawnPointsHandler = FindObjectOfType<RespawnPointsHandler>();
+            else Debug.LogError($"Missing \"RespawnPointsHandler script\" in {this.gameObject.name}");
+        }
+
         playerPuzzleInv = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PuzzleInventory>();
         TimelineLevel = GameObject.Find("TimeLines").GetComponent<TimelineLevel>();
 

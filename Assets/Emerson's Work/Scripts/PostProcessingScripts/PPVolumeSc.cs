@@ -13,6 +13,7 @@ public class PPVolumeSc : MonoBehaviour
     
     //external scripts
     public TimelineLevel timelineLevelSc = null;
+    [HideInInspector] public RespawnPointsHandler respawnPointsHandler = null;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +28,11 @@ public class PPVolumeSc : MonoBehaviour
         {
             if (FindObjectOfType<TimelineLevel>() != null) timelineLevelSc = FindObjectOfType<TimelineLevel>();
             else Debug.LogError($"Missing \"TimelineLevel script\" in {this.gameObject.name}");
+        }
+        if (respawnPointsHandler == null)
+        {
+            if (FindObjectOfType<RespawnPointsHandler>() != null) respawnPointsHandler = FindObjectOfType<RespawnPointsHandler>();
+            else Debug.LogError($"Missing \"RespawnPointsHandler script\" in {this.gameObject.name}");
         }
     }
 
@@ -54,7 +60,7 @@ public class PPVolumeSc : MonoBehaviour
     // death transition vignette effect
     private void DeathVignetteEffect()
     {
-        int index = (int) RespawnPointsHandler.CurrentRespawnPoint;
+        int index = (int) respawnPointsHandler.CurrentRespawnPoint;
         if (index >= 4) index -= 1;
 
         if (death_effect_ticks >= 8.0f)

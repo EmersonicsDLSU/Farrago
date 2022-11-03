@@ -29,6 +29,23 @@ public class T_R6_Dead : TimelineTrigger
 
 
     }
+
+    public override void CallEndTimelineEvents()
+    {
+        // add the current respawnPoint
+        respawnPointsHandler.CurrentRespawnPosition = transform.position;
+        GetComponent<BoxCollider>().enabled = false;
+        isCompleted = true;
+        // call the delegate of this clue
+        if (D_End != null)
+        {
+            D_End(new C_Event());
+        }
+        // transform back to the respawn point
+        player_mainSc.gameObject.transform.position = respawnPointsHandler.CurrentRespawnPosition;
+        // Reset the right wire in room 6
+        FindObjectOfType<R6_RightWire>().ResetWire();
+    }
     
     public override void OOnTriggerEnter(Collider other)
     {
@@ -43,25 +60,18 @@ public class T_R6_Dead : TimelineTrigger
     {
         base.OOnTriggerExit(other);
     }
-    public override void CallEndTimelineEvents()
-    {
-        base.CallEndTimelineEvents();
-        timelineLevelSc.ResetCutscene(CutSceneTypes.Level6Dead);
-        player_mainSc.gameObject.transform.position = 
-            DataPersistenceManager.instance.GetGameData().respawnPoint;
-    }
     public override void OOnResetScene()
     {
         base.OOnResetScene();
     }
     public override void OLoadData(GameData data)
     {
-        base.OLoadData(data);
+
     }
     
     public override void OSaveData(GameData data)
     {
-        base.OSaveData(data);
+
     }
 
 }

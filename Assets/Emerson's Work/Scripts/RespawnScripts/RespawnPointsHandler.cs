@@ -4,36 +4,50 @@ using UnityEngine;
 
 public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
 {
-    private static RespawnPointsHandler _instance;
+    [SerializeField] private List<GameObject> respawnPointList = new List<GameObject>();
+    public Dictionary<RespawnPoints, RespawnTrigger> respawnPointCollection = new Dictionary<RespawnPoints, RespawnTrigger>();
+    public RespawnPoints CurrentRespawnPoint;
+    public Vector3 CurrentRespawnPosition = new Vector3(-249.49f, 14.79f, -2.98f);
 
-    public static RespawnPointsHandler Instance
+    // Start is called before the first frame update
+    void Awake()
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<RespawnPointsHandler>();
-
-                if (_instance == null)
-                {
-                    _instance = new RespawnPointsHandler();
-                }
-            }
-
-            return _instance;
+        Debug.LogError($"Assign TimelineCollection!");
+        AssignTimelineCollection();
+    }
+    
+    //adds each playableDirector's GO from the level to this list; also adds the list of timeline triggers
+    private void AssignTimelineCollection()
+    {
+        //adds to the dictionary
+        int i = 0;
+        foreach (var obj in respawnPointList)
+        { 
+            respawnPointCollection.Add(obj.GetComponent<RespawnTrigger>().respawnPointEnum, obj.GetComponent<RespawnTrigger>());
         }
     }
 
-    public static RespawnPoints CurrentRespawnPoint;
+    private void ActivateRespawnEvent()
+    {
+        if (CurrentRespawnPoint != RespawnPoints.NONE)
+        {
+            Debug.LogError($"CurrentRespawnPoint: {CurrentRespawnPoint}");
+            respawnPointCollection[CurrentRespawnPoint].CallStartTimelineEvents();
+
+        }
+    }
 
     public void LoadData(GameData data)
     {
         CurrentRespawnPoint = (RespawnPoints)data.currentRespawnPoint;
+        CurrentRespawnPosition = data.respawnPoint;
+        ActivateRespawnEvent();
     }
 
     public void SaveData(GameData data)
     {
         Debug.LogError($"Saved Respawn Point!!");
         data.currentRespawnPoint = (int)CurrentRespawnPoint;
+        data.respawnPoint = CurrentRespawnPosition;
     }
 }

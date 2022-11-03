@@ -23,6 +23,8 @@ public class TimelineTrigger : MonoBehaviour, IDataPersistence
     //external scripts
     [HideInInspector] public TimelineLevel timelineLevelSc = null;
     [HideInInspector] public MainPlayerSc player_mainSc = null;
+    [HideInInspector] public RatSpawnerCollection ratSpawnerCollection = null;
+    [HideInInspector] public RespawnPointsHandler respawnPointsHandler = null;
 
     void Awake()
     {
@@ -36,6 +38,16 @@ public class TimelineTrigger : MonoBehaviour, IDataPersistence
         {
             if (FindObjectOfType<MainPlayerSc>() != null) player_mainSc = FindObjectOfType<MainPlayerSc>();
             else Debug.LogError($"Missing \"MainPlayerSc script\" in {this.gameObject.name}");
+        }
+        if (ratSpawnerCollection == null)
+        {
+            if (FindObjectOfType<RatSpawnerCollection>() != null) ratSpawnerCollection = FindObjectOfType<RatSpawnerCollection>();
+            else Debug.LogError($"Missing \"RatSpawnerCollection script\" in {this.gameObject.name}");
+        }
+        if (respawnPointsHandler == null)
+        {
+            if (FindObjectOfType<RespawnPointsHandler>() != null) respawnPointsHandler = FindObjectOfType<RespawnPointsHandler>();
+            else Debug.LogError($"Missing \"RespawnPointsHandler script\" in {this.gameObject.name}");
         }
         OAwake();
     }
@@ -67,6 +79,9 @@ public class TimelineTrigger : MonoBehaviour, IDataPersistence
 
     public virtual void CallEndTimelineEvents()
     {
+        // add the current respawnPoint
+        respawnPointsHandler.CurrentRespawnPosition = transform.position;
+
         GetComponent<BoxCollider>().enabled = false;
         isCompleted = true;
         // call the delegate of this clue
@@ -126,13 +141,7 @@ public class TimelineTrigger : MonoBehaviour, IDataPersistence
     {
 
     }
-
-    // input pressed condition; Default
-    public virtual bool OInput()
-    {
-        return Input.GetKey(KeyCode.E);
-    }
-
+    
     // this is the default condition for OnTriggerEnter; Default
     public virtual void OOnTriggerEnter(Collider other)
     {
@@ -178,8 +187,6 @@ public class TimelineTrigger : MonoBehaviour, IDataPersistence
             data.cutsceneTriggerPassed.Remove((int)sceneType);
         }
         data.cutsceneTriggerPassed.Add((int)sceneType, isCompleted);
-        // timeline trigger position
-        data.respawnPoint = this.transform.position;
     }
     
 }

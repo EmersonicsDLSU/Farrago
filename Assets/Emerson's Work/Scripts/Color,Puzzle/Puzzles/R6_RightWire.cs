@@ -113,6 +113,25 @@ public class R6_RightWire : PuzzleItemInteraction
         }
     }
 
+    public void ResetWire()
+    {
+        // disables the interactable UI
+        interactableParent.SetActive(true);
+        isActive = true;
+        canInteract = true;
+        // close the light component from the wire
+        lightToOpen.SetActive(true);
+        // disable the death timeline trigger
+        timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
+            GetComponent<BoxCollider>().enabled = false;
+        //CHANGE ELECTRICITY COLOR
+        ma.startColor = Color.white;
+        tr.colorOverLifetime = Color.white;
+        ParticleSystem.GetComponent<Renderer>().materials[1].color = Color.white;
+        subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
+        subEmitter.startColor = Color.white;
+    }
+
     public override void OLoadData(GameData data)
     {
         // disables the interactable UI

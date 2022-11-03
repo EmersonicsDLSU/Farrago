@@ -23,25 +23,10 @@ public class RatChaseSpawner : RatSpawner
     // Update is called once per frame
     public override void OUpdate()
     {
-        if(timelineLevelSc.currentTimeline == null)
-            return;
-        if(enemyPool == null)
-        {
-                Debug.LogError($"Script Empty");
-        }
-        // checks if the pool storage is not empty and the required existing size still complies
-        if (enemyPool.HasObjectAvailable(1) && enemyPool.usedObjects.Count < existingSpawnSize &&
-            timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage && 
-            timelineLevelSc.timelinePlayIsFinished)
-        {
-            // request for a new rat
-            enemyPool.RequestPoolable();
-        }
-        // release the rat first if one is being used
-        else if(enemyPool.usedObjects.Count > 0 && timelineLevelSc.currentSceneType == CutSceneTypes.Level4RatCage && 
-                !timelineLevelSc.timelinePlayIsFinished)
-            enemyPool.ReleasePoolable(enemyPool.usedObjects[enemyPool.usedObjects.Count - 1]);
+
     }
+
+
     
     public override void OOnRequestGo(List<Transform> spawnLocations)
     {

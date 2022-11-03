@@ -127,7 +127,10 @@ public class TimelineLevel : MonoBehaviour
     private void TimelineActiveChecker()
     {
         // timeline was finished; call its end events
-        currentTrigger.GetComponent<TimelineTrigger>().CallEndTimelineEvents();
+        if (currentTrigger != null)
+        {
+            currentTrigger.GetComponent<TimelineTrigger>().CallEndTimelineEvents();
+        }
         currentTrigger = null;
 
         lastPlayedSceneType = currentSceneType;
