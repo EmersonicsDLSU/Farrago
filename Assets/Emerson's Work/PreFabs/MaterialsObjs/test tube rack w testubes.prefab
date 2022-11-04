@@ -262,7 +262,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -566,7 +566,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -674,7 +674,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1028,7 +1028,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1329,9 +1329,9 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: 140000000b000000ffffffff00000000ffffffff120000000a000000ffffffffffffffff08000000ffffffffffffffffffffffffffffffff050000000d000000ffffffffffffffff0e00000010000000ffffffffffffffff06000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff13000000ffffffff09000000110000000f00000003000000ffffffff
-      _HashCodes: fa4c02008e4c0200644d02001a4d0200224d02002a4d0200324d0200ae4c02004a4d0200a84c0200d84c0200424d0200e44c0200064d02009a4c0200f44c0200544d0200624d0200464d02003a4d0200d24c020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-      _Next: ffffffffffffffffffffffff0200000001000000ffffffffffffffffffffffffffffffffffffffff0400000007000000ffffffffffffffff0c000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _Buckets: 08000000ffffffffffffffffffffffffffffffff050000000d0000000e000000ffffffff0c000000ffffffffffffffff1000000006000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff13000000ffffffffffffffffffffffff0f0000001400000007000000020000000b000000ffffffff0000000001000000120000000a000000ffffffffffffffff
+      _HashCodes: 10920100a29101007c92010030920100389201004092010048920100c291010060920100bc910100ee91010058920100fa9101001c920100ae9101000a9201006c9201007a9201005c92010050920100e691010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffffffffffffffffffffffffffffffffffff03000000ffffffff090000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
       _Count: 21
       _Version: 21
       _FreeList: -1
@@ -2273,7 +2273,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3139,7 +3139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba19d8d47ff051b4593efb6a92e4ec6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainPlayerScript: {fileID: 0}
   interactableIcon: {fileID: 0}
 --- !u!1 &8949470374352663316
 GameObject:
@@ -3423,7 +3422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba19d8d47ff051b4593efb6a92e4ec6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainPlayerScript: {fileID: 0}
   interactableIcon: {fileID: 0}
 --- !u!1 &8949470374612774560
 GameObject:
@@ -3707,7 +3705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba19d8d47ff051b4593efb6a92e4ec6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainPlayerScript: {fileID: 0}
   interactableIcon: {fileID: 0}
 --- !u!1 &8949470375555590787
 GameObject:
@@ -4245,5 +4242,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba19d8d47ff051b4593efb6a92e4ec6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainPlayerScript: {fileID: 0}
   interactableIcon: {fileID: 0}
