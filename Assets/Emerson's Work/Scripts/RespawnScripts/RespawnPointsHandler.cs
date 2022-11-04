@@ -48,6 +48,8 @@ public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
     {
         Debug.LogError($"Saved Respawn Point!!");
         data.currentRespawnPoint = (int)CurrentRespawnPoint;
-        data.respawnPoint = CurrentRespawnPosition;
+        Vector3 offset = new Vector3(CurrentRespawnPosition.x,
+            CurrentRespawnPosition.y + 2.0f, CurrentRespawnPosition.z);
+        data.respawnPoint = offset;
     }
 }

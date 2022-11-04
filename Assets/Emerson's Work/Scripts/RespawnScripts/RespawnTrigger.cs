@@ -95,17 +95,20 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
 
     private void OnTriggerEnter(Collider other)
     {
-        OOnTriggerEnter(other);
+        if (other.transform.CompareTag("Player"))
+            OOnTriggerEnter(other);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        OOnTriggerStay(other);
+        if (other.transform.CompareTag("Player"))
+            OOnTriggerStay(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        OOnTriggerExit(other);
+        if (other.transform.CompareTag("Player"))
+            OOnTriggerExit(other);
     }
 
     // Load system

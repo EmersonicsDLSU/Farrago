@@ -126,7 +126,9 @@ public enum CutSceneTypes
     Level5PlantGrow,
     Level6Transition,
     Level6Dead,
-    Level7RatSwarm
+    Level7RatSwarm,
+    Level7DoorClose,
+    Level8ScareRat
 }
 //
 public enum RatSpawnerArea
@@ -137,7 +139,8 @@ public enum RatSpawnerArea
     R4_1,
     R4_Chase,
     R6,
-    R7_Swarm
+    R7_Swarm,
+    R8
 }
 
 //General Identification of the enemies type

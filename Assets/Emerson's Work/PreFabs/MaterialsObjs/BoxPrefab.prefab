@@ -308,7 +308,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
-  m_StaticEditorFlags: 119
+  m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!4 &2778194919756779597
 Transform:
@@ -331,7 +331,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3298307438072400631}
-  m_Mesh: {fileID: 3925360246919112806, guid: b487b2f1b6869bd479179af6fdbfb250, type: 3}
+  m_Mesh: {fileID: -2419865965811914967, guid: cf349fe39e4c29246be64721121603cc, type: 3}
 --- !u!23 &3946575302636481314
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c55f9c40369b6e44b2100c002c6b06d, type: 2}
+  - {fileID: 2100000, guid: 0db0625edd0c8884dbfc6cdd8d2063d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 8341049429807911816}
   - component: {fileID: 1682235952300374398}
   - component: {fileID: 8366368495850549833}
-  m_Layer: 10
+  m_Layer: 3
   m_Name: GroundPlane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ Transform:
   m_GameObject: {fileID: 5235056696692748968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0324605, y: 1.7162246, z: 1.9564093}
   m_Children:
   - {fileID: 2778194919756779597}
   - {fileID: 3512340024790238625}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 4421067488300745597}
   - component: {fileID: 5670789731007179060}
   - component: {fileID: 8315846385881828608}
-  m_Layer: 10
+  m_Layer: 3
   m_Name: GroundPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
