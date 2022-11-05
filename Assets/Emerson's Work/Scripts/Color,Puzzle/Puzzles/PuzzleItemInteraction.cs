@@ -71,6 +71,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
                 }
                 else if (OInput())
                 {
+                    mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, true);
                     mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
                     timePress += Time.deltaTime;
                     if (interactableFill != null)
@@ -80,6 +81,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
 
                     if (OFillCompletion())
                     {
+                        mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, false);
                         // call the item's events
                         CallItemEvents(Item_Identification);
 

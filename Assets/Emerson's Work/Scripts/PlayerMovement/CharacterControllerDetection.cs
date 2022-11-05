@@ -32,8 +32,11 @@ public class CharacterControllerDetection : MonoBehaviour
                     hit.transform.parent.GetComponent<AIAgent>().ratSpawnerSc.enemyPool.ReleasePoolable(hit.transform.parent.gameObject);
                     Debug.LogError($"Obj: {hit.transform.name} is touched!");
                 }
-                else if(hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc != null)
-                    hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc.enemyPool.ReleasePoolable(hit.transform.parent.gameObject);
+                else if (hit.transform.parent.GetComponent<AIAgent>().ratChaseSpawnerSc != null)
+                {
+                    FindObjectOfType<RatChaseSpawner>().enemyPool.ReleaseAllPoolable();
+                    FindObjectOfType<TimelineLevel>().ResetCutscene(CutSceneTypes.Level4RatCage);
+                }
 
                 
                 // resets the 'isPlayerCaptured' boolean

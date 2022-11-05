@@ -46,9 +46,6 @@ public class T_R4_RatCage : TimelineTrigger
 
     public override void CallEndTimelineEvents()
     {
-        // add the current respawnPoint
-        respawnPointsHandler.CurrentRespawnPosition = transform.position;
-
         GetComponent<BoxCollider>().enabled = false;
         isCompleted = true;
         // call the delegate of this clue
