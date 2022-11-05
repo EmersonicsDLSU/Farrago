@@ -17,11 +17,13 @@ public class T_R8_ScareRat : TimelineTrigger
     public override void ODelegates()
     {
         D_Start += Event1;
+        D_End += E_Event1;
     }
 
     public void OnDestroy()
     {
         D_Start -= Event1;
+        D_End -= E_Event1;
     }
 
     [SerializeField] private RatSpawner ratSpawner;
@@ -46,10 +48,22 @@ public class T_R8_ScareRat : TimelineTrigger
         }
 
     }
+    private void E_Event1(C_Event e)
+    {
+        // reduced the rat count to half
+        int ratSize = ratSpawner.enemyPool.usedObjects.Count / 2;
+        for (int j = 0; j < ratSize; j++)
+        {
+            ratSpawner.enemyPool.ReleasePoolable(0);
+        }
+    }
     
     public override void OOnTriggerEnter(Collider other)
     {
-        base.OOnTriggerEnter(other);
+        // if objective is done
+        if (QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
+                .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1] == true)
+            base.OOnTriggerEnter(other);
     }
     public override void OOnTriggerStay(Collider other)
     {

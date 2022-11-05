@@ -25,7 +25,8 @@ public enum QuestDescriptions
     NONE = -1,
     tutorial_color_r3,
     color_r5,
-    color_r6
+    color_r6,
+    color_r8
 };
 public enum DescriptiveQuest
 {
@@ -34,7 +35,11 @@ public enum DescriptiveQuest
     R5_REPAIR_WIRE,
     R5_ON_LIGHT,
     R6_ON_LEFT_LIGHT,
-    R6_ON_DESKLIGHT
+    R6_ON_DESKLIGHT,
+    R8_COMPLETED_FIRE,
+    R8_REPAIR_WIRE1,
+    R8_REPAIR_WIRE2,
+    R8_COLOR_PLANT,
 }
 
 public enum QuestType

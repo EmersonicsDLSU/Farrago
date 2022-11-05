@@ -45,12 +45,19 @@ public sealed class QuestCollection
         AQuest quest3 = new AQuest(QuestDescriptions.color_r6, false,
             new Dictionary<DescriptiveQuest, bool>() 
                 {{DescriptiveQuest.R6_ON_LEFT_LIGHT, false}, {DescriptiveQuest.R6_ON_DESKLIGHT, false}},
-            new List<string>(),
+            new List<string>() {$"- Repair the correct wire/s", "- Repair desk lamp"},
+            new List<GameObject>());
+        AQuest quest4 = new AQuest(QuestDescriptions.color_r8, true,
+            new Dictionary<DescriptiveQuest, bool>() 
+                {{DescriptiveQuest.R8_REPAIR_WIRE1, false}, {DescriptiveQuest.R8_REPAIR_WIRE2, false}, 
+                    {DescriptiveQuest.R8_COMPLETED_FIRE, false}, {DescriptiveQuest.R8_COLOR_PLANT, false}},
+            new List<string>() {$"- Repair wires", "- Turn on bunsen burner", "- Find a way up."},
             new List<GameObject>());
 
         //add to dict
         questDict.Add(quest1.questID, quest1);
         questDict.Add(quest2.questID, quest2);
         questDict.Add(quest3.questID, quest3);
+        questDict.Add(quest4.questID, quest4);
     }
 }

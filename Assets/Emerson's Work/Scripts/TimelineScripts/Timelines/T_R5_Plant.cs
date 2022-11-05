@@ -48,7 +48,7 @@ public class T_R5_Plant : TimelineTrigger
         // if objective is done
         if (QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
             .descriptiveObjectives[DescriptiveQuest.R5_ON_LIGHT] == true)
-        base.OOnTriggerEnter(other);
+            base.OOnTriggerEnter(other);
     }
     public override void OOnTriggerStay(Collider other)
     {

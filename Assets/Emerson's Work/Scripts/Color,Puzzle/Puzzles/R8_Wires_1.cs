@@ -93,11 +93,8 @@ public class R8_Wires_1 : PuzzleItemInteraction
 
             /* Start of Objective Completion / Setting strikethrough to the text's fontStyle*/
             // set the two objectives as complete
-            /*
-            QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
-                .descriptiveObjectives[DescriptiveQuest.R5_REPAIR_WIRE] = true;
-            QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
-                .descriptiveObjectives[DescriptiveQuest.R5_ON_LIGHT] = true;
+            QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
+                .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1] = true;
 
             // Update the objectiveList as well; double update 
             objectivePool.itemPool.ReleaseAllPoolable();
@@ -110,8 +107,6 @@ public class R8_Wires_1 : PuzzleItemInteraction
                 questGiver.currentQuest.neededGameObjects.Clear();
             }
             /* End of Objective Completion */
-
-            //PUT CODE HERE FOR TRIGGERING RAT CUTSCENE
         }
         else
         {
