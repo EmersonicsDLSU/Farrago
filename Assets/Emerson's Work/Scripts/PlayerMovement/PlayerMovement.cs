@@ -43,14 +43,14 @@ public class PlayerMovement : MonoBehaviour
     {
 
     }
-    /*
+    
     // Checking Foot Checker Radius
     void OnDrawGizmos()
     {
         Handles.DrawWireDisc(groundCheckLeft.position, Vector3.forward, groundCheckRad);
         Handles.DrawWireDisc(groundCheckRight.position, Vector3.forward, groundCheckRad);
     }
-    */
+    
 
     private void Start()
     {
@@ -381,9 +381,9 @@ public class PlayerMovement : MonoBehaviour
         */
         
         // Evaluates the translation value from the customized method
-        movementX = CustomizedGetAxis(local_keybind.left, local_keybind.right, movementX);
-        movementY = CustomizedGetAxis(local_keybind.back, local_keybind.fwd, movementY);
-        
+        CustomizedGetAxis(local_keybind.left, local_keybind.right, ref movementX);
+        CustomizedGetAxis(local_keybind.back, local_keybind.fwd, ref movementY);
+
         // translates the player
         Vector3 move = transform.right * movementX + transform.forward * movementY;
         FlipCharacter(ref mainPlayer);
@@ -403,7 +403,7 @@ public class PlayerMovement : MonoBehaviour
     // NOTE: THIS IS NOT EFFICIENT, CUSTOM METHODS LIKE THIS SHOULD BE PLACED IN A SEPARATE CLASS 
     // THAT CONSIST OF DIFFERENT SELECTIONS/BEHAVIORS
     // Customized method for player movement
-    private float CustomizedGetAxis(KeyCode first, KeyCode second, float axisValue)
+    private void CustomizedGetAxis(KeyCode first, KeyCode second, ref float axisValue)
     {
         if (Input.GetKey(first))
         {
@@ -421,7 +421,6 @@ public class PlayerMovement : MonoBehaviour
         {
             axisValue = 0.0f;
         }
-        return axisValue;
     }
     // General method used to clamp the face position of the player to the object
     public void ClampToObject(ref MainPlayerSc mainPlayer, GameObject directedObj)

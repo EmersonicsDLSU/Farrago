@@ -40,7 +40,8 @@ public class EnemyPatrolling : MonoBehaviour
 
         for (int i = 0; i < destinationSet.transform.childCount; i++)
         {
-            destinations.Add(destinationSet.transform.GetChild(i));
+            if (destinationSet.transform.GetChild(i).gameObject.activeSelf)
+                destinations.Add(destinationSet.transform.GetChild(i));
         }
     }
 

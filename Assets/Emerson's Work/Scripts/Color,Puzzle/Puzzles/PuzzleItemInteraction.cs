@@ -63,6 +63,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
             {
                 if (Input.GetKeyUp(KeyCode.E))
                 {
+                    mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, false);
                     timePress = 0;
                     if (interactableFill != null)
                     {
