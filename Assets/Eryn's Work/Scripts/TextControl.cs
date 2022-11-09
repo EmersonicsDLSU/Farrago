@@ -5,20 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.Playables;
 using Cinemachine;
 using TMPro;
+using static System.Net.Mime.MediaTypeNames;
+using static UnityEngine.Rendering.DebugUI.Table;
+using System.Drawing;
+using static UnityEngine.InputManagerEntry;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 
 public class TextControl : MonoBehaviour
 {
-    public TextMesh textHolder;
     public TMP_Text textPro;
 
     public static TextControl _instance;
-
-    public Camera camRef;
-
-    private CinemachineVirtualCamera CVCam;
-    private CinemachineBrain cinemachineBrain;
-
-    private float defaultCharSize = 0.05f;
 
     public int currentLevel = 0;
     public int currentTextLevel = 0;
@@ -139,7 +137,29 @@ public class TextControl : MonoBehaviour
         "I know this hallway",
         "The room I need is just on the other side of this hallway"
     };
-    
+
+    private string[] level5Idle =
+    {
+        "I just need to get to the other side",
+        "The next room is all the way up there",
+        "How do I get up there…"
+    };
+
+    private string[] level6Idle =
+    {
+        "The plants grow under the light…",
+
+        "That rat looks dangerous",
+		"How do I get over there.."
+    };
+
+    private string[] level7Idle =
+    {
+        "It’s coming back to me now",
+		"My old room…",
+		"Maybe I can find out more about this place"
+    };
+
     public static TextControl Instance
     {
         get
@@ -160,52 +180,14 @@ public class TextControl : MonoBehaviour
 
     private void Start()
     {
-        animator = GameObject.Find("TextCanvas").GetComponentInChildren<Animator>();
+        animator = textPro.gameObject.GetComponent<Animator>();
         TimelineLevel = GameObject.Find("TimeLines").GetComponent<TimelineLevel>();
         levelMonologue = new Queue<string>();
-        cinemachineBrain = camRef.GetComponent<CinemachineBrain>();
     }
 
     void Update()
-    {
-        try
-        {
-            CVCam = (CinemachineVirtualCamera)this.cinemachineBrain.ActiveVirtualCamera;
-            if (CVCam.GetCinemachineComponent<CinemachineFramingTransposer>() != null)
-            {
-                textHolder.gameObject.SetActive(true);
-                textHolder.GetComponentInParent<Transform>().rotation = CVCam.transform.rotation;
-                var test1 = CVCam.GetCinemachineComponent<CinemachineFramingTransposer>();
-                var test2 = CVCam.m_Lens;
-                textHolder.characterSize = defaultCharSize * (test1.m_CameraDistance / 5.0f) * (test2.FieldOfView / 60) * 0.75f;
-            }
-            else if (CVCam.GetCinemachineComponent<CinemachineComposer>() != null)
-            {
-                textHolder.gameObject.SetActive(true);
-                var test1 = CVCam.GetCinemachineComponent<CinemachineComposer>();
-                textHolder.GetComponentInParent<Transform>().rotation = CVCam.transform.rotation; 
-                textHolder.characterSize = defaultCharSize * (this.transform.position.x - CVCam.transform.position.x) * 0.3f;
-            }
-            else
-            {
-                textHolder.gameObject.SetActive(false);
-                textHolder.characterSize = defaultCharSize;
-            }
-            
-        }
-        catch
-        {
-            //Debug.LogError($"Error In: {this.transform.name}");
-        }
-        
-        /*
-        CVCam = (CinemachineVirtualCamera)this.cinemachineBrain.ActiveVirtualCamera;
-        var test1 = CVCam.GetCinemachineComponent<CinemachineFramingTransposer>();
-        var test2 = CVCam.m_Lens;
-        //Debug.LogError($"LIVE VCAM Distance: {test1.m_CameraDistance}");
-        textHolder.characterSize = defaultCharSize * (test1.m_CameraDistance / 5.0f) * (test2.FieldOfView / 60) * 0.75f;
-        */
-        
+    {   
+        //For firing level texts
         if (levelMonologue.Count != 0 && !TimelineLevel.isTimelinePlayed)
         {
             textFireDelay += Time.deltaTime;
@@ -216,6 +198,7 @@ public class TextControl : MonoBehaviour
             }
         }
 
+        //For Idle Text
         else
         {
             idleTime += Time.deltaTime;
@@ -263,6 +246,12 @@ public class TextControl : MonoBehaviour
             setText(level3Idle[Random.Range(0, level3Idle.Length - 1)]);
         else if (currentTextLevel == 4)
             setText(level4Idle[Random.Range(0, level4Idle.Length - 1)]);
+        else if (currentTextLevel == 5)
+            setText(level5Idle[Random.Range(0, level5Idle.Length - 1)]);
+        else if (currentTextLevel == 6)
+            setText(level6Idle[Random.Range(0, level6Idle.Length - 1)]);
+        else if (currentTextLevel == 7)
+            setText(level7Idle[Random.Range(0, level7Idle.Length - 1)]);
 
         idleTime = 0;
 
@@ -271,7 +260,7 @@ public class TextControl : MonoBehaviour
 
     public void setText(string text)
     {
-        textHolder.text = text;
+        textPro.text = "Angela: " + text;
 
         fireText();
     }
