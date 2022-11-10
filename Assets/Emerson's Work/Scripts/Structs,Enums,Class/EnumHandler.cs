@@ -131,6 +131,7 @@ public enum CutSceneTypes
     Level5PlantGrow,
     Level6Transition,
     Level6Dead,
+    Level6Dead2,
     Level7RatSwarm,
     Level7DoorClose,
     Level8ScareRat
