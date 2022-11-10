@@ -381,8 +381,8 @@ public class PlayerMovement : MonoBehaviour
         */
         
         // Evaluates the translation value from the customized method
-        CustomizedGetAxis(local_keybind.left, local_keybind.right, ref movementX);
-        CustomizedGetAxis(local_keybind.back, local_keybind.fwd, ref movementY);
+        CustomizedGetAxis(local_keybind.back, local_keybind.fwd, ref movementX);
+        CustomizedGetAxis(local_keybind.right, local_keybind.left, ref movementY);
 
         // translates the player
         Vector3 move = transform.right * movementX + transform.forward * movementY;
