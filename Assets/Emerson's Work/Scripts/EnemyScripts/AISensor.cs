@@ -194,7 +194,7 @@ public class AISensor : MonoBehaviour
         mesh = CreatWedgeMesh();
     }
 
-    
+    /*
     private void OnDrawGizmos()
     {
         if(mesh)
@@ -220,5 +220,5 @@ public class AISensor : MonoBehaviour
             Gizmos.DrawSphere(obj.transform.position, 0.2f);
         }
     }
-    
+    */
 }
