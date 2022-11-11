@@ -134,7 +134,8 @@ public enum CutSceneTypes
     Level6Dead2,
     Level7RatSwarm,
     Level7DoorClose,
-    Level8ScareRat
+    Level8ScareRat,
+    Level8CheckRat
 }
 //
 public enum RatSpawnerArea

@@ -73,11 +73,30 @@ public class R6_DeskLamp : PuzzleItemInteraction
         D_Item -= Event1;
     }
 
+    [SerializeField] private RatSpawner ratSpawner;
+    [SerializeField] private GameObject destinationSet;
+    [SerializeField] private GameObject[] deActivateDestinations;
+    [SerializeField] private GameObject[] ActivateDestinations;
+
     private void Event1(C_Item e)
     {
         // Check if color is correct
         if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
         {
+            // remove some rats destination points
+            foreach (var pos in deActivateDestinations)
+            {
+                pos.SetActive(false);
+            }
+            foreach (var pos in ActivateDestinations)
+            {
+                pos.SetActive(true);
+            }
+            foreach (var rat in ratSpawner.enemyPool.usedObjects)
+            {
+                rat.GetComponentInChildren<EnemyPatrolling>().assignDestinations(destinationSet);
+            }
+
             // disables the interactable UI
             interactableParent.SetActive(false);
             isActive = false;
@@ -92,7 +111,10 @@ public class R6_DeskLamp : PuzzleItemInteraction
             ParticleSystem.GetComponent<Renderer>().materials[1].color = inventory.inventorySlots[0].colorMixer.color;
             subEmitter = ParticleSystem.subEmitters.GetSubEmitterSystem(0).main;
             subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
-                
+            
+            // disable the death timeline trigger
+            timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead2].
+                GetComponent<BoxCollider>().enabled = false;
             // play the vine animation
             assignedVine.GetComponent<Animator>().SetBool("willGrow", true);
             // enable the death timeline trigger

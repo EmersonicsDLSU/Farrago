@@ -33,6 +33,7 @@ public class T_R8_ScareRat : TimelineTrigger
 
     private void Event1(C_Event e)
     {
+        // remove some rats destination points
         foreach (var pos in deActivateDestinations)
         {
             pos.SetActive(false);

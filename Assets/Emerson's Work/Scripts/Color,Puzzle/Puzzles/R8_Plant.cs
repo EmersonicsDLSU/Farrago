@@ -56,7 +56,7 @@ public class R8_Plant : PuzzleItemInteraction
 
             // play the stem growing animation
             GetComponent<Animator>().SetBool("willGrow", true);
-            Invoke("StopGrowAnim", 2.0f);
+            //Invoke("StopGrowAnim", 2.0f);
 
             //TRIGGER CORRECT MONOLOGUE
             Monologues.Instance.triggerPuzzleUITextCorrect();
