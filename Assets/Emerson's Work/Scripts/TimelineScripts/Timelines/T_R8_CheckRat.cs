@@ -31,7 +31,12 @@ public class T_R8_CheckRat : TimelineTrigger
 
     public override void CallEndTimelineEvents()
     {
-        base.CallEndTimelineEvents();
+        // call the delegate of this clue
+        if (D_End != null)
+        {
+            D_End(new C_Event());
+        }
+        timelineLevelSc.ResetCutscene(CutSceneTypes.Level8CheckRat);
     }
     
     public override void OOnTriggerEnter(Collider other)

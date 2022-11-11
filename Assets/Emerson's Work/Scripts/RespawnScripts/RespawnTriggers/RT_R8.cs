@@ -26,8 +26,8 @@ public class RT_R8 : RespawnTrigger
 
     private void Event1(C_Event e)
     {
-
-
+        // open rat spawner
+        ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R8].SetActive(true);
     }
     
     public override void OOnTriggerEnter(Collider other)

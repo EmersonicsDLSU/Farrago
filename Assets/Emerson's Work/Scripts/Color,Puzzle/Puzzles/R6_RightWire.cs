@@ -119,9 +119,9 @@ public class R6_RightWire : PuzzleItemInteraction
         // disables the interactable UI
         interactableParent.SetActive(true);
         isActive = true;
-        canInteract = true;
+        canInteract = false;
         // close the light component from the wire
-        lightToOpen.SetActive(true);
+        lightToOpen.SetActive(false);
         // disable the death timeline trigger
         timelineLevel.timelineTriggerCollection[CutSceneTypes.Level6Dead].
             GetComponent<BoxCollider>().enabled = false;

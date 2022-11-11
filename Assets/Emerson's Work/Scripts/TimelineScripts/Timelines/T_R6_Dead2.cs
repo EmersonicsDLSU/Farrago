@@ -62,6 +62,7 @@ public class T_R6_Dead2 : TimelineTrigger
     public override void OOnTriggerExit(Collider other)
     {
         base.OOnTriggerExit(other);
+        timelineLevelSc.ResetCutscene(CutSceneTypes.Level6Dead2);
     }
     public override void OOnResetScene()
     {
