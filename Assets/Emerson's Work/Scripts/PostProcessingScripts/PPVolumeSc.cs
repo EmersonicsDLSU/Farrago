@@ -39,7 +39,7 @@ public class PPVolumeSc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        VignetteEffect();
+        //VignetteEffect();
         if (IsDeathEffect)
             DeathVignetteEffect();
     }
