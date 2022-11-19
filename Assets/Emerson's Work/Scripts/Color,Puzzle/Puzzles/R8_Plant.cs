@@ -7,6 +7,7 @@ public class R8_Plant : PuzzleItemInteraction
     private Inventory inventory;
     private Component[] materialComponents;
     private bool isPlantActivated = false;
+    [SerializeField] Light deskLampLight2;
 
     public override void OAwake()
     {
@@ -47,7 +48,7 @@ public class R8_Plant : PuzzleItemInteraction
             }
             isPlantActivated = true;
         }
-        else if(inventory.inventorySlots[0].colorMixer.color_code == ColorCode.BLUE && isPlantActivated)
+        else if(inventory.inventorySlots[0].colorMixer.color_code == ColorCode.BLUE && isPlantActivated && deskLampLight2.isActiveAndEnabled)
         {
             // disables the interactable UI
             interactableParent.SetActive(false);

@@ -10,6 +10,7 @@ public class TooltipHolder : MonoBehaviour
     private GameObject tooltipHelp;
     private bool isMoveTutDone;
     private bool isJumpTutDone;
+    private bool isCrouchTutDone = false;
     [SerializeField] private bool isObjectiveTutDone;
     private Journal playerJournal;
     public bool isObjectivesAvailable;
@@ -74,6 +75,17 @@ public class TooltipHolder : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isMoveTutDone == true && isJumpTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level1Intro)
         {
             isJumpTutDone = true;
+
+            unTriggerTooltipHelp();
+
+            tooltipHelp.GetComponent<Text>().text = "press CTRL to crouch";
+            triggerTooltipHelp();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.LeftControl) && isMoveTutDone == true && isJumpTutDone == true && isCrouchTutDone == false && !TimelineLevel.isTimelinePlayed && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level1Intro)
+        {
+            isCrouchTutDone = true;
 
             unTriggerTooltipHelp();
         }
