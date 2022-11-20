@@ -29,7 +29,7 @@ public class T_R3_Intro : TimelineTrigger
 
 
     }
-    
+
     public override void OOnTriggerEnter(Collider other)
     {
         base.OOnTriggerEnter(other);

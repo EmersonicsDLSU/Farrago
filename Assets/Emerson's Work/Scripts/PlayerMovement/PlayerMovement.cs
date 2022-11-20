@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     private KeybindReceiver local_keybind;
 
     [SerializeField]private Transform modelTransform;
+    private Dictionary<Movement_Angle, List<KeyCode>> inputOrder;
+    [HideInInspector] public Movement_Angle movement_angle;
 
     private MainPlayerSc MPsc;
     private void Awake()
@@ -62,7 +64,28 @@ public class PlayerMovement : MonoBehaviour
             local_keybind = FindObjectOfType<KeybindReceiver>();
         }
 
+        InitializeMovementOrder();
+        movement_angle = Movement_Angle.DEG_270;
         InitializeDelegates();
+    }
+
+    private void InitializeMovementOrder()
+    {
+        /*
+         * 
+        CustomizedGetAxis(local_keybind.left, local_keybind.right, ref movementX);
+        CustomizedGetAxis(local_keybind.back, local_keybind.fwd, ref movementY);
+         */
+        // Movement Axis [-X, +X, -Z, +Z]
+        inputOrder = new Dictionary<Movement_Angle, List<KeyCode>>();
+        inputOrder.Add(Movement_Angle.DEG_270, 
+            new List<KeyCode>(){local_keybind.left, local_keybind.right, local_keybind.back, local_keybind.fwd});
+        inputOrder.Add(Movement_Angle.DEG_180, 
+            new List<KeyCode>(){local_keybind.back, local_keybind.fwd, local_keybind.right, local_keybind.left});
+        inputOrder.Add(Movement_Angle.DEG_90, 
+            new List<KeyCode>(){local_keybind.right, local_keybind.left, local_keybind.fwd, local_keybind.back});
+        inputOrder.Add(Movement_Angle.DEG_0, 
+            new List<KeyCode>(){local_keybind.fwd, local_keybind.back, local_keybind.left, local_keybind.right});
     }
 
     private void InitializeDelegates()
@@ -234,13 +257,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 // Sprint Mechanic KeyEvents
                 // When the player is holding the sprint button; increases the speed of the player
-                if(Input.GetKey(this.local_keybind.run))
+                if(Input.GetKey(local_keybind.run))
                 {
                     _playerProperty.speed = _playerProperty.maxSpeed * 2.0f;
                     _playerProperty.isRun = true;
                     mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
                 }
-                if(!Input.GetKey(this.local_keybind.run))
+                if(!Input.GetKey(local_keybind.run))
                 {
                     _playerProperty.isRun = false;
                     mainPlayer.playerAngelaAnim.IH_RunAnim(ref mainPlayer);
@@ -360,6 +383,7 @@ public class PlayerMovement : MonoBehaviour
             
         }
     }
+    
     // Method that handles the translation movement of the MainCharacter
     private void CalculateHorizontalMovement(ref MainPlayerSc mainPlayer)
     {
@@ -379,10 +403,11 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log($"MOVE X: {movementX}");
         */
-        
+
+        List<KeyCode> order = inputOrder[movement_angle];
         // Evaluates the translation value from the customized method
-        CustomizedGetAxis(local_keybind.left, local_keybind.right, ref movementX);
-        CustomizedGetAxis(local_keybind.back, local_keybind.fwd, ref movementY);
+        CustomizedGetAxis(order[0], order[1], ref movementX);
+        CustomizedGetAxis(order[2], order[3], ref movementY);
 
         // translates the player
         Vector3 move = transform.right * movementX + transform.forward * movementY;

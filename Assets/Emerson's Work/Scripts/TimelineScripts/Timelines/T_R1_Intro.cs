@@ -27,7 +27,6 @@ public class T_R1_Intro : TimelineTrigger
     private void Event1(C_Event e)
     {
 
-
     }
     
     public override void OOnTriggerEnter(Collider other)

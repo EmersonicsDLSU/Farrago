@@ -156,3 +156,13 @@ public enum Enemy_Type
     RAT = 0, 
     SPIDER
 };
+
+//General Identification of the enemies type
+public enum Movement_Angle
+{
+    DEG_270 = 0,
+    DEG_180,
+    DEG_90,
+    DEG_0
+
+};
