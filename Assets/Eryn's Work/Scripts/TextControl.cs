@@ -29,6 +29,8 @@ public class TextControl : MonoBehaviour
     private Animator animator;
     private TimelineLevel TimelineLevel;
 
+    private RespawnPointsHandler respawnHandler_ref;
+
 
     public enum textType
     {
@@ -183,6 +185,7 @@ public class TextControl : MonoBehaviour
         animator = textPro.gameObject.GetComponent<Animator>();
         TimelineLevel = GameObject.Find("TimeLines").GetComponent<TimelineLevel>();
         levelMonologue = new Queue<string>();
+        respawnHandler_ref = GameObject.Find("RespawnTrigger").GetComponent<RespawnPointsHandler>();
     }
 
     void Update()
@@ -260,7 +263,10 @@ public class TextControl : MonoBehaviour
 
     public void setText(string text)
     {
-        textPro.text = "Angela: " + text;
+        if (respawnHandler_ref.CurrentRespawnPoint == RespawnPoints.LEVEL7 || respawnHandler_ref.CurrentRespawnPoint == RespawnPoints.LEVEL8)
+            textPro.text = "Angela: " + text;
+        else
+            textPro.text = "???: " + text;
 
         fireText();
     }
