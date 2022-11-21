@@ -101,7 +101,7 @@ public class TooltipHolder : MonoBehaviour
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level2JournalChecker  && 
             !TimelineLevel.isTimelinePlayed && playerJournal.isJournalObtained == false)
         {
-            tooltipHelp.GetComponent<Text>().text = "find Angela's JOURNAL";
+            tooltipHelp.GetComponent<Text>().text = "find the JOURNAL";
             triggerTooltipHelp();
         }
 
