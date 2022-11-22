@@ -95,6 +95,9 @@ public class R8_Wires_1 : PuzzleItemInteraction
             // set the two objectives as complete
             QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
                 .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1] = true;
+            var temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
+                .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1];
+            Debug.LogError($"Wire Fixed: {temp}");
 
             // Update the objectiveList as well; double update 
             objectivePool.itemPool.ReleaseAllPoolable();

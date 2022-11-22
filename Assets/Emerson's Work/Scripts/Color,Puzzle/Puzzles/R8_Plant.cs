@@ -55,6 +55,9 @@ public class R8_Plant : PuzzleItemInteraction
             isActive = false;
             canInteract = false;
 
+            QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
+                .descriptiveObjectives[DescriptiveQuest.R8_COLOR_PLANT] = true;
+
             // play the stem growing animation
             GetComponent<Animator>().SetBool("willGrow", true);
             //Invoke("StopGrowAnim", 2.0f);

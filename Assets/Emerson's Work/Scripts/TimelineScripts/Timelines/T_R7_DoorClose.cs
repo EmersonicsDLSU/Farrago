@@ -39,6 +39,7 @@ public class T_R7_DoorClose : TimelineTrigger
     
     public override void OOnTriggerEnter(Collider other)
     {
+        ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R7_Swarm].SetActive(false);
         base.OOnTriggerEnter(other);
     }
     public override void OOnTriggerStay(Collider other)
