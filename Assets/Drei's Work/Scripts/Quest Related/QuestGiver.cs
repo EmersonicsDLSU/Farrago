@@ -31,13 +31,19 @@ public class QuestGiver : MonoBehaviour
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r5];
             }
-            /*
-            else if (RespawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL6)
+            
+            else if (respawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL6)
             {
                 temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r6];
-                FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
+                //FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
             }
-            */
+
+            else if (respawnPointsHandler.CurrentRespawnPoint == RespawnPoints.LEVEL8)
+            {
+                temp = QuestCollection.Instance.questDict[QuestDescriptions.color_r8];
+                //FindObjectOfType<HUD_Controller>().objectivesPanel.SetActive(true);
+            }
+
             // edit the 'return' statement if you want to debug a particular room/level
             // e.g. return QuestCollection.Instance.questDict[QuestDescriptions.tutorial_color_r3];
             return temp;
