@@ -39,6 +39,7 @@ public class Inventory : MonoBehaviour
     //DEFAULT ANGELA COLORS
     private Color coatBaseColor;
     private GameObject coat;
+    private Color emissionColor;
 
     private void Start()
     {
@@ -76,7 +77,7 @@ public class Inventory : MonoBehaviour
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
         coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = coatBaseColor;
         mainPlayer.playerLightSc.ConfigurePlayerLight(Color.white);
-        coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
+        //coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
 
 
         timeCheck = 0.0f;
@@ -113,9 +114,9 @@ public class Inventory : MonoBehaviour
         coatColor.materials[6].color = color.color;
 
         //assign emission to coat color
-        Color emissionColor = color.color * Mathf.LinearToGammaSpace(1.4f);
-        coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
-        coatColor.materials[6].EnableKeyword("_EMISSION");
+        //emissionColor = coatColor.materials[6].color;
+        //coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
+        //coatColor.materials[6].EnableKeyword("_EMISSION");
 
        //assign player pt light to current color
        FindObjectOfType<MainPlayerSc>().playerLightSc.ConfigurePlayerLight(color.color);
