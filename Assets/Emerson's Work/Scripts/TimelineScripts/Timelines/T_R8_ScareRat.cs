@@ -90,8 +90,11 @@ public class T_R8_ScareRat : TimelineTrigger
     {
         // if objective is done
         if (QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
-                .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1] == true)
+                .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1] == true && !isCompleted)
+        {
+            isCompleted = true;
             base.OOnTriggerEnter(other);
+        }
     }
     public override void OOnTriggerExit(Collider other)
     {

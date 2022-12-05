@@ -74,6 +74,8 @@ public class TimelineTrigger : MonoBehaviour, IDataPersistence
     
     public virtual void CallStartTimelineEvents()
     {
+        if (sceneType == CutSceneTypes.Level8ScareRat)
+            Debug.Log("Scare Rat Call Events");
         // call the delegate of this clue
         if (D_Start != null)
         {
