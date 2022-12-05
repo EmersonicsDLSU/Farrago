@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class IntroSceneToMM : MonoBehaviour
 {
-    private float wait_time = 10.0f;
+    private float wait_time = 20.0f;
 
 
     // Start is called before the first frame update

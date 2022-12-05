@@ -11,6 +11,12 @@ public class PlayerLight : MonoBehaviour
         foreach(var light in PointLights)
         {
             light.GetComponent<Light>().enabled = isOn;
+
+            //change intensity and range to high to accommodate dark levels
+            light.GetComponent<Light>().range = 10;
+            light.GetComponent<Light>().intensity = 10;
+
+
         }
     }
     public void ConfigurePlayerLight(Color color)

@@ -6,12 +6,15 @@ using UnityEngine;
 public class R3_Key : PuzzleItemInteraction
 {
     private QuestGiver questGiver;
+    // PlayerSFXManager Instance reference - used for absorbed sfx
+    private PlayerSFX_Manager playerSFX;
     public override void OAwake()
     {
         // set the item identification
         Item_Identification = PuzzleItem.R3_KEY;
 
         questGiver = FindObjectOfType<QuestGiver>();
+        playerSFX = PlayerSFX_Manager.Instance;
     }
     // removes the default update
     public override void InheritorsUpdate()
@@ -46,6 +49,9 @@ public class R3_Key : PuzzleItemInteraction
         Debug.LogError($"Key Acquired!!!");
         PuzzleInventory.Instance.AddToInventory(Item_Identification, this.gameObject);
         this.gameObject.SetActive(false);
+
+        playerSFX.findSFXSourceByLabel("ItemObtain").PlayOneShot(playerSFX.findSFXSourceByLabel("ItemObtain").clip);
+
         // call the delegate for the key captured interaction
         D_Item(new C_Item());
     }

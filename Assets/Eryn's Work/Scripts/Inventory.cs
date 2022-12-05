@@ -77,15 +77,14 @@ public class Inventory : MonoBehaviour
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
         coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = coatBaseColor;
         mainPlayer.playerLightSc.ConfigurePlayerLight(Color.white);
-        //coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
+        coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
 
 
         timeCheck = 0.0f;
         cleanseFill.fillAmount = 0.0f;
         canCleanse = false;
         isCleansing = false;
-        // Fire the Cleanse SFX clip
-        playerSFX.findSFXSourceByLabel("Cleanse").PlayOneShot(playerSFX.findSFXSourceByLabel("Cleanse").clip);
+        
 
     }
 
@@ -114,9 +113,9 @@ public class Inventory : MonoBehaviour
         coatColor.materials[6].color = color.color;
 
         //assign emission to coat color
-        //emissionColor = coatColor.materials[6].color;
-        //coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
-        //coatColor.materials[6].EnableKeyword("_EMISSION");
+        emissionColor = coatColor.materials[6].color;
+        coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
+        coatColor.materials[6].EnableKeyword("_EMISSION");
 
        //assign player pt light to current color
        FindObjectOfType<MainPlayerSc>().playerLightSc.ConfigurePlayerLight(color.color);
@@ -150,11 +149,19 @@ public class Inventory : MonoBehaviour
         // If Cleanse Key is Released
         if (Input.GetKeyUp(KeyCode.R) && !mainPlayer.PotionAbsorptionSC.isAbsorbing)
         {
+            // stop the Cleanse SFX clip
+            playerSFX.findSFXSourceByLabel("Cleanse").Stop();
+
             timeCheck = 0.0f;
             cleanseFill.fillAmount = 0.0f;
             isCleansing = false;
             canCleanse = true;
             cleanseUI.SetActive(false);
+        }
+        else if(Input.GetKeyDown(KeyCode.R) && canCleanse && !mainPlayer.PotionAbsorptionSC.isAbsorbing)
+        {
+            // Fire the Cleanse SFX clip
+            playerSFX.findSFXSourceByLabel("Cleanse").Play();
         }
         // Cleanse Key is still on press
         else if (Input.GetKey(KeyCode.R) && canCleanse && !mainPlayer.PotionAbsorptionSC.isAbsorbing)

@@ -90,6 +90,7 @@ public class PotionAbsorption : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.E) && PAClass_obj.interactAgain && !mainPlayer.playerInventory.isCleansing)
             {
                 absorbingGameObject.SetActive(true);
+                playerSFX.findSFXSourceByLabel("Absorb").Play();
             }
             else if (Input.GetKey(KeyCode.E) && PAClass_obj.interactAgain && !mainPlayer.playerInventory.isCleansing)
             {
@@ -106,6 +107,8 @@ public class PotionAbsorption : MonoBehaviour
                 // TODO: TEMPORARY
                 absorbingFillIcon.fillAmount = timePress / 1.0f;
 
+                
+
                 // TODO: REVERT
                 // if UI fill is full
                 //if (interactableFillIcon.fillAmount == 1.0f)
@@ -115,7 +118,6 @@ public class PotionAbsorption : MonoBehaviour
                     ResetProperties(ref mainPlayer, false);
                     // Absorb Animation with Delay
                     GameObject.Find("Inventory").GetComponent<Animator>().SetBool("isAbsorb", true);
-                    playerSFX.findSFXSourceByLabel("Absorb").PlayOneShot(playerSFX.findSFXSourceByLabel("Absorb").clip);
                     Invoke("resetGrowAnim", 0.4f);
 
                     // Checks the Current tag(Color Tag) of this objects
@@ -159,6 +161,7 @@ public class PotionAbsorption : MonoBehaviour
         else
         {
             timePress = 0;
+            playerSFX.findSFXSourceByLabel("Absorb").Stop();
             PAClass_obj.interactAgain = true;
         }
     }

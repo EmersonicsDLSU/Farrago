@@ -40,6 +40,9 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
     private Vector2 imageInitPos;
     private Object_ID object_ID;
 
+    // PlayerSFXManager Instance reference - used for absorbed sfx
+    private PlayerSFX_Manager playerSFX;
+
     private void Awake()
     {
         object_ID = GetComponent<Object_ID>();
@@ -55,6 +58,8 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
         // assign value to fields
         canInteract = false;
         isActive = true;
+
+        playerSFX = PlayerSFX_Manager.Instance;
     }
     
     private void Update()
@@ -90,6 +95,7 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
                     {
                         // call the item's events
                         CallItemEvents(Clue_Identification);
+                        playerSFX.findSFXSourceByLabel("ClueObtain").PlayOneShot(playerSFX.findSFXSourceByLabel("ClueObtain").clip);
 
                         timePress = 0;
                         if (interactableFill != null)
