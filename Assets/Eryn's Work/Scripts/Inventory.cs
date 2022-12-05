@@ -77,7 +77,11 @@ public class Inventory : MonoBehaviour
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
         coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = coatBaseColor;
         mainPlayer.playerLightSc.ConfigurePlayerLight(Color.white);
-        coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
+        //coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
+
+        //turn off player lights
+        if(GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PlayerLight>().isInDarkLevel == false)
+            GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PlayerLight>().ConfigurePlayerLightLessIntense(false);
 
 
         timeCheck = 0.0f;
@@ -108,14 +112,18 @@ public class Inventory : MonoBehaviour
     // Borrows the requested object from the pool and assign the parent to the UI slot
     public void AssignColor(ColorMixer color)
     {
+        //turn on player lights
+        if (GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PlayerLight>().isInDarkLevel == false)
+            GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PlayerLight>().ConfigurePlayerLightLessIntense(true);
+
         // assigns the new color for the mainPlayer's skinMeshRenderer
         var coatColor = GameObject.FindGameObjectWithTag("Player_Coat").GetComponent<SkinnedMeshRenderer>();
         coatColor.materials[6].color = color.color;
 
         //assign emission to coat color
-        emissionColor = coatColor.materials[6].color;
-        coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
-        coatColor.materials[6].EnableKeyword("_EMISSION");
+        //emissionColor = coatColor.materials[6].color;
+        //coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
+        //coatColor.materials[6].EnableKeyword("_EMISSION");
 
        //assign player pt light to current color
        FindObjectOfType<MainPlayerSc>().playerLightSc.ConfigurePlayerLight(color.color);

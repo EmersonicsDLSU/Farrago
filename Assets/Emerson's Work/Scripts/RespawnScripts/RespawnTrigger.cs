@@ -202,6 +202,7 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
         GetComponent<BoxCollider>().enabled = !isCompleted;
         if (data.currentRespawnPoint == (int) RespawnPoints.LEVEL7 || data.currentRespawnPoint == (int) RespawnPoints.LEVEL8)
         {
+            player_mainSc.playerLightSc.ConfigurePlayerLightLessIntense(false);
             player_mainSc.playerLightSc.ConfigurePlayerLight(true);
         }
 

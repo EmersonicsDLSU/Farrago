@@ -29,7 +29,9 @@ public class RT_R7 : RespawnTrigger
 
     private void Event1(C_Event e)
     {
+        player_mainSc.playerLightSc.ConfigurePlayerLightLessIntense(false);
         player_mainSc.playerLightSc.ConfigurePlayerLight(true);
+        player_mainSc.playerLightSc.isInDarkLevel = true;
     }
     private void E_Event1(C_Event e)
     {
