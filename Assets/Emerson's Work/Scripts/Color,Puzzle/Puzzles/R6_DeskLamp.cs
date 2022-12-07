@@ -83,6 +83,12 @@ public class R6_DeskLamp : PuzzleItemInteraction
         // Check if color is correct
         if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
         {
+            // change the rat's sensor distance
+            foreach (var rats in FindObjectsOfType<AISensor>())
+            {
+                rats.distance = 1;
+            }
+
             // remove some rats destination points
             foreach (var pos in deActivateDestinations)
             {

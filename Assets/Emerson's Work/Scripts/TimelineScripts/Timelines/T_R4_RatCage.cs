@@ -33,7 +33,6 @@ public class T_R4_RatCage : TimelineTrigger
 
     private void Event1(C_Event e)
     {
-        StartCoroutine(BGM_Manager.Instance.SwapTrack(BGM_Manager.Instance.getClipByLabel("Chase")));
         ratChaseSpawnerSc.enemyPool.ReleaseAllPoolable();
     }
     private void E_Event1(C_Event e)

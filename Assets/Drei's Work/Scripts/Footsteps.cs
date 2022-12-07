@@ -7,6 +7,7 @@ public class Footsteps : MonoBehaviour
 {
     [SerializeField] private AudioClip stepClip;
     [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip deathClip;
 
     private AudioSource audioSource;
 
@@ -17,6 +18,12 @@ public class Footsteps : MonoBehaviour
     }
 
     private void OnStep()
+    {
+        audioSource.volume = Random.Range(0.8f, 1);
+        audioSource.pitch = Random.Range(0.8f, 1.1f);
+        audioSource.PlayOneShot(stepClip, 2f);
+    }
+    private void OnDeath()
     {
         audioSource.volume = Random.Range(0.8f, 1);
         audioSource.pitch = Random.Range(0.8f, 1.1f);

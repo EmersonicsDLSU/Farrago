@@ -101,7 +101,7 @@ public class EnemyPatrolling : MonoBehaviour
 
         if(!isOnChase)
         {
-            //patroling
+            //patrolling
             //constantly updating the remaining distance
             agent.agentAnimFunc.remainingDistance(ref agent);
             if (this.readyToChange)
