@@ -31,15 +31,17 @@ public class Area_Identifier : MonoBehaviour
         {
             if(area == areaType.LEVEL)
             {
-                AudioClip clip = BGM_Manager.Instance.getClipByLabel("BGMLevel" + level);
-                StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
+                
+                    AudioClip clip = BGM_Manager.Instance.getClipByLabel("BGMLevel" + level);
+                    StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
             }
-            else if(area == areaType.CHASE)
+            else if (area == areaType.CHASE)
             {
+                Debug.LogWarning("Hit chase");
                 AudioClip clip = BGM_Manager.Instance.getClipByLabel("Chase");
                 StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
             }
-            
+
 
             TextControl.Instance.queueLevelText(Texts, level);
             levelClear = true;
@@ -49,11 +51,6 @@ public class Area_Identifier : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (area == areaType.CHASE)
-            {
-                AudioClip clip = BGM_Manager.Instance.getClipByLabel("BGMLevel" + level);
-                StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
-            }
             TextControl.Instance.clearQueue();
         }
     }
