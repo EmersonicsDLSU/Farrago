@@ -200,11 +200,6 @@ public class RespawnTrigger : MonoBehaviour, IDataPersistence
     {
         data.respawnTriggerPassed.TryGetValue((int)respawnPointEnum, out isCompleted);
         GetComponent<BoxCollider>().enabled = !isCompleted;
-        if (data.currentRespawnPoint == (int) RespawnPoints.LEVEL7 || data.currentRespawnPoint == (int) RespawnPoints.LEVEL8)
-        {
-            player_mainSc.playerLightSc.ConfigurePlayerLightLessIntense(false);
-            player_mainSc.playerLightSc.ConfigurePlayerLight(true);
-        }
 
         if (data.currentRespawnPoint == (int) respawnPointEnum)
         {

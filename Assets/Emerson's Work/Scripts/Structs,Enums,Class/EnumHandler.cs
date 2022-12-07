@@ -95,6 +95,7 @@ public enum PuzzleItem
     R3_KEY,
     R3_DOOR,
     R3_BUNSEN_BURNER,
+    R5_FLASHLIGHT,
     R5_WIRES,
     R6_VINE,
     R6_LEFT_WIRE,

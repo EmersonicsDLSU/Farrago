@@ -25,10 +25,7 @@ public class RT_R5 : RespawnTrigger
     }
 
     private void Event1(C_Event e)
-    {
-        player_mainSc.playerLightSc.ConfigurePlayerLightLessIntense(false);
-        player_mainSc.playerLightSc.ConfigurePlayerLight(true);
-        player_mainSc.playerLightSc.isInDarkLevel = true;
+    {   
         // open rat spawner
         ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R4_Chase].SetActive(false);
         ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R4_0].SetActive(false);

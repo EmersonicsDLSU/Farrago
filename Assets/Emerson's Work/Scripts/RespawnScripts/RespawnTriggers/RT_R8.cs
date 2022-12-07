@@ -28,10 +28,7 @@ public class RT_R8 : RespawnTrigger
     {
         // open rat spawner
         ratSpawnerCollection.spawnerCollection[RatSpawnerArea.R8].SetActive(true);
-
-        player_mainSc.playerLightSc.ConfigurePlayerLightLessIntense(false);
-        player_mainSc.playerLightSc.ConfigurePlayerLight(true);
-        player_mainSc.playerLightSc.isInDarkLevel = true;
+        
     }
     
     public override void OOnTriggerEnter(Collider other)
