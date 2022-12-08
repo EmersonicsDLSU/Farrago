@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class R5_Flashlight : PuzzleItemInteraction
 {
     private Object_ID object_ID;
+    [SerializeField] private ParticleSystem itemParticles;
 
     public override void OAwake()
     {
@@ -48,7 +49,7 @@ public class R5_Flashlight : PuzzleItemInteraction
         // texts are now added after acquiring the journal
         //TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
         //TextControl.Instance.delayReset();
-
+        itemParticles.Stop();
         this.gameObject.SetActive(false);
 
         // CALL THE END EVENTS FOR JournalChecker cutscene 

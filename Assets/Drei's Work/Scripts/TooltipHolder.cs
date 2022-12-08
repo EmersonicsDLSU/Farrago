@@ -11,12 +11,13 @@ public class TooltipHolder : MonoBehaviour
     private bool isMoveTutDone;
     private bool isJumpTutDone;
     private bool isCrouchTutDone = false;
-    [SerializeField] private bool isObjectiveTutDone;
+    private bool isObjectiveTutDone;
     private Journal playerJournal;
     public bool isObjectivesAvailable;
     public bool isJournalTutDone = false;
     private bool isCleanseTutDone;
     private bool isRunTutDone;
+    [SerializeField] private bool isFlashlightTutDone = false;
     private Color playerCurrentColor;
     float cleanseTicks = 0.0f;
     private float runTicks = 0.0f;
@@ -156,6 +157,18 @@ public class TooltipHolder : MonoBehaviour
                 isRunTutDone = true;
                 unTriggerTooltipHelp();
             }
+        }
+
+        //ROOM 4 FLASHLIGHT OBTAIN TOOLTIP
+        if (FindObjectOfType<PlayerLight>().isFlashlightObtained == true && isFlashlightTutDone == false)
+        {
+            tooltipHelp.GetComponent<Text>().text = "press F to turn on FLASHLIGHT";
+            triggerTooltipHelp();
+        }
+        if(Input.GetKeyDown(KeyCode.F) && isFlashlightTutDone == false)
+        {
+            isFlashlightTutDone = true;
+            unTriggerTooltipHelp();
         }
     }
 

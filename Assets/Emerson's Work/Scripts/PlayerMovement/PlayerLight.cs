@@ -14,8 +14,16 @@ public class PlayerLight : MonoBehaviour
         if (isFlashlightObtained && Input.GetKeyDown(KeyCode.F))
         {
             isFlashlightOn = !isFlashlightOn;
-            if (isFlashlightOn) flashlight.SetActive(true);
+            if (isFlashlightOn)
+            {
+                flashlight.SetActive(true);
+            } 
             else flashlight.SetActive(false);
         }
+    }
+
+    public void ConfigureFlashlightColor(Color color)
+    {
+        flashlight.GetComponent<Light>().color = color;
     }
 }

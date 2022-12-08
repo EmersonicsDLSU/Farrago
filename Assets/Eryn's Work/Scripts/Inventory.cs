@@ -76,6 +76,7 @@ public class Inventory : MonoBehaviour
         // Reset Color Slots properties
         coat = GameObject.FindGameObjectWithTag("Player_Coat");
         coat.GetComponent<SkinnedMeshRenderer>().materials[6].color = coatBaseColor;
+        FindObjectOfType<MainPlayerSc>().playerLightSc.ConfigureFlashlightColor(Color.white);
         //coat.GetComponent<SkinnedMeshRenderer>().materials[6].DisableKeyword("_EMISSION");
 
         timeCheck = 0.0f;
@@ -116,7 +117,7 @@ public class Inventory : MonoBehaviour
         //coatColor.materials[6].SetColor("_EmissionColor", emissionColor);
         //coatColor.materials[6].EnableKeyword("_EMISSION");
 
-
+        FindObjectOfType<MainPlayerSc>().playerLightSc.ConfigureFlashlightColor(color.color);
 
         // Release color UI ICON pool
         this.inventoryPoolSc.itemPool.ReleasePoolable(inventorySlots[0].colorItem);
