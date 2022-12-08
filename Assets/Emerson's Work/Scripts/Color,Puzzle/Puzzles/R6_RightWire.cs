@@ -164,4 +164,10 @@ public class R6_RightWire : PuzzleItemInteraction
             assignedVine.GetComponent<Animator>().SetBool("isRightOn", true);
         }
     }
+
+    public override void OSaveData(GameData data)
+    {
+
+    }
+    
 }

@@ -142,12 +142,6 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
     // Save system
     public void SaveData(GameData data)
     {
-        if (data.objectivesDone.ContainsKey((int)Item_Identification))
-        {
-            data.objectivesDone.Remove((int)Item_Identification);
-        }
-        data.objectivesDone.Add((int)Item_Identification, isActive);
-
         OSaveData(data);
     }
 
@@ -218,7 +212,11 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
     // overridable function for save method
     public virtual void OSaveData(GameData data)
     {
-
+        if (data.objectivesDone.ContainsKey((int)Item_Identification))
+        {
+            data.objectivesDone.Remove((int)Item_Identification);
+        }
+        data.objectivesDone.Add((int)Item_Identification, isActive);
     }
     
 }
