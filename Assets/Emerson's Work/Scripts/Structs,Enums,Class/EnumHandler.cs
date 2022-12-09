@@ -118,6 +118,8 @@ public enum E_ClueInteraction
     R5_POTPLANT,
     R5_LIGHTPLANT,
     R6_PLANT,
+    R7_NAME,
+    R7_GROUP,
 }
 
 //
