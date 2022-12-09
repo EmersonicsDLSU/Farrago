@@ -137,7 +137,7 @@ public class TooltipHolder : MonoBehaviour
         }
 
         //ROOM 4 CHASE RUN TUTORIAL
-        if (TimelineLevel.currentSceneType == CutSceneTypes.Level4RatCage &&
+        if (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level4RatCage &&
             !TimelineLevel.isTimelinePlayed && isRunTutDone == false)
         {
             tooltipHelp.GetComponent<Text>().text = "hold LSHIFT + W/A/S/D to RUN";
@@ -145,18 +145,10 @@ public class TooltipHolder : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) && 
-            isRunTutDone == false && TimelineLevel.currentSceneType == CutSceneTypes.Level4RatCage && !TimelineLevel.isTimelinePlayed)
+            isRunTutDone == false && TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level4RatCage && !TimelineLevel.isTimelinePlayed)
         {
-            runTicks += Time.deltaTime;
-
-            Debug.LogWarning(runTicks);
-
-            if (runTicks >= 1.0f)
-            {
-                runTicks = 0.0f;
-                isRunTutDone = true;
-                unTriggerTooltipHelp();
-            }
+            isRunTutDone = true;
+            unTriggerTooltipHelp();
         }
 
         //ROOM 4 FLASHLIGHT OBTAIN TOOLTIP
