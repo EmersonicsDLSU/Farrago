@@ -45,6 +45,7 @@ public class R5_Flashlight : PuzzleItemInteraction
 
         // flashlight is obtained
         FindObjectOfType<PlayerLight>().isFlashlightObtained = true;
+        FindObjectOfType<PlayerLight>().flashlight.SetActive(true);
         
         // Play sound
         PlayerSFX_Manager.Instance.findSFXSourceByLabel("ItemObtain").
