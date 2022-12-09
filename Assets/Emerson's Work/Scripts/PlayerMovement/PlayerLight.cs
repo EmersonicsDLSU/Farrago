@@ -33,6 +33,9 @@ public class PlayerLight : MonoBehaviour
         {
             lightComp.color = color;
         }
-        
+        foreach (var lightComp in light.GetComponentsInChildren<Light>())
+        {
+            lightComp.color = color;
+        }
     }
 }

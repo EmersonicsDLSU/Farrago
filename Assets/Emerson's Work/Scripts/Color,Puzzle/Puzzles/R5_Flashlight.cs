@@ -10,6 +10,7 @@ public class R5_Flashlight : PuzzleItemInteraction
 {
     private Object_ID object_ID;
     [SerializeField] private ParticleSystem itemParticles;
+    public GameObject itemBlocker;
 
     public override void OAwake()
     {
@@ -38,6 +39,8 @@ public class R5_Flashlight : PuzzleItemInteraction
     {
         Debug.LogError($"Flashlight Is Obtained");
 
+        itemBlocker.SetActive(false);
+        
         // disables the interactable UI
         interactableParent.SetActive(false);
         isActive = false;
