@@ -45,6 +45,10 @@ public class R5_Flashlight : PuzzleItemInteraction
 
         // flashlight is obtained
         FindObjectOfType<PlayerLight>().isFlashlightObtained = true;
+        
+        // Play sound
+        PlayerSFX_Manager.Instance.findSFXSourceByLabel("ItemObtain").
+            PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("ItemObtain").clip);
 
         // texts are now added after acquiring the journal
         //TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);

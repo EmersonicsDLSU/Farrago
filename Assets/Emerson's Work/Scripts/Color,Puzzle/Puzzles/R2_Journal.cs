@@ -62,6 +62,10 @@ public class R2_Journal : PuzzleItemInteraction
         TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
         TextControl.Instance.delayReset();
             
+        // Play sound
+        PlayerSFX_Manager.Instance.findSFXSourceByLabel("ItemObtain").
+            PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("ItemObtain").clip);
+
         // display UI of journal
         journalHUDText.SetActive(true);
             

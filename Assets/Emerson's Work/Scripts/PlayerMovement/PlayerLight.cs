@@ -19,6 +19,10 @@ public class PlayerLight : MonoBehaviour
                 flashlight.SetActive(true);
             } 
             else flashlight.SetActive(false);
+            
+            // Play sound
+            PlayerSFX_Manager.Instance.findSFXSourceByLabel("FlashLight").
+                PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("FlashLight").clip);
         }
     }
 
