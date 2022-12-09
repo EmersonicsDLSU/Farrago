@@ -77,6 +77,10 @@ public class R6_RightWire : PuzzleItemInteraction
         // Check if color is correct and if the left wire is turned on
         if (inventory.inventorySlots[0].colorMixer.color_code == ColorCode.YELLOW)
         {
+            // Play sound
+            PlayerSFX_Manager.Instance.findSFXSourceByLabel("FixWire").
+                PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("FixWire").clip); 
+
             // disables the interactable UI
             interactableParent.SetActive(false);
             isActive = false;

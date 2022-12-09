@@ -61,6 +61,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-3109981948491452775
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: e1a7fafc6d62bb741a5d0f95fef42f71
+  m_EffectName: Attenuation
+  m_MixLevel: cb78d8caccaaf4c4c81f530e97cb2f87
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-2163809844500682079
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -100,6 +114,7 @@ AudioMixerController:
     - 1d4238f043593d34e8bb4900d74a8b80
     - 76504670354f7bf4f8e0933633ba6d0d
     - cf2cc9e3ebedae4479ca3da04351c3af
+    - c253d7601cccd664fa3f6390fdc12c49
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -119,6 +134,7 @@ AudioMixerGroupController:
   - {fileID: 7005062765730780238}
   - {fileID: 4026103134694828047}
   - {fileID: 7209848093415020225}
+  - {fileID: 1909431668278988696}
   m_Volume: 6f230387021ae4349acae420962e235d
   m_Pitch: af9955d4d6653b4468be8165e7236235
   m_Send: 00000000000000000000000000000000
@@ -159,6 +175,25 @@ AudioMixerSnapshotController:
     da587df73673666479e04058e8d9c947: 14.9016905
     39e3297e182cdae47b9ccbc8d26af61d: -9.833286
   m_TransitionOverrides: {}
+--- !u!243 &1909431668278988696
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WireSFX
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: c253d7601cccd664fa3f6390fdc12c49
+  m_Children: []
+  m_Volume: 9c047e4704f07d14c9f4fb7394406d71
+  m_Pitch: 848db208c3cb3ad43a36bf04584ae41d
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -3109981948491452775}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &3765676061095229426
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
