@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerLight : MonoBehaviour
 {
-    [SerializeField] private GameObject flashlight;
+    public GameObject flashlight;
+    [SerializeField] private GameObject light;
     [HideInInspector]
     public bool isFlashlightObtained = false;
     private bool isFlashlightOn = false;
@@ -16,9 +17,9 @@ public class PlayerLight : MonoBehaviour
             isFlashlightOn = !isFlashlightOn;
             if (isFlashlightOn)
             {
-                flashlight.SetActive(true);
+                light.SetActive(true);
             } 
-            else flashlight.SetActive(false);
+            else light.SetActive(false);
             
             // Play sound
             PlayerSFX_Manager.Instance.findSFXSourceByLabel("FlashLight").
@@ -28,6 +29,10 @@ public class PlayerLight : MonoBehaviour
 
     public void ConfigureFlashlightColor(Color color)
     {
-        flashlight.GetComponent<Light>().color = color;
+        foreach (var lightComp in light.GetComponents<Light>())
+        {
+            lightComp.color = color;
+        }
+        
     }
 }
