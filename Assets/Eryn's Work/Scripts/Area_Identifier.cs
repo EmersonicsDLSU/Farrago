@@ -5,7 +5,8 @@ using UnityEngine.Audio;
 public enum areaType
 {
     LEVEL = 0,
-    CHASE
+    CHASE,
+    SWARM,
 };
 
 public class Area_Identifier : MonoBehaviour
@@ -41,7 +42,12 @@ public class Area_Identifier : MonoBehaviour
                 AudioClip clip = BGM_Manager.Instance.getClipByLabel("Chase");
                 StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
             }
-
+            else if (area == areaType.SWARM)
+            {
+                Debug.LogWarning("Hit swarm");
+                AudioClip clip = BGM_Manager.Instance.getClipByLabel("Swarm");
+                StartCoroutine(BGM_Manager.Instance.SwapTrack(clip));
+            }
 
             TextControl.Instance.queueLevelText(Texts, level);
             levelClear = true;

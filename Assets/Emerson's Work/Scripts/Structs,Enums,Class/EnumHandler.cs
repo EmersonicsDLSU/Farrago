@@ -75,7 +75,8 @@ public enum RespawnPoints
     LEVEL5,
     LEVEL6,
     LEVEL7,
-    LEVEL8
+    LEVEL8,
+    LEVEL9,
 };
 
 //General Identification of the pool type
@@ -141,6 +142,8 @@ public enum CutSceneTypes
     Level8CheckRat,
     Level8Ending,
     Level9Identity,
+    Level9Grow,
+    Level9Ending
 }
 //
 public enum RatSpawnerArea

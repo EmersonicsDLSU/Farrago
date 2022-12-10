@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -144,6 +145,10 @@ public class PotionAbsorption : MonoBehaviour
                             Debug.LogError($"Color is Blue!!!");
                             AssignColor(ref PAClass_obj, new ColorMixer
                                 (color_Code_To_UColor[ColorCode.BLUE], ColorCode.BLUE));
+                            break;
+
+                        case "CURE POTION":
+                            GameObject.Find("TooltipHolder").GetComponent<TooltipHolder>().isCureFound = true;
                             break;
                     }
                     // call Monologue Text methods 

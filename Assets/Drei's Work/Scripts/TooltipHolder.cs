@@ -17,6 +17,7 @@ public class TooltipHolder : MonoBehaviour
     public bool isJournalTutDone = false;
     private bool isCleanseTutDone;
     private bool isRunTutDone;
+    [HideInInspector] public bool isCureFound = false;
     [SerializeField] private bool isFlashlightTutDone = false;
     private Color playerCurrentColor;
     float cleanseTicks = 0.0f;
@@ -160,6 +161,18 @@ public class TooltipHolder : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F) && isFlashlightTutDone == false)
         {
             isFlashlightTutDone = true;
+            unTriggerTooltipHelp();
+        }
+
+        //ROOM 9 CURE TOOLTIP
+        if (TimelineLevel.lastPlayedSceneType == CutSceneTypes.Level9Identity &&
+            !TimelineLevel.isTimelinePlayed)
+        {
+            tooltipHelp.GetComponent<Text>().text = "find the CURE POTION";
+            triggerTooltipHelp();
+        }
+        if (isCureFound)
+        {
             unTriggerTooltipHelp();
         }
     }
