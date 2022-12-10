@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class T_R7_DoorClose : TimelineTrigger
 {
+    public GameObject door;
     public override void OAwake()
     {
 
@@ -56,7 +57,17 @@ public class T_R7_DoorClose : TimelineTrigger
     }
     public override void OLoadData(GameData data)
     {
-        base.OLoadData(data);
+        data.cutsceneTriggerPassed.TryGetValue((int)sceneType, out isCompleted);
+        if (isCompleted)
+        {
+            GetComponent<BoxCollider>().enabled = false;
+            door.transform.Rotate(0, 90, 0);
+        }
+        else
+        {
+            GetComponent<BoxCollider>().enabled = true;
+        }
+
     }
     
     public override void OSaveData(GameData data)

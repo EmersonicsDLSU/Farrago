@@ -140,17 +140,15 @@ public class R8_Wires_1 : PuzzleItemInteraction
         subEmitter.startColor = inventory.inventorySlots[0].colorMixer.color;
 
         // enable the timeline trigger for plant growing cut-scene
-        timelineLevel.timelineTriggerCollection[CutSceneTypes.Level5PlantGrow].
+        timelineLevel.timelineTriggerCollection[CutSceneTypes.Level8ScareRat].
             GetComponent<BoxCollider>().enabled = true;
         // open the light component from the lampLight
        lampLight.GetComponent<Light>().enabled = true;
 
         /* Start of Objective Completion / Setting strikethrough to the text's fontStyle*/
         // set the two objectives as complete
-        QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
-            .descriptiveObjectives[DescriptiveQuest.R5_REPAIR_WIRE] = true;
-        QuestCollection.Instance.questDict[QuestDescriptions.color_r5]
-            .descriptiveObjectives[DescriptiveQuest.R5_ON_LIGHT] = true;
+        QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
+            .descriptiveObjectives[DescriptiveQuest.R8_REPAIR_WIRE1] = true;
 
         // Update the objectiveList as well; double update 
         objectivePool.itemPool.ReleaseAllPoolable();
