@@ -34,7 +34,7 @@ public class T_R9_Start : TimelineTrigger
     }
     private void E_Event1(C_Event e)
     {
-        FindObjectOfType<R9_CurePotion>().EnableInterActable();
+        //FindObjectOfType<R9_CurePotion>().EnableInterActable();
     }
     
     public override void CallEndTimelineEvents()

@@ -142,7 +142,7 @@ public class PotionAbsorption : MonoBehaviour
                             break;
 
                         case "BLUE POTION":
-                            Debug.LogError($"Color is Blue!!!");
+                            //Debug.LogError($"Color is Blue!!!");
                             AssignColor(ref PAClass_obj, new ColorMixer
                                 (color_Code_To_UColor[ColorCode.BLUE], ColorCode.BLUE));
                             break;

@@ -57,7 +57,7 @@ public class R8_Plant : PuzzleItemInteraction
 
             QuestCollection.Instance.questDict[QuestDescriptions.color_r8]
                 .descriptiveObjectives[DescriptiveQuest.R8_COLOR_PLANT] = true;
-            Debug.LogError("R8 PUZZLE PLANT FINISHED!");
+            //Debug.LogError("R8 PUZZLE PLANT FINISHED!");
 
             // play the stem growing animation
             GetComponent<Animator>().SetBool("willGrow", true);

@@ -46,7 +46,7 @@ public class R3_Key : PuzzleItemInteraction
 
     public override void OOnTriggerEnter(Collider other)
     {
-        Debug.LogError($"Key Acquired!!!");
+        //Debug.LogError($"Key Acquired!!!");
         PuzzleInventory.Instance.AddToInventory(Item_Identification, this.gameObject);
         this.gameObject.SetActive(false);
 
@@ -61,7 +61,7 @@ public class R3_Key : PuzzleItemInteraction
         // call the delegate for the key captured interaction
         D_Item(new C_Item());
 
-        Debug.LogError($"Key Acquired!!!");
+        //Debug.LogError($"Key Acquired!!!");
         PuzzleInventory.Instance.AddToInventory(Item_Identification, this.gameObject);
         this.gameObject.SetActive(false);
     }

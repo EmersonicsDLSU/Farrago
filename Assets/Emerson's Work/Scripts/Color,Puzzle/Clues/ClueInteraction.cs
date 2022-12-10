@@ -255,7 +255,7 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
         // adds the journal to the journalEntries(List)
         if (Clue_Identification != E_ClueInteraction.R2_INSTRUCTION1 && Clue_Identification != E_ClueInteraction.R2_INSTRUCTION2)
         {
-            Debug.LogError($"Load: {Clue_Identification}");
+            //Debug.LogError($"Load: {Clue_Identification}");
             Journal.Instance.journalImages.Add(new JournalImage(Clue_Identification, clueImage));
         }
 

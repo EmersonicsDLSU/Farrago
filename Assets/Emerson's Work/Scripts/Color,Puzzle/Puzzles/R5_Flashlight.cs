@@ -37,7 +37,7 @@ public class R5_Flashlight : PuzzleItemInteraction
 
     private void Event1(C_Item e)
     {
-        Debug.LogError($"Flashlight Is Obtained");
+        //Debug.LogError($"Flashlight Is Obtained");
 
         itemBlocker.SetActive(false);
         

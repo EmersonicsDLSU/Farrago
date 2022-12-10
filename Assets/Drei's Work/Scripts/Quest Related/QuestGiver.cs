@@ -59,7 +59,7 @@ public class QuestGiver : MonoBehaviour
         if (respawnPointsHandler == null)
         {
             if (FindObjectOfType<RespawnPointsHandler>() != null) respawnPointsHandler = FindObjectOfType<RespawnPointsHandler>();
-            else Debug.LogError($"Missing \"RespawnPointsHandler script\" in {this.gameObject.name}");
+            //else Debug.LogError($"Missing \"RespawnPointsHandler script\" in {this.gameObject.name}");
         }
 
         playerPuzzleInv = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<PuzzleInventory>();
@@ -78,7 +78,7 @@ public class QuestGiver : MonoBehaviour
     {
         if (currentQuest == null)
         {
-            Debug.LogError($"Current Quest is currently empty!");
+            //Debug.LogError($"Current Quest is currently empty!");
             return;
         }
         // get the order list of the completed objectives
