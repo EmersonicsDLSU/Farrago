@@ -25,7 +25,7 @@ public class SaveSlot : MonoBehaviour
 
     public void SetData(GameData data) 
     {
-        Debug.LogError($"Setting Data: {data == null}");
+        //Debug.LogError($"Setting Data: {data == null}");
         // there's no data for this profileId
         if (data == null) 
         {

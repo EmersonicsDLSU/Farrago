@@ -118,7 +118,7 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
     }
 
     // Add here the delegate to be called for a specific puzzle
-    protected void CallItemEvents(E_ClueInteraction item)
+    public virtual void CallItemEvents(E_ClueInteraction item)
     {
         // adds the journal to the journalEntries(List)
         //Journal.Instance.journalEntries.Add(Clue_Identification, clueImage);

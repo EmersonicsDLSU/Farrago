@@ -28,7 +28,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.LogError("Start to Awake");
+        //Debug.LogError("Start to Awake");
         playerTrans = this.GetComponent<Transform>(); ;
         playerCharController = this.GetComponentInChildren<CharacterController>();
         playerSkinMesh = this.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -43,7 +43,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         if (timelineLevelSc == null)
         {
             if (FindObjectOfType<TimelineLevel>() != null) timelineLevelSc = FindObjectOfType<TimelineLevel>();
-            else Debug.LogError($"Missing \"TimelineLevel script\" in {this.gameObject.name}");
+            //else Debug.LogError($"Missing \"TimelineLevel script\" in {this.gameObject.name}");
         }
         characterControllerDetection = this.GetComponentInChildren<CharacterControllerDetection>();
         PotionAbsorptionSC = this.GetComponentInChildren<PotionAbsorption>();
@@ -53,7 +53,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
 
     void Start()
     {
-        Debug.LogError("Start to Respawn");
+        //Debug.LogError("Start to Respawn");
     }
 
     // Update is called once per frame
@@ -69,7 +69,7 @@ public class MainPlayerSc : MonoBehaviour, IDataPersistence
         // if first try, then we do not translate the player 
         if (DataPersistenceManager.instance.GetGameData().total_tries != 0)
         {
-            Debug.LogError($"Translate to :{data.respawnPoint}");
+            //Debug.LogError($"Translate to :{data.respawnPoint}");
             playerCharController.enabled = false;
             this.transform.position = data.respawnPoint;
             playerCharController.enabled = true;

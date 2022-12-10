@@ -235,13 +235,13 @@ public class FileDataHandler
             // otherwise, something went wrong and we should throw an exception
             else 
             {
-                throw new Exception("Save file could not be verified and backup could not be created.");
+                //throw new Exception("Save file could not be verified and backup could not be created.");
             }
 
         }
         catch (Exception e) 
         {
-            Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
+            //Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
         }
     }
     public void Delete(string profileId) 
@@ -260,17 +260,17 @@ public class FileDataHandler
             {
                 // delete the profile folder and everything within it
                 Directory.Delete(Path.GetDirectoryName(fullPath), true);
-                Debug.LogError("File is Deleted");
+                //Debug.LogError("File is Deleted");
             }
             else 
             {
-                Debug.LogWarning("Tried to delete profile data, but data was not found at path: " + fullPath);
+                //Debug.LogWarning("Tried to delete profile data, but data was not found at path: " + fullPath);
             }
         }
         catch (Exception e) 
         {
-            Debug.LogError("Failed to delete profile data for profileId: " 
-                + profileId + " at path: " + fullPath + "\n" + e);
+            /*Debug.LogError("Failed to delete profile data for profileId: " 
+                + profileId + " at path: " + fullPath + "\n" + e);*/
         }
     }
 
@@ -289,8 +289,8 @@ public class FileDataHandler
             string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
             if (!File.Exists(fullPath))
             {
-                Debug.LogWarning("Skipping directory when loading all profiles because it does not contain data: "
-                    + profileId);
+                /*Debug.LogWarning("Skipping directory when loading all profiles because it does not contain data: "
+                    + profileId);*/
                 continue;
             }
 

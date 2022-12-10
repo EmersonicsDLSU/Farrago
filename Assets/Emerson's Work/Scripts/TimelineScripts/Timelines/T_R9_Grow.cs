@@ -31,6 +31,7 @@ public class T_R9_Grow : TimelineTrigger
     [SerializeField] private GameObject destinationSet;
     [SerializeField] private GameObject[] deActivateDestinations;
     [SerializeField] private GameObject[] ActivateDestinations;
+    
 
     private void Event1(C_Event e)
     {
@@ -87,14 +88,14 @@ public class T_R9_Grow : TimelineTrigger
     public override void OOnTriggerEnter(Collider other)
     {
         // if the cure potion was obtained
-        if (FindObjectOfType<R9_CurePotion>().isActive)
+        if (!FindObjectOfType<R9_CurePotion>().isActive)
         {
             base.OOnTriggerEnter(other);
         }
     }
     public override void OOnTriggerStay(Collider other)
     {
-        base.OOnTriggerEnter(other);
+        base.OOnTriggerStay(other);
     }
     public override void OOnTriggerExit(Collider other)
     {

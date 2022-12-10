@@ -12,7 +12,7 @@ public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.LogError($"Assign TimelineCollection!");
+        //Debug.LogError($"Assign TimelineCollection!");
         AssignTimelineCollection();
     }
     
@@ -31,7 +31,7 @@ public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
     {
         if (CurrentRespawnPoint != RespawnPoints.NONE)
         {
-            Debug.LogError($"CurrentRespawnPoint: {CurrentRespawnPoint}");
+            //Debug.LogError($"CurrentRespawnPoint: {CurrentRespawnPoint}");
             respawnPointCollection[CurrentRespawnPoint].CallStartTimelineEvents();
 
         }
@@ -46,7 +46,7 @@ public class RespawnPointsHandler : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        Debug.LogError($"Saved Respawn Point!!");
+        //Debug.LogError($"Saved Respawn Point!!");
         data.currentRespawnPoint = (int)CurrentRespawnPoint;
         Vector3 offset = new Vector3(CurrentRespawnPosition.x,
             CurrentRespawnPosition.y + 2.0f, CurrentRespawnPosition.z);

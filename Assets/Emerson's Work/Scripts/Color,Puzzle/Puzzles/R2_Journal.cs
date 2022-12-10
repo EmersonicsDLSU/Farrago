@@ -48,7 +48,7 @@ public class R2_Journal : PuzzleItemInteraction
 
     private void Event1(C_Item e)
     {
-        Debug.LogError($"Journal Is Obtained");
+        //Debug.LogError($"Journal Is Obtained");
 
         // disables the interactable UI
         interactableParent.SetActive(false);

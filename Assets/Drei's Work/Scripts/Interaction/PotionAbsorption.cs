@@ -152,11 +152,12 @@ public class PotionAbsorption : MonoBehaviour
                             break;
                     }
                     // call Monologue Text methods 
-                    if (object_ID != null)
+                    /*if (object_ID != null)
                         TextControl.Instance.Interact(
                             (TextControl.textType)System.Enum.Parse(typeof(TextControl.textType),
                                 object_ID.objectCode.ToString())
                             );
+                    */
                     TextControl.Instance.delayReset();
                 }
             }

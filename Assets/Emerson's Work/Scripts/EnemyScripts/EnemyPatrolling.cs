@@ -256,7 +256,7 @@ public class EnemyPatrolling : MonoBehaviour
     private void CollectPickUp(AIAgent agent)
     {
         //change the destination and chases the player
-        Debug.LogError($"Rat Found You: {this.transform.name}");
+        //Debug.LogError($"Rat Found You: {this.transform.name}");
         agent.navMeshAgent.SetDestination(this.pickup.transform.position);
     }
 

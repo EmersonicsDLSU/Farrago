@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
             // terminate the function if the same color is absorbed
             if (color.color_code == inventorySlots[0].colorMixer.color_code)
                 return;
-            Debug.LogError($"Combine!!!");
+            //Debug.LogError($"Combine!!!");
             AssignColor(inventorySlots[0].colorMixer + color);
         }
         else // simply assigns the new color

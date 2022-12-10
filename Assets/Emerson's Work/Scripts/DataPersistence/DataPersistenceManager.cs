@@ -37,7 +37,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (instance != null) 
         {
-            Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
+            //Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
             Destroy(this.gameObject);
             return;
         }
@@ -46,7 +46,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         if (disableDataPersistence) 
         {
-            Debug.LogWarning("Data Persistence is currently disabled!");
+            //Debug.LogWarning("Data Persistence is currently disabled!");
         }
 
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
@@ -105,19 +105,19 @@ public class DataPersistenceManager : MonoBehaviour
         if (overrideSelectedProfileId) 
         {
             this.selectedProfileId = testSelectedProfileId;
-            Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
+            //Debug.LogWarning("Overrode selected profile id with test id: " + testSelectedProfileId);
         }
     }
 
     public void NewGame() 
     {
         this.gameData = new GameData();
-        Debug.LogError("Create New Game");
+        //Debug.LogError("Create New Game");
     }
     public void NewCareer() 
     {
         this.careerData = new CareerData();
-        Debug.LogError("Create New Career");
+        //Debug.LogError("Create New Career");
     }
 
     public void LoadGame()
@@ -140,7 +140,7 @@ public class DataPersistenceManager : MonoBehaviour
         // if no data can be loaded, don't continue
         if (this.gameData == null) 
         {
-            Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
+            //Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
             return;
         }
 
@@ -150,7 +150,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.LoadData(gameData);
         }
         
-        Debug.LogError("Load Game");
+        //Debug.LogError("Load Game");
     }
     
     public void LoadCareer()
@@ -167,14 +167,14 @@ public class DataPersistenceManager : MonoBehaviour
         // start a new game if the data is null and we're configured to initialize data for debugging purposes
         if (this.careerData == null) 
         {
-            Debug.LogError("Creating Career");
+            //Debug.LogError("Creating Career");
             NewCareer();
         }
 
         // if no data can be loaded, don't continue
         if (this.careerData == null) 
         {
-            Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
+            //Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
             return;
         }
 
@@ -184,7 +184,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.LoadData(careerData);
         }
         
-        Debug.LogError("Load Career");
+        //Debug.LogError("Load Career");
     }
 
     public void SaveGame()
@@ -198,7 +198,7 @@ public class DataPersistenceManager : MonoBehaviour
         // if we don't have any data to save, log a warning here
         if (this.gameData == null) 
         {
-            Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
+            //Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
             return;
         }
 
@@ -220,14 +220,14 @@ public class DataPersistenceManager : MonoBehaviour
         // return right away if data persistence is disabled
         if (disableDataPersistence) 
         {
-            Debug.LogError("SAVE CANCEL");
+            //Debug.LogError("SAVE CANCEL");
             return;
         }
 
         // if we don't have any data to save, log a warning here
         if (this.careerData == null) 
         {
-            Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
+            //Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
             return;
         }
 
@@ -242,7 +242,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         // save that data to a file using the data handler
         dataHandler.Save(careerData, selectedCareerId);
-        Debug.LogError("SETTINGS SAVED");
+        //Debug.LogError("SETTINGS SAVED");
     }
     private void OnApplicationQuit() 
     {
@@ -286,7 +286,7 @@ public class DataPersistenceManager : MonoBehaviour
         {
             yield return new WaitForSeconds(autoSaveTimeSeconds);
             SaveGame();
-            Debug.Log("Auto Saved Game");
+            //Debug.Log("Auto Saved Game");
         }
     }
 }

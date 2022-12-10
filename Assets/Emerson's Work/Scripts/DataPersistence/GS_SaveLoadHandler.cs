@@ -26,7 +26,7 @@ public class GS_SaveLoadHandler : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        Debug.LogError($"Total tries: {data.total_tries}");
+        //Debug.LogError($"Total tries: {data.total_tries}");
         total_tries = ++data.total_tries;
     }
     

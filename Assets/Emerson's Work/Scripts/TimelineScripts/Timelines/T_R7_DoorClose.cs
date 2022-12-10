@@ -62,6 +62,7 @@ public class T_R7_DoorClose : TimelineTrigger
         {
             GetComponent<BoxCollider>().enabled = false;
             door.transform.Rotate(0, 90, 0);
+            Debug.LogError($"Close Door!");
         }
         else
         {

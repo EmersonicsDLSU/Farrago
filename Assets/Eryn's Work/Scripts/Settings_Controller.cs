@@ -42,7 +42,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
         QualitySettings.renderPipeline = renderPipelines[index];
         //PlayerPrefs.SetInt("Quality", index);
 
-        Debug.LogError("GRAPHICS IS CHANGED");
+        //Debug.LogError("GRAPHICS IS CHANGED");
 
         quality = index;
     }
@@ -89,7 +89,7 @@ public class Settings_Controller : MonoBehaviour, ICareerDataPersistence
 
         SetQuality(data.quality);
         quality_dropdown.value = data.quality;
-        Debug.LogError($"Quality Settings: {quality_dropdown.value}");
+        //Debug.LogError($"Quality Settings: {quality_dropdown.value}");
 
         var isFullscreen = (data.is_fullscreen == 1) ? true : false;
         SetFullScreen(isFullscreen);

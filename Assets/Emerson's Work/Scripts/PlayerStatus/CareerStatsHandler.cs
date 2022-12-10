@@ -30,7 +30,7 @@ public class CareerStatsHandler : MonoBehaviour, ICareerDataPersistence
     {
         if (instance != null) 
         {
-            Debug.LogError("Found more than one Career Stats Handler in the scene.");
+            //Debug.LogError("Found more than one Career Stats Handler in the scene.");
         }
         DontDestroyOnLoad(this);
     }
