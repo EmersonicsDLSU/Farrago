@@ -50,6 +50,10 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
 
     public void Update()
     {
+        if (Item_Identification == PuzzleItem.R9_CURE_POTION)
+        {
+            Debug.LogError($"IsActive: {isActive} : {canInteract}");
+        }
         InheritorsUpdate();
     }
     
