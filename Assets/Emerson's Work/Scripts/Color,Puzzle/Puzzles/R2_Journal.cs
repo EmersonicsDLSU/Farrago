@@ -74,6 +74,21 @@ public class R2_Journal : PuzzleItemInteraction
         // CALL THE END EVENTS FOR JournalChecker cutscene 
         FindObjectOfType<T_R2_JournalCheck>().CallEndTimelineEvents();
     }
+    
+    // once interacted, the journal will be acquired instantly
+    public override void OLoadData(GameData data)
+    {
+        if (!isActive)
+        {
+            CallItemEvents(Item_Identification);
+        }
+        else
+        {
+            // journal is obtained
+            Journal.Instance.isJournalObtained = false;
+            Journal.Instance.journalImages.Clear();
+        }
+    }
 
     // once interacted, the journal will be acquired instantly
     public override bool OFillCompletion()

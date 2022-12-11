@@ -126,7 +126,7 @@ public class JournalBook : MonoBehaviour
         // checks if the next page returns back to the first page / journalImage
         if (Journal.Instance.journalImages.Count > 2 && (curr_JournalIndex+=2) >= Journal.Instance.journalImages.Count)
         {
-            Debug.LogError($"Back to first page: {curr_JournalIndex}:{Journal.Instance.journalImages.Count}");
+            //Debug.LogError($"Back to first page: {curr_JournalIndex}:{Journal.Instance.journalImages.Count}");
             curr_JournalIndex = 0;
         }
         else if (Journal.Instance.journalImages.Count <= 2)

@@ -52,7 +52,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
     {
         if (Item_Identification == PuzzleItem.R9_CURE_POTION)
         {
-            Debug.LogError($"IsActive: {isActive} : {canInteract}");
+            //Debug.LogError($"IsActive: {isActive} : {canInteract}");
         }
         InheritorsUpdate();
     }
@@ -136,10 +136,7 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
         if (data.objectivesDone.ContainsKey((int) Item_Identification))
         {
             data.objectivesDone.TryGetValue((int)Item_Identification, out isActive);
-            if (!isActive)
-            {
-                OLoadData(data);
-            }
+            OLoadData(data);
         }
     }
     
@@ -210,7 +207,10 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
     // overridable function for load method
     public virtual void OLoadData(GameData data)
     {
-        CallItemEvents(Item_Identification);
+        if (!isActive)
+        {
+            CallItemEvents(Item_Identification);
+        }
     }
     
     // overridable function for save method
