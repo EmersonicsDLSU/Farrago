@@ -96,15 +96,19 @@ public class T_R9_Grow : TimelineTrigger
 
     public override void OOnTriggerEnter(Collider other)
     {
-        // if the cure potion was obtained
-        if (!FindObjectOfType<R9_CurePotion>().isActive)
-        {
-            base.OOnTriggerEnter(other);
-        }
+
     }
+
+    private bool onceUse = false;
+
     public override void OOnTriggerStay(Collider other)
     {
-        base.OOnTriggerStay(other);
+        // if the cure potion was obtained
+        if (!onceUse && !FindObjectOfType<R9_CurePotion>().isActive)
+        {
+            onceUse = true;
+            base.OOnTriggerEnter(other);
+        }
     }
     public override void OOnTriggerExit(Collider other)
     {

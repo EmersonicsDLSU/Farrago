@@ -52,6 +52,59 @@ public class R9_CurePotion : PuzzleItemInteraction
             Monologues.Instance.triggerPuzzleUITextIncorrect();
         }
     }
+    
+    // Default Update content
+    public override void InheritorsUpdate()
+    {
+        if (canInteract && isActive && FindObjectOfType<T_R9_Start>().isCompleted)
+        {
+            interactableParent.SetActive(true);
+            if(OBeforeInteraction())
+            {
+                if (Input.GetKeyUp(KeyCode.E))
+                {
+                    mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, false);
+                    timePress = 0;
+                    if (interactableFill != null)
+                    {
+                        interactableFill.fillAmount = 0.0f;
+                    }
+                }
+                else if (OInput())
+                {
+                    mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, true);
+                    mainPlayer.playerMovementSc.ClampToObject(ref mainPlayer, this.gameObject);
+                    timePress += Time.deltaTime;
+                    if (interactableFill != null)
+                    {
+                        interactableFill.fillAmount = timePress / 2.0f;
+                    }
+
+                    if (OFillCompletion())
+                    {
+                        mainPlayer.playerAngelaAnim.IH_ConsumeAnim(ref mainPlayer, false);
+                        // call the item's events
+                        CallItemEvents(Item_Identification);
+
+                        timePress = 0;
+                        if (interactableFill != null)
+                        {
+                            interactableFill.fillAmount = 0.0f;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            timePress = 0;
+            if (interactableFill != null)
+            {
+                interactableFill.fillAmount = 0.0f;
+            }
+            interactableParent.SetActive(false);
+        }
+    }
 
     public override void OLoadData(GameData data)
     {

@@ -71,7 +71,7 @@ public class R3_Door : PuzzleItemInteraction
 
     public override bool OBeforeInteraction()
     {
-        Debug.LogError($"IsKeyFound: {objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e))}");
+        //Debug.LogError($"IsKeyFound: {objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e))}");
         // Checks if all items are found in the inventory
         if (objectsRequired.All(e => PuzzleInventory.Instance.FindInInventory(e)))
             return true;
