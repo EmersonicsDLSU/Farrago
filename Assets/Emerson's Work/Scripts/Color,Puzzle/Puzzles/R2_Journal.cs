@@ -71,8 +71,12 @@ public class R2_Journal : PuzzleItemInteraction
 
         // display UI of journal
         journalHUDText.SetActive(true);
-            
-        this.gameObject.SetActive(false);
+
+        // remove journal object
+        //this.gameObject.SetActive(false);
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+
 
         // CALL THE END EVENTS FOR JournalChecker cutscene 
         FindObjectOfType<T_R2_JournalCheck>().CallEndTimelineEvents();

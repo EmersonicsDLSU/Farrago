@@ -57,9 +57,18 @@ public class T_R9_Grow : TimelineTrigger
             rat.GetComponentInChildren<EnemyPatrolling>().assignDestinations(destinationSet);
         }
     }
+
+    public GameObject winPanel;
+    public GameObject HUD;
+    public GameObject quitConfirmationPanel;
+
     private void E_Event1(C_Event e)
     {
+        Time.timeScale = 0;
 
+        HUD.SetActive(false);
+        winPanel.SetActive(true);
+        quitConfirmationPanel.SetActive(false);
     }
     
     public override void CallEndTimelineEvents()
