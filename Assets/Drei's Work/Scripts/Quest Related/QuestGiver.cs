@@ -67,8 +67,8 @@ public class QuestGiver : MonoBehaviour
 
         //FOR TESTING, delete when there are multiple levels
         //check first if the player is in a tutorial level; if empty then we initialize
-        if (QuestCollection.Instance == null)
-            QuestCollection.Instance.InitializeQuests();
+        
+        QuestCollection.Instance.InitializeQuests();
 
         if(FindObjectOfType<ObjectivePool>() != null)
             objectivePool = FindObjectOfType<ObjectivePool>();

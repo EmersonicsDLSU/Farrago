@@ -32,6 +32,9 @@ public sealed class QuestCollection
     // initialize quest
     public void InitializeQuests()
     {
+        // reset dictionary
+        questDict.Clear();
+
         AQuest quest1 = new AQuest(QuestDescriptions.tutorial_color_r3, true,
             new Dictionary<DescriptiveQuest, bool>() 
                 {{DescriptiveQuest.R3_COMPLETED_FIRE, false}, {DescriptiveQuest.R3_OBTAINKEY, false}},
