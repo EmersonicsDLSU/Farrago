@@ -49,6 +49,7 @@ public class R2_Journal : PuzzleItemInteraction
         D_Item -= Event1;
     }
 
+    public GameObject particleEffect;
     private void Event1(C_Item e)
     {
         //Debug.LogError($"Journal Is Obtained");
@@ -74,9 +75,11 @@ public class R2_Journal : PuzzleItemInteraction
 
         // remove journal object
         //this.gameObject.SetActive(false);
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
-        gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
-
+        foreach (var journObj in gameObject.GetComponentsInChildren<MeshRenderer>())
+        {
+            journObj.enabled = false;
+        }
+        particleEffect.SetActive(false);
 
         // CALL THE END EVENTS FOR JournalChecker cutscene 
         FindObjectOfType<T_R2_JournalCheck>().CallEndTimelineEvents();

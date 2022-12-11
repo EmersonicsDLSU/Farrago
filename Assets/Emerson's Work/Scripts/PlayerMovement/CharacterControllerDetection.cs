@@ -21,7 +21,7 @@ public class CharacterControllerDetection : MonoBehaviour
         {
             //checks the distance once hit
             float distance = Vector3.Distance(this.transform.position, hit.transform.position);
-            Debug.LogError($"Distance between: {distance}!");
+            //Debug.LogError($"Distance between: {distance}!");
             //checks the condition of the touch distance
             if (distance <= this.distance_captured)
             {
