@@ -92,6 +92,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Gameplay_DelegateHandler.D_OnDeath += (c_onDeath) =>
         {
+            // Play sound
+            PlayerSFX_Manager.Instance.findSFXSourceByLabel("DeathSound").
+                PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("DeathSound").clip); 
+
             // if the player is captured
             MPsc.characterControllerDetection.isPlayerCaptured = c_onDeath.isPlayerCaptured;
             // spawns back the player to the last saved point
@@ -108,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
                 MPsc.timelineLevelSc.ResetCutscene(CutSceneTypes.Level4RatCage);
             }
 
-            Debug.LogError($"Dead");
+            //Debug.LogError($"Dead");
 
             // play death vignette effect
             FindObjectOfType<PPVolumeSc>().IsDeathEffect = true;

@@ -62,13 +62,18 @@ public class T_R9_Start : TimelineTrigger
 
     public override void OOnTriggerEnter(Collider other)
     {
-        // if objective is done
-        if (FindObjectOfType<T_R8_Ending>().isCompleted)
-            base.OOnTriggerEnter(other);
+
     }
+
+    private bool onceUsed = false;
     public override void OOnTriggerStay(Collider other)
     {
-        base.OOnTriggerStay(other);
+        // if objective is done
+        if (!onceUsed && FindObjectOfType<T_R8_Ending>().isCompleted)
+        {
+            onceUsed = true;
+            base.OOnTriggerEnter(other);
+        }
     }
     public override void OOnTriggerExit(Collider other)
     {

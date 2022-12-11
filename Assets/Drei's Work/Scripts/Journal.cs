@@ -24,7 +24,7 @@ public sealed class Journal
     public bool isJournalObtained = false;
     
     private static Journal instance = null;
-
+        
     public static Journal Instance
     {
         get
