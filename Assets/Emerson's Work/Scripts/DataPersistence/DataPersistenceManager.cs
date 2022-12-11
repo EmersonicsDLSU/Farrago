@@ -89,8 +89,13 @@ public class DataPersistenceManager : MonoBehaviour
         this.selectedProfileId = newProfileId;
     }
 
-    public void DeleteProfileData(string profileId) 
+    public void DeleteProfileData(string profileId = null) 
     {
+        // delete the current profile
+        if (profileId == null)
+        {
+            profileId = selectedProfileId;
+        }
         // delete the data for this profile id
         dataHandler.Delete(profileId);
         // initialize the selected profile id
