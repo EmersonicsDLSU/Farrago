@@ -90,43 +90,51 @@ public class PlayerMovement : MonoBehaviour
 
     private void InitializeDelegates()
     {
-        Gameplay_DelegateHandler.D_OnDeath += (c_onDeath) =>
+        Gameplay_DelegateHandler.D_OnDeath += DeathEvent;
+
+    }
+
+    public void OnDestroy()
+    {
+        Gameplay_DelegateHandler.D_OnDeath -= DeathEvent;
+    }
+
+    private void DeathEvent(Gameplay_DelegateHandler.C_OnDeath c_onDeath)
+    {
+        // Play sound
+        PlayerSFX_Manager.Instance.findSFXSourceByLabel("DeathSound").
+            PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("DeathSound").clip); 
+
+        // if the player is captured
+        MPsc.characterControllerDetection.isPlayerCaptured = c_onDeath.isPlayerCaptured;
+        // spawns back the player to the last saved point
+        MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
+        _playerProperty.isDead = true;
+        MainPlayerSc temp = FindObjectOfType<MainPlayerSc>();
+        FindObjectOfType<MainPlayerSc>().playerAngelaAnim.IH_DeathAnim(ref temp);
+        // increment death count
+        CareerStatsHandler.instance._careerProperty.total_deaths += 1;
+
+        // reset a specific scene: chase rat scene
+        if (MPsc.timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage)
         {
-            // Play sound
-            PlayerSFX_Manager.Instance.findSFXSourceByLabel("DeathSound").
-                PlayOneShot(PlayerSFX_Manager.Instance.findSFXSourceByLabel("DeathSound").clip); 
+            MPsc.timelineLevelSc.ResetCutscene(CutSceneTypes.Level4RatCage);
+        }
 
-            // if the player is captured
-            MPsc.characterControllerDetection.isPlayerCaptured = c_onDeath.isPlayerCaptured;
-            // spawns back the player to the last saved point
-            MainCharacterStructs.Instance.playerSavedAttrib.IsDead = true;
-            _playerProperty.isDead = true;
-            MainPlayerSc temp = FindObjectOfType<MainPlayerSc>();
-            FindObjectOfType<MainPlayerSc>().playerAngelaAnim.IH_DeathAnim(ref temp);
-            // increment death count
-            CareerStatsHandler.instance._careerProperty.total_deaths += 1;
+        //Debug.LogError($"Dead");
 
-            // reset a specific scene: chase rat scene
-            if (MPsc.timelineLevelSc.lastPlayedSceneType == CutSceneTypes.Level4RatCage)
-            {
-                MPsc.timelineLevelSc.ResetCutscene(CutSceneTypes.Level4RatCage);
-            }
+        // play death vignette effect
+        FindObjectOfType<PPVolumeSc>().IsDeathEffect = true;
 
-            //Debug.LogError($"Dead");
+        Invoke("BackToRespawnPoint", 5.0f);
 
-            // play death vignette effect
-            FindObjectOfType<PPVolumeSc>().IsDeathEffect = true;
-
-            Invoke("BackToRespawnPoint", 5.0f);
-
-            /* // replays the cutscene **Don't Delete**
-            int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);
-            for(int i = start; i < mainPlayer.timelineLevelSc.triggerObjectList.Count; i++)
-            {
-                mainPlayer.timelineLevelSc.triggerObjectList[i].SetActive(true);
-            }
-            */
-        };
+        /* // replays the cutscene **Don't Delete**
+        int start = mainPlayer.timelineLevelSc.triggerObjectList.IndexOf(MainCharacterStructs.Instance.playerSavedAttrib.recentTrigger);
+        for(int i = start; i < mainPlayer.timelineLevelSc.triggerObjectList.Count; i++)
+        {
+            mainPlayer.timelineLevelSc.triggerObjectList[i].SetActive(true);
+        }
+        */
     }
 
     void BackToRespawnPoint()
