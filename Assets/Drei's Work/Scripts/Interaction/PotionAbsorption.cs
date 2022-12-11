@@ -67,6 +67,8 @@ public class PotionAbsorption : MonoBehaviour
         PAClass_obj.playerInventory = GameObject.FindGameObjectWithTag("PlayerScripts").GetComponent<Inventory>();
         // reference to the PlayerSFX_Manager Static Instance
         playerSFX = PlayerSFX_Manager.Instance;
+        // reset dictionary list
+        color_Code_To_UColor.Clear();
         // assigns all the corresponding UColor for each color_code(enum)
         color_Code_To_UColor.Add(ColorCode.RED, Color.red);
         color_Code_To_UColor.Add(ColorCode.BLUE, Color.blue);
