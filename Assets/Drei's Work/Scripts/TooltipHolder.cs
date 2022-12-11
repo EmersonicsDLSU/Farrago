@@ -93,7 +93,7 @@ public class TooltipHolder : MonoBehaviour
         }
 
         //ROOM 2 JOURNAL OBTAIN TOOLTIP
-        if (playerJournal.isJournalObtained == true && isJournalTutDone == false)
+        if (FindObjectOfType<R2_Journal>().isJournalObtained == true && isJournalTutDone == false)
         {
             tooltipHelp.GetComponent<Text>().text = "press J to open Journal";
             triggerTooltipHelp();
@@ -101,7 +101,7 @@ public class TooltipHolder : MonoBehaviour
 
         //ROOM 2 JOURNAL CHECK TOOLTIP
         if (TimelineLevel.currentSceneType == CutSceneTypes.Level2JournalChecker  && 
-            !TimelineLevel.isTimelinePlayed && playerJournal.isJournalObtained == false)
+            !TimelineLevel.isTimelinePlayed && FindObjectOfType<R2_Journal>().isJournalObtained == false)
         {
             tooltipHelp.GetComponent<Text>().text = "find the JOURNAL";
             triggerTooltipHelp();

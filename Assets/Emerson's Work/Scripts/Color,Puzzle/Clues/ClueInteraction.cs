@@ -123,7 +123,7 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
         // adds the journal to the journalEntries(List)
         //Journal.Instance.journalEntries.Add(Clue_Identification, clueImage);
         //Journal.Instance.journalEntries[Clue_Identification].enabled = true;
-        Journal.Instance.journalImages.Add(new JournalImage(Clue_Identification, clueImage));
+        FindObjectOfType<R2_Journal>().journalImages.Add(new JournalImage(Clue_Identification, clueImage));
 
         // Deactivate this interactable clue
         isActive = false;
@@ -256,7 +256,7 @@ public abstract class ClueInteraction : MonoBehaviour, IDataPersistence
         if (Clue_Identification != E_ClueInteraction.R2_INSTRUCTION1 && Clue_Identification != E_ClueInteraction.R2_INSTRUCTION2)
         {
             //Debug.LogError($"Load: {Clue_Identification}");
-            Journal.Instance.journalImages.Add(new JournalImage(Clue_Identification, clueImage));
+            FindObjectOfType<R2_Journal>().journalImages.Add(new JournalImage(Clue_Identification, clueImage));
         }
 
         // Deactivate this interactable clue

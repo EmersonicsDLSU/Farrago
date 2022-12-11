@@ -32,7 +32,7 @@ public class T_R2_JournalCheck : TimelineTrigger
     
     public override void OOnTriggerEnter(Collider other)
     {
-        if (!Journal.Instance.isJournalObtained)
+        if (!FindObjectOfType<R2_Journal>().isJournalObtained)
         {
             base.OOnTriggerEnter(other);
         }
@@ -48,7 +48,7 @@ public class T_R2_JournalCheck : TimelineTrigger
     }
     public override void CallEndTimelineEvents()
     {
-        if (Journal.Instance.isJournalObtained)
+        if (FindObjectOfType<R2_Journal>().isJournalObtained)
         {
             GetComponent<BoxCollider>().enabled = false;
             isCompleted = true;

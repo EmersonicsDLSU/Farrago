@@ -18,7 +18,7 @@ public class CR2_Instruction2 : ClueInteraction
         // adds the journal to the journalEntries(List)
         //Journal.Instance.journalEntries.Add(Clue_Identification, clueImage);
         //Journal.Instance.journalEntries[Clue_Identification].enabled = true;
-        Journal.Instance.journalImages.Add(new JournalImage(Clue_Identification, clueImage));
+        FindObjectOfType<R2_Journal>().journalImages.Add(new JournalImage(Clue_Identification, clueImage));
 
         // Deactivate this interactable clue
         isActive = false;

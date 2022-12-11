@@ -49,7 +49,7 @@ public class HUD_Controller : MonoBehaviour
             }
         }
         //JOURNAL MENU
-        else if (Input.GetKeyDown(KeyCode.J) && canPress && Journal.Instance.isJournalObtained == true)
+        else if (Input.GetKeyDown(KeyCode.J) && canPress && FindObjectOfType<R2_Journal>().isJournalObtained == true)
         {
             canPress = false;
             if (isJPressed == false)

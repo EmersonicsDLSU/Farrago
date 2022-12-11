@@ -136,7 +136,10 @@ public abstract class PuzzleItemInteraction : MonoBehaviour, IDataPersistence
         if (data.objectivesDone.ContainsKey((int) Item_Identification))
         {
             data.objectivesDone.TryGetValue((int)Item_Identification, out isActive);
-            OLoadData(data);
+            if (!isActive)
+            {
+                OLoadData(data);
+            }
         }
     }
     

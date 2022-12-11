@@ -13,13 +13,16 @@ public class R2_Journal : PuzzleItemInteraction
     public Image journalFirstPage;
     public Image journalSecondPage;
     private Object_ID object_ID;
+    
+    public List<JournalImage> journalImages = new List<JournalImage>();
+    public bool isJournalObtained = false;
 
     public override void OAwake()
     {
         // set the item identification
         Item_Identification = PuzzleItem.R2_JOURNAL;
 
-        if (Journal.Instance.isJournalObtained == false)
+        if (isJournalObtained == false)
         {
             journalHUDText.SetActive(false);
         }
@@ -56,7 +59,7 @@ public class R2_Journal : PuzzleItemInteraction
         canInteract = false;
 
         // journal is obtained
-        Journal.Instance.isJournalObtained = true;
+        isJournalObtained = true;
 
         // texts are now added after acquiring the journal
         TextControl.Instance.setText(object_ID.Texts[Random.Range(0, object_ID.Texts.Length - 1)]);
@@ -85,8 +88,8 @@ public class R2_Journal : PuzzleItemInteraction
         else
         {
             // journal is obtained
-            Journal.Instance.isJournalObtained = false;
-            Journal.Instance.journalImages.Clear();
+            isJournalObtained = false;
+            journalImages.Clear();
         }
     }
 

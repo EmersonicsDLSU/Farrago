@@ -39,7 +39,12 @@ public class GameData
         {
             if (!notCompleted) 
             {
+                Debug.LogError($"Collected: {((PuzzleItem)totalCollected).ToString()}!");
                 totalCollected++;
+            }
+            else
+            {
+                Debug.LogError($"Not Collected: {((PuzzleItem)totalCollected).ToString()}!");
             }
         }
 
@@ -47,6 +52,7 @@ public class GameData
         int percentageCompleted = -1;
         if (objectivesDone.Count != 0) 
         {
+            Debug.LogError($"Total Collected: {totalCollected} : {objectivesDone.Count}");
             percentageCompleted = (totalCollected * 100 / objectivesDone.Count);
         }
         return percentageCompleted;

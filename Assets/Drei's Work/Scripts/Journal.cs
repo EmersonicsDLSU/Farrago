@@ -20,8 +20,8 @@ public class JournalImage
 public sealed class Journal
 {
     //public Dictionary<string, Image> journalEntries = new Dictionary<string, Image>();
-    public List<JournalImage> journalImages = new List<JournalImage>();
-    public bool isJournalObtained = false;
+    //public List<JournalImage> journalImages = new List<JournalImage>();
+    //public bool isJournalObtained = false;
     
     private static Journal instance = null;
         
